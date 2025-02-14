@@ -1,6 +1,5 @@
+import 'package:eye/core/utils/app_router.dart';
 import 'package:flutter/material.dart';
-
-import 'features/splash/presentation/views/splash_view.dart';
 
 void main() {
   runApp(const EyeApp());
@@ -11,10 +10,9 @@ class EyeApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return  MaterialApp.router(
+      routerConfig: AppRouter.router,
       debugShowCheckedModeBanner: false,
-      home: SplashView(),
-     
     );
   }
 }
