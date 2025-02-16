@@ -1,6 +1,9 @@
-import 'package:eye/core/utils/assets.dart';
+import 'package:eye/constants.dart';
+import 'package:eye/features/home/presentation/views/widgets/custom_app_bar.dart';
+import 'package:eye/features/home/presentation/views/widgets/welcome_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+
+import '../../../../../core/utils/styles.dart';
 
 class HomeViewBody extends StatelessWidget {
   const HomeViewBody({super.key});
@@ -10,64 +13,28 @@ class HomeViewBody extends StatelessWidget {
     return const Column(
       children: [
         CustomAppBar(),
+        WelcomeText(),
+        StartingBox(),
       ],
     );
   }
 }
 
-class CustomAppBar extends StatelessWidget {
-  const CustomAppBar({super.key});
+
+class StartingBox extends StatelessWidget {
+  const StartingBox({super.key});
 
   @override
   Widget build(BuildContext context) {
-    double screenHeight = MediaQuery.of(context).size.height;
-
-    return SafeArea(
-      child: Container(
-        width: double.infinity,
-        height: screenHeight * 0.08,
-        padding: const EdgeInsets.symmetric( vertical: 10),
-        decoration: BoxDecoration(
-          color: const Color(0xffD3CCB8),
-          borderRadius: BorderRadius.circular(6),
-        ),
-        child:
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          SizedBox(
-            child: Image.asset(
-              AssetsData.eyePNG,
-              fit: BoxFit.contain,
-            ),
-          ),
-          Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SvgPicture.asset(
-                    width: 40,
-                    AssetsData.homeIcon,
-                    fit: BoxFit.contain,
-                  ),
-                  SvgPicture.asset(
-                    width: 40,
-                    AssetsData.trophyIcon,
-                    fit: BoxFit.contain,
-                    
-                  ),
-                ],
-              ),
-            ),
-          IconButton(
-            padding: EdgeInsets.zero,
-            onPressed: () {},
-            icon: SvgPicture.asset(
-              AssetsData.userIcon,
-              fit: BoxFit.contain,
-            ),
-          ),
-        ]),
+    return Container(
+      alignment: Alignment.center,
+      width: 260,
+      height: 60,
+      decoration: BoxDecoration(
+        color: secondColor,
+        borderRadius: BorderRadius.circular(10),
       ),
+      child: const Text('يلا نحل',style: Styles.customtextStyle),
     );
   }
 }
