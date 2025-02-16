@@ -1,7 +1,7 @@
 import 'package:eye/core/utils/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../../core/utils/assets.dart';
+ import '../../../../../core/utils/assets.dart';
 
 class SplashViewBody extends StatefulWidget {
   const SplashViewBody({super.key});
@@ -30,6 +30,6 @@ class _SplashViewBodyState extends State<SplashViewBody> {
   Widget build(BuildContext context) {
     return Align(
         alignment: Alignment.center,
-        child: Image.asset(AssetsData.eyeSplashJPG));
+        child: Image.asset(AssetsData.eyeSplashJPG,scale: 4,)); // / Reduces the image size to 1/4
   }
 }
