@@ -10,5 +10,6 @@ abstract class Styles {
 
   static const customtextStyle = TextStyle(
     fontSize: 16,
+    fontWeight: FontWeight.bold
   );
 }
