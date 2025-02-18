@@ -7,8 +7,8 @@ class WelcomeText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Padding(
-      padding:  EdgeInsets.all(20),
-      child:  Text('!نورت منصة عين',style: Styles.textStyle18,),
+      padding: EdgeInsets.all(30),
+      child: Text('!نورت منصة عين', style: Styles.myWelcomeText18),
     );
   }
 }
