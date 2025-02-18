@@ -3,7 +3,6 @@ import 'package:eye/core/utils/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-
 class CustomAppBar extends StatelessWidget {
   const CustomAppBar({super.key});
 
@@ -13,54 +12,74 @@ class CustomAppBar extends StatelessWidget {
 
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal:8,vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
         child: Container(
           width: double.infinity,
           height: screenHeight * 0.08,
-          padding: const EdgeInsets.symmetric( vertical: 10),
+          padding: const EdgeInsets.symmetric(vertical: 10),
           decoration: BoxDecoration(
-            color:  mainColor,
-            borderRadius: BorderRadius.circular(6),
-          ),
+              color: mainColor,
+              borderRadius: BorderRadius.circular(6),
+              boxShadow: const [
+                BoxShadow(
+                  blurRadius: 5,
+                  color: shadowMainColor,
+                  offset: Offset(0, 6),
+                  spreadRadius: -3,
+                ),
+              ],
+              ),
           child:
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-               const SizedBox(width: 10,),
-            SizedBox(
-             
-              child: Image.asset(
-                AssetsData.eyePNG,
-                fit: BoxFit.contain,
-              ),
+            const SizedBox(
+              width: 10,
             ),
-            Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    SvgPicture.asset(
-                      width: 40,
-                      AssetsData.homeIcon,
-                      fit: BoxFit.contain,
-                    ),
-                    SvgPicture.asset(
-                      width: 40,
-                      AssetsData.trophyIcon,
-                      fit: BoxFit.contain,
-                      
-                    ),
-                  ],
-                ),
-              ),
-            IconButton(
-              padding: EdgeInsets.zero,
-              onPressed: () {},
-              icon: SvgPicture.asset(
-                AssetsData.userIcon,
-                fit: BoxFit.contain,
-              ),
-            ),
+            firstIcon(),
+            middleIcons(),
+            lastIcon(),
           ]),
         ),
+      ),
+    );
+  }
+
+  IconButton lastIcon() {
+    return IconButton(
+      padding: EdgeInsets.zero,
+      onPressed: () {},
+      icon: SvgPicture.asset(
+        AssetsData.userIcon,
+        fit: BoxFit.contain,
+      ),
+    );
+  }
+
+  Expanded middleIcons() {
+    return Expanded(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SvgPicture.asset(
+            width: 40,
+            AssetsData.homeIcon,
+            fit: BoxFit.contain,
+          ),
+          SvgPicture.asset(
+            width: 40,
+            AssetsData.trophyIcon,
+            fit: BoxFit.contain,
+          ),
+        ],
+      ),
+    );
+  }
+
+  SizedBox firstIcon() {
+    return SizedBox(
+      child: Image.asset(
+        AssetsData.eyePNG,
+        fit: BoxFit.contain,
       ),
     );
   }

@@ -12,7 +12,7 @@ class StartingBox extends StatelessWidget {
     return InkWell(
       onTap: () {},
       child: Stack(
-        clipBehavior: Clip.none, 
+        clipBehavior: Clip.none,
         children: [
           Container(
             width: 260,
@@ -20,6 +20,14 @@ class StartingBox extends StatelessWidget {
             decoration: BoxDecoration(
               color: secondColor,
               borderRadius: BorderRadius.circular(10),
+              boxShadow: const [
+                BoxShadow(
+                    blurRadius: 7,
+                    color: shadowSecondColor,
+                    offset: Offset(0, 7),
+                    spreadRadius: -3,
+                    ),
+              ],
             ),
             alignment: Alignment.center,
             child: const Text(
@@ -27,9 +35,8 @@ class StartingBox extends StatelessWidget {
               style: Styles.customtextStyle,
             ),
           ),
-          
           Positioned(
-            right: -7, 
+            right: -7,
             top: -5,
             child: SvgPicture.asset(
               AssetsData.arrowIcon,
@@ -42,4 +49,3 @@ class StartingBox extends StatelessWidget {
     );
   }
 }
-
