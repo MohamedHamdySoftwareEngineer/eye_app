@@ -1,7 +1,12 @@
+import 'package:eye/core/utils/assets.dart';
+import 'package:eye/features/home/presentation/views/widgets/classifier_item.dart';
 import 'package:eye/features/home/presentation/views/widgets/custom_app_bar.dart';
+import 'package:eye/features/home/presentation/views/widgets/custom_bottom_bar.dart';
 import 'package:eye/features/home/presentation/views/widgets/starting_box.dart';
+import 'package:eye/features/home/presentation/views/widgets/strongest_classifiers.dart';
 import 'package:eye/features/home/presentation/views/widgets/welcome_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../../constants.dart';
 import '../../../../../core/utils/styles.dart';
@@ -16,38 +21,14 @@ class HomeViewBody extends StatelessWidget {
         CustomAppBar(),
         WelcomeText(),
         SizedBox(
-          height: 40,
+          height: 30,
         ),
         StartingBox(),
         SizedBox(
-          height: 50,
+          height: 40,
         ),
         StrongestClassifiers(),
-      ],
-    );
-  }
-}
-
-class StrongestClassifiers extends StatelessWidget {
-  const StrongestClassifiers({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(
-          'الأقوى',
-          style: Styles.customtextStyle.copyWith(
-            fontWeight: FontWeight.w900,
-            fontSize: 25,
-          shadows: [
-            const Shadow(
-              blurRadius: 7,
-              color: shadowMainColor,
-              offset: Offset(-1, 5),
-            )
-          ]),
-        ),
+        CustomBottomBar(),
       ],
     );
   }

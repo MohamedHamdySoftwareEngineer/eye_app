@@ -7,4 +7,8 @@ class AssetsData {
   static const trophyIcon = 'assets/images/trophy_icon.svg';
   static const userIcon = 'assets/images/user_icon.svg';
   static const arrowIcon = 'assets/images/arrow_next.svg';
+  static const classifierPhoto = 'assets/images/classifier_photo.svg';
+  static const classifierPhotoJPG = 'assets/images/classifier_photo.jpg';
+  static const classifierPhotoPNG = 'assets/images/classifier_photo.png';
+  static const bottomIcon = 'assets/images/bottom_icon.svg';
 }
