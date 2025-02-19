@@ -2,7 +2,7 @@ import 'package:eye/constants.dart';
 import 'package:flutter/material.dart';
 
 abstract class Styles {
-  static const myWelcomeText18 = TextStyle(
+  static const brownText18 = TextStyle(
     fontSize: 18,
     fontWeight: FontWeight.w800,
     color: textColor,
@@ -20,8 +20,9 @@ abstract class Styles {
 
   static const classifierTextStyle =
       TextStyle(fontSize: 14, color: Colors.black, fontWeight: FontWeight.w900);
-  static const bottomTextStyle =
+  static const renameTextStyle10 =
       TextStyle(fontSize: 10, color: secondColor, fontWeight: FontWeight.w300);
+  static const signTextStyle = TextStyle(fontSize: 14, color: signColor, fontWeight: FontWeight.bold);
 
   static const strongestclassifiersText = TextStyle(
     fontSize: 20,

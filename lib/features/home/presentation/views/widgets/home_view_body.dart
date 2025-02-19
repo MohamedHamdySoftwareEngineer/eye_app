@@ -1,14 +1,9 @@
-import 'package:eye/core/utils/assets.dart';
-import 'package:eye/features/home/presentation/views/widgets/classifier_item.dart';
 import 'package:eye/features/home/presentation/views/widgets/custom_app_bar.dart';
 import 'package:eye/features/home/presentation/views/widgets/custom_bottom_bar.dart';
 import 'package:eye/features/home/presentation/views/widgets/starting_box.dart';
 import 'package:eye/features/home/presentation/views/widgets/strongest_classifiers.dart';
 import 'package:eye/features/home/presentation/views/widgets/welcome_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-
-import '../../../../../constants.dart';
 import '../../../../../core/utils/styles.dart';
 
 class HomeViewBody extends StatelessWidget {
@@ -25,7 +20,11 @@ class HomeViewBody extends StatelessWidget {
         ),
         StartingBox(),
         SizedBox(
-          height: 40,
+          height: 60,
+        ),
+        Text(
+          'الأقوى',
+          style: Styles.strongestclassifiersText,
         ),
         StrongestClassifiers(),
         CustomBottomBar(),

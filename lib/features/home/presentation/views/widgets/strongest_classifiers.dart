@@ -1,5 +1,4 @@
 import 'package:eye/core/utils/assets.dart';
-import 'package:eye/core/utils/styles.dart';
 import 'package:eye/features/home/presentation/views/widgets/classifier_item.dart';
 import 'package:flutter/material.dart';
 
@@ -10,51 +9,51 @@ class StrongestClassifiers extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Row(
-        
-        mainAxisSize: MainAxisSize.min, 
         children: [
-          const Column(
-            crossAxisAlignment: CrossAxisAlignment.start, 
-            children: [
-              Text(
-                'الأقوى',
-                style: Styles.strongestclassifiersText,
-              ),
-              SizedBox(height: 30),
-              ClassifierItem(
-                xAxiz: -0.3,
-                yAxiz: 0,
-                imagePath: AssetsData.classifierPhotoPNG,
-                name: 'محمد',
-                points: 3128,
-              ),
-              SizedBox(height: 30),
-              ClassifierItem(
-                xAxiz: -0.7,
-                yAxiz: 0,
-                imagePath: AssetsData.classifierPhotoPNG,
-                name: 'محمد',
-                points: 2100,
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              ClassifierItem(
-                xAxiz: 0,
-                yAxiz: -0.9,
-                imagePath: AssetsData.classifierPhotoPNG,
-                name: 'محمد',
-                points: 2100,
-              ),
-            ],
+          const Expanded(
+            flex: 5,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [  
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    ClassifierItem(
+                      xAxiz: 2,
+                      yAxiz: 0,
+                      imagePath: AssetsData.classifierPhotoPNG,
+                      name: 'محمد',
+                      points: 3128,
+                    ),
+                    SizedBox(height: 60),
+                    ClassifierItem(
+                      xAxiz: 0.2,
+                      yAxiz: 0,
+                      imagePath: AssetsData.classifierPhotoPNG,
+                      name: 'محمد',
+                      points: 2100,
+                    ),
+                    SizedBox(height: 60),
+                    ClassifierItem(
+                      xAxiz: 3,
+                      yAxiz: -0.9,
+                      imagePath: AssetsData.classifierPhotoPNG,
+                      name: 'محمد',
+                      points: 2100,
+                    ),
+                  ],
+                ),
+                
+              ],
+            ),
           ),
-          const SizedBox(width: 30), 
+          
           Expanded(
-            child: Image.asset(
-              AssetsData.trophyImage, // Trophy icon on the right
-              width: 400,
-              height: 350,
-              fit: BoxFit.contain,
+            flex: 3,
+            child: SizedBox(
+              child: Image.asset(AssetsData.trophyImage),
             ),
           ),
         ],

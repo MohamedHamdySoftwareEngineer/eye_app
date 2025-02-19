@@ -1,5 +1,4 @@
 import 'package:eye/constants.dart';
-import 'package:eye/core/utils/assets.dart';
 import 'package:eye/core/utils/styles.dart';
 import 'package:flutter/material.dart';
 
