@@ -3,6 +3,9 @@ import 'package:eye/core/utils/assets.dart';
 import 'package:eye/core/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
+
+import '../../../../../core/utils/app_router.dart';
 
 class StartingBox extends StatelessWidget {
   const StartingBox({super.key});
@@ -10,7 +13,9 @@ class StartingBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        GoRouter.of(context).push(AppRouter.rSignIn);
+      },
       child: Stack(
         clipBehavior: Clip.none,
         children: [

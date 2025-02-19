@@ -29,8 +29,7 @@ class CustomBottomBar extends StatelessWidget {
           ],
         ),
         child:
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, 
-            children: [
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           const SizedBox(
             width: 10,
           ),
@@ -49,7 +48,7 @@ class CustomBottomBar extends StatelessWidget {
               alignment: Alignment.bottomCenter,
               child: Text(
                 '@Aye team',
-                style: Styles.bottomTextStyle,
+                style: Styles.renameTextStyle10,
               )),
           const SizedBox(
             width: 20,
@@ -66,7 +65,7 @@ class CustomBottomBar extends StatelessWidget {
                 const Flexible(
                   child: Text(
                     "Telegram group",
-                    style: Styles.bottomTextStyle,
+                    style: Styles.renameTextStyle10,
                   ),
                 ),
               ],

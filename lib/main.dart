@@ -15,10 +15,12 @@ class EyeApp extends StatelessWidget {
       routerConfig: AppRouter.router,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        brightness: Brightness.light,
         textTheme: GoogleFonts.cairoTextTheme().apply(
           bodyColor: Colors.white
         ), // Apply Cairo font globally
       ),
+      themeMode: ThemeMode.light,
     );
   }
 }
