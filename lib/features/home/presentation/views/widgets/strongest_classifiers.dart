@@ -8,25 +8,55 @@ class StrongestClassifiers extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Expanded(
-      child:  Column(
+    return Expanded(
+      child: Row(
+        
+        mainAxisSize: MainAxisSize.min, 
         children: [
-          Text(
-            'الأقوى',
-            style: Styles.strongestclassifiersText,
+          const Column(
+            crossAxisAlignment: CrossAxisAlignment.start, 
+            children: [
+              Text(
+                'الأقوى',
+                style: Styles.strongestclassifiersText,
+              ),
+              SizedBox(height: 30),
+              ClassifierItem(
+                xAxiz: -0.3,
+                yAxiz: 0,
+                imagePath: AssetsData.classifierPhotoPNG,
+                name: 'محمد',
+                points: 3128,
+              ),
+              SizedBox(height: 30),
+              ClassifierItem(
+                xAxiz: -0.7,
+                yAxiz: 0,
+                imagePath: AssetsData.classifierPhotoPNG,
+                name: 'محمد',
+                points: 2100,
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              ClassifierItem(
+                xAxiz: 0,
+                yAxiz: -0.9,
+                imagePath: AssetsData.classifierPhotoPNG,
+                name: 'محمد',
+                points: 2100,
+              ),
+            ],
           ),
-          SizedBox(
-            height: 30,
+          const SizedBox(width: 30), 
+          Expanded(
+            child: Image.asset(
+              AssetsData.trophyImage, // Trophy icon on the right
+              width: 400,
+              height: 350,
+              fit: BoxFit.contain,
+            ),
           ),
-          ClassifierItem(xAxiz: -0.3, yAxiz: 0,imagePath:  AssetsData.classifierPhotoPNG,name: 'محمد',points: 3128,),
-          SizedBox(
-            height: 30,
-          ),
-          ClassifierItem(xAxiz: -0.7, yAxiz: 0,imagePath:  AssetsData.classifierPhotoPNG,name: 'محمد',points: 2100,),
-          SizedBox(
-            height: 30,
-          ),
-          ClassifierItem(xAxiz: 0, yAxiz: -0.9, imagePath:  AssetsData.classifierPhotoPNG,name: 'محمد',points: 2100,),      
         ],
       ),
     );

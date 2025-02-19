@@ -11,4 +11,5 @@ class AssetsData {
   static const classifierPhotoJPG = 'assets/images/classifier_photo.jpg';
   static const classifierPhotoPNG = 'assets/images/classifier_photo.png';
   static const bottomIcon = 'assets/images/bottom_icon.svg';
+  static const trophyImage = 'assets/images/trophy_image.png';
 }
