@@ -30,7 +30,9 @@ class CustomAppBar extends StatelessWidget {
               ],
               ),
           child:
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween, 
+              children: [
             const SizedBox(
               width: 10,
             ),
@@ -43,13 +45,17 @@ class CustomAppBar extends StatelessWidget {
     );
   }
 
-  IconButton lastIcon() {
-    return IconButton(
-      padding: EdgeInsets.zero,
-      onPressed: () {},
-      icon: SvgPicture.asset(
-        AssetsData.userIcon,
-        fit: BoxFit.contain,
+  Widget lastIcon() {
+    return Transform.translate(
+      offset: const Offset(0, 3),
+      child: IconButton(
+        padding: EdgeInsets.zero,
+        onPressed: () {},
+        icon: SvgPicture.asset(
+          width: 70,      
+          AssetsData.userIcon,
+          fit: BoxFit.contain,
+        ),
       ),
     );
   }

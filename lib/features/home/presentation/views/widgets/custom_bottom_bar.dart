@@ -29,7 +29,8 @@ class CustomBottomBar extends StatelessWidget {
           ],
         ),
         child:
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, 
+            children: [
           const SizedBox(
             width: 10,
           ),
@@ -62,9 +63,11 @@ class CustomBottomBar extends StatelessWidget {
                   AssetsData.bottomIcon,
                   fit: BoxFit.contain,
                 ),
-                const Text(
-                  "Telegram group",
-                  style: Styles.bottomTextStyle,
+                const Flexible(
+                  child: Text(
+                    "Telegram group",
+                    style: Styles.bottomTextStyle,
+                  ),
                 ),
               ],
             ),
