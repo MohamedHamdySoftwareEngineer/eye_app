@@ -1,6 +1,7 @@
 import 'package:eye/core/utils/assets.dart';
 import 'package:eye/core/widgets/main_box.dart';
 import 'package:eye/features/sign_in/presentation/views/widgets/email_box.dart';
+import 'package:eye/features/sign_in/presentation/views/widgets/forget_password.dart';
 import 'package:eye/features/sign_in/presentation/views/widgets/password_box.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -37,7 +38,7 @@ class SignInBody extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               InkWell(
-                onTap: (){
+                onTap: () {
                   GoRouter.of(context).push(AppRouter.rSignUp);
                 },
                 child: Text(
@@ -45,10 +46,7 @@ class SignInBody extends StatelessWidget {
                   style: Styles.brownText18.copyWith(shadows: [], fontSize: 10),
                 ),
               ),
-              Text(
-                'نسيت كلمة مرورك؟',
-                style: Styles.brownText18.copyWith(shadows: [], fontSize: 10),
-              ),
+              const ForgetPassword(),
             ],
           ),
         ),
