@@ -12,4 +12,5 @@ class AssetsData {
   static const classifierPhotoPNG = 'assets/images/classifier_photo.png';
   static const bottomIcon = 'assets/images/bottom_icon.svg';
   static const trophyImage = 'assets/images/trophy_image.png';
+  static const arrowIconInternal = 'assets/images/arrow_next_internal.svg';
 }
