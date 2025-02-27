@@ -1,5 +1,5 @@
-import 'package:eye/features/home/presentation/views/widgets/custom_app_bar.dart';
-import 'package:eye/features/home/presentation/views/widgets/custom_bottom_bar.dart';
+import 'package:eye/core/widgets/custom_app_bar.dart';
+import 'package:eye/core/widgets/custom_bottom_bar.dart';
 import 'package:eye/features/home/presentation/views/widgets/starting_box.dart';
 import 'package:eye/features/home/presentation/views/widgets/strongest_classifiers.dart';
 import 'package:eye/features/home/presentation/views/widgets/welcome_text.dart';

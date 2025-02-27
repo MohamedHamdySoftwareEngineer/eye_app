@@ -3,7 +3,7 @@ import 'package:eye/core/utils/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class CustomAppBar extends StatelessWidget {
+class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({super.key});
 
   @override
@@ -43,6 +43,8 @@ class CustomAppBar extends StatelessWidget {
         ),
       ),
     );
+
+    
   }
 
   Widget lastIcon() {
@@ -89,4 +91,7 @@ class CustomAppBar extends StatelessWidget {
       ),
     );
   }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
