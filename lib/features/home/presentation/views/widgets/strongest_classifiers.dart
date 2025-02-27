@@ -1,7 +1,7 @@
 import 'package:eye/core/utils/assets.dart';
 import 'package:eye/features/home/presentation/views/widgets/classifier_item.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+
 
 class StrongestClassifiers extends StatelessWidget {
   const StrongestClassifiers({super.key});
@@ -10,11 +10,10 @@ class StrongestClassifiers extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: LayoutBuilder(builder: (context, constraints) {
-        
         double screenHeight = constraints.maxHeight;
         return Row(
           children: [
-             Expanded(
+            Expanded(
               flex: 5,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -26,7 +25,6 @@ class StrongestClassifiers extends StatelessWidget {
                     children: [
                       const ClassifierItem(
                         xAxiz: 2,
-                        yAxiz: 0,
                         imagePath: AssetsData.classifierPhotoPNG,
                         name: 'محمد',
                         points: 3128,
@@ -34,7 +32,6 @@ class StrongestClassifiers extends StatelessWidget {
                       SizedBox(height: screenHeight * 0.15),
                       const ClassifierItem(
                         xAxiz: 0.2,
-                        yAxiz: 0,
                         imagePath: AssetsData.classifierPhotoPNG,
                         name: 'محمد',
                         points: 2100,

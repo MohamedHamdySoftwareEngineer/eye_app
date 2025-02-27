@@ -5,8 +5,6 @@ import 'package:eye/features/sign_in/presentation/views/widgets/forget_password.
 import 'package:eye/features/sign_in/presentation/views/widgets/password_box.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
-import '../../../../../constants.dart';
 import '../../../../../core/utils/app_router.dart';
 import '../../../../../core/utils/styles.dart';
 
@@ -53,12 +51,17 @@ class SignInBody extends StatelessWidget {
         const SizedBox(
           height: 30,
         ),
-        const MainBox(
-          text: 'تسجيل الدخول',
-          assetName: AssetsData.arrowIconInternal,
-          numWidHig: 30,
-          numRight: 22,
-          numTop: 16,
+        InkWell(
+          onTap: (){
+            GoRouter.of(context).push(AppRouter.rLeaderboard);
+          },
+          child: const MainBox(
+            text: 'تسجيل الدخول',
+            assetName: AssetsData.arrowIconInternal,
+            numWidHig: 30,
+            numRight: 22,
+            numTop: 16,
+          ),
         ),
       ]),
     );

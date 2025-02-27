@@ -5,9 +5,11 @@ import 'package:flutter/material.dart';
 class ClassifierItem extends StatelessWidget {
   const ClassifierItem(
       {super.key,
-      required this.xAxiz,
-      required this.yAxiz,
-      required this.imagePath, required this.name, required this.points});
+      this.xAxiz = 0,
+      this.yAxiz = 0,
+      required this.imagePath,
+      required this.name,
+      required this.points});
 
   final double xAxiz;
   final double yAxiz;
@@ -16,16 +18,19 @@ class ClassifierItem extends StatelessWidget {
   final int points;
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHight = MediaQuery.of(context).size.height;
+
     return Padding(
-      padding: const EdgeInsets.only(left:5),
+      padding: const EdgeInsets.only(left: 5),
       child: Align(
           alignment: Alignment(xAxiz, yAxiz),
           child: Stack(
             clipBehavior: Clip.none,
             children: [
               Container(
-                width: 200,
-                height: 35,
+                width: screenWidth * 0.55,
+                height: screenHight * 0.05,
                 decoration: BoxDecoration(
                   color: mainColor,
                   borderRadius: BorderRadius.circular(17),
@@ -77,7 +82,7 @@ class ClassifierItem extends StatelessWidget {
   }
 
   Padding classifierPointsText() {
-    return  Padding(
+    return Padding(
       padding: const EdgeInsets.only(right: 1.0),
       child: Text(
         "$points PTS",
@@ -87,7 +92,7 @@ class ClassifierItem extends StatelessWidget {
   }
 
   Padding classifierNameText() {
-    return  Padding(
+    return Padding(
       padding: const EdgeInsets.only(left: 22),
       child: Text(
         name,

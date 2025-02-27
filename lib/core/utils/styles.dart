@@ -5,7 +5,7 @@ abstract class Styles {
   static const brownText18 = TextStyle(
     fontSize: 18,
     fontWeight: FontWeight.w800,
-    color: textColor,
+    color: myBrownColor,
     shadows: [
       Shadow(
         blurRadius: 8,
