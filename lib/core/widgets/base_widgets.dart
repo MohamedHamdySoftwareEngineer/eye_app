@@ -1,5 +1,4 @@
 import 'package:eye/core/widgets/custom_app_bar.dart';
-import 'package:eye/core/widgets/custom_bottom_bar.dart';
 import 'package:flutter/material.dart';
 
 class BaseWidgets extends StatelessWidget {
@@ -10,7 +9,7 @@ class BaseWidgets extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: const CustomBottomBar(),
+      // bottomNavigationBar: const CustomBottomBar(),
       body: Column(
         children: [
           // Include your custom app bar here instead of in the Scaffold's appBar property.
