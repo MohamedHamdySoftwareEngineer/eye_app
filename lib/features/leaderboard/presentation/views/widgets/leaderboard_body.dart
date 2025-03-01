@@ -1,5 +1,6 @@
 import 'package:eye/constants.dart';
 import 'package:eye/core/widgets/base_widgets.dart';
+import 'package:eye/core/widgets/next_box.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'dart:math' as math;
@@ -35,7 +36,7 @@ class LeaderboardBody extends StatelessWidget {
                   child: Transform.rotate(
                     angle: math.pi / 10,
                     child: SizedBox(
-                      width: screenWidth * 0.36,
+                      width: screenWidth * 0.32,
                       height: screenHeight * 0.46,
                       child: Image.asset(
                         AssetsData.trophyImage,
@@ -56,7 +57,7 @@ class LeaderboardBody extends StatelessWidget {
                           children: [
                             // Centered classifier item.
                             Transform.scale(
-                              scale: 0.55,
+                              scale: 0.7,
                               child: const ClassifierItem(
                                 imagePath: AssetsData.classifierPhotoPNG,
                                 name: 'محمد',
@@ -65,7 +66,7 @@ class LeaderboardBody extends StatelessWidget {
                             ),
                             // Order number placed immediately to the left of the classifier item.
                             Positioned(
-                              left: screenWidth * 0.25,
+                              left: screenWidth * 0.1,
                               child: Center(
                                 child: Text("${index + 1}",
                                     style: Styles.brownText18
@@ -78,25 +79,8 @@ class LeaderboardBody extends StatelessWidget {
                     );
                   }),
                 ),
-                Positioned(
-                  bottom: 10,
-                  left: 240,
-                  
-                  child: InkWell(
-                    onTap: () {
-                      GoRouter.of(context).push(AppRouter.rChoiceScreen);
-                    },
-                    child: const MainBox(
-                      text: 'التالي',
-                      assetName: AssetsData.arrowIconInternal,
-                      numWidHig: 16,
-                      numRight: 5,
-                      numTop: 7,
-                      width: 100,
-                      height: 30,
-                    ),
-                  ),
-                ),
+                
+                const NextBox(screenRoute: AppRouter.rChoiceScreen,),
               ],
             );
           },

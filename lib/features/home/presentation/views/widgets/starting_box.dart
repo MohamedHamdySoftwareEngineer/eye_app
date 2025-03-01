@@ -1,11 +1,7 @@
-import 'package:eye/constants.dart';
 import 'package:eye/core/utils/assets.dart';
-import 'package:eye/core/utils/styles.dart';
 import 'package:eye/core/widgets/main_box.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-
 import '../../../../../core/utils/app_router.dart';
 
 class StartingBox extends StatelessWidget {
@@ -17,7 +13,13 @@ class StartingBox extends StatelessWidget {
       onTap: () {
         GoRouter.of(context).push(AppRouter.rSignIn);
       },
-      child: const MainBox(text: 'يلا نحل', assetName: AssetsData.arrowIcon,numWidHig: 70,numRight: -7,numTop: -5,),
+      child: const MainBox(
+        text: 'يلا نحل',
+        assetName: AssetsData.arrowIcon,
+        numWidHig: 70,
+        numRight: -7,
+        numTop: -5,
+      ),
     );
   }
 }
