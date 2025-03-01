@@ -1,7 +1,10 @@
 import 'package:eye/core/utils/styles.dart';
 import 'package:eye/core/widgets/base_widgets.dart';
+import 'package:eye/core/widgets/next_box.dart';
 import 'package:eye/core/widgets/second_box.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../../core/utils/app_router.dart';
 
 class ChoiceScreenBody extends StatelessWidget {
   const ChoiceScreenBody({super.key});
@@ -28,31 +31,22 @@ class ChoiceScreenBody extends StatelessWidget {
             SizedBox(
               height: 30,
             ),
-            Row(
+            Wrap(
+              spacing: 10,
+              runSpacing: 10,
+              runAlignment: WrapAlignment.spaceBetween,
               children: [
                 SecondBox(text: 'فيزياء'),
-                SizedBox(
-                  width: 10,
-                ),
-                SecondBox(text: 'كيمياء'),
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Row(
-              children: [
                 SecondBox(text: 'أحياء'),
-                SizedBox(
-                  width: 10,
-                ),
+                SecondBox(text: 'كيمياء'),
                 SecondBox(text: 'رياضيات'),
+                SecondBox(text: 'عشوائي'),
               ],
             ),
             SizedBox(
-              height: 10,
+              height: 5,
             ),
-            Expanded(child: SecondBox(text: 'عشوائي'))
+            NextBox(screenRoute: AppRouter.rQuizScreen,),
           ],
         ),
       ),
