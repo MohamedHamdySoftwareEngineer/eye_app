@@ -1,13 +1,32 @@
+import 'package:flutter/material.dart';
 import 'package:eye/constants.dart';
 import 'package:eye/core/utils/styles.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../../../core/utils/assets.dart';
+class PasswordBox extends StatefulWidget {
+  const PasswordBox({super.key, required this.text});
 
-class PasswordBox extends StatelessWidget {
-  const PasswordBox({super.key,required this.text});
   final String text;
+
+  @override
+  PasswordBoxState createState() => PasswordBoxState();
+}
+
+class PasswordBoxState extends State<PasswordBox> {
+  late TextEditingController _controller;
+  bool _obscureText = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -20,25 +39,30 @@ class PasswordBox extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         border: Border.all(color: borderColor, width: 1),
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          RichText(
-            text:  TextSpan(
-                text: text,
-                style: Styles.signTextStyle,
-                children: const [
-                  TextSpan(
-                    text: ' *',
-                    style: TextStyle(
-                      color: Color(0xffE43B3B),
-                    ),
-                  ),
-                ]),
+      child: TextField(
+        textAlignVertical: TextAlignVertical.center,
+        controller: _controller,
+        obscureText: _obscureText,
+        decoration: InputDecoration(
+          hintText: widget.text,
+          hintStyle: Styles.signTextStyle,
+          border: InputBorder.none,
+          isDense: true,
+          suffixIcon: IconButton(
+            icon: Icon(
+              _obscureText ? Icons.visibility_off : Icons.visibility,
+              color: signColor,
+            ),
+            onPressed: () {
+              setState(() {
+                _obscureText = !_obscureText;
+              });
+            },
           ),
-
-          SvgPicture.asset(AssetsData.passwordEye,width: 20,height: 20,),
-        ],
+        ),
+        style: Styles.signTextStyle,
+        keyboardType: TextInputType.visiblePassword,
+        textInputAction: TextInputAction.done,
       ),
     );
   }

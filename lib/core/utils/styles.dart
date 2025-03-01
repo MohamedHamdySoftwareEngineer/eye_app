@@ -14,6 +14,16 @@ abstract class Styles {
       )
     ],
   );
+  static const brownWithoutShadow18 = TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.w800,
+    color: myBrownColor,
+  );
+  static const brownWithoutShadow11 = TextStyle(
+    fontSize: 11,
+    fontWeight: FontWeight.w800,
+    color: myBrownColor,
+  );
 
   static const customtextStyle =
       TextStyle(fontSize: 16, fontWeight: FontWeight.bold);
