@@ -10,6 +10,7 @@ class QuizBox extends StatelessWidget {
     this.radius = 30,
     this.percOfWidth = 0.25,
     this.minHeight = 50,
+    this.maxHeight = 70,
     this.paddingNumber = 12,
   });
 
@@ -17,6 +18,7 @@ class QuizBox extends StatelessWidget {
   final double radius;
   final double percOfWidth;
   final double minHeight;
+  final double maxHeight;
   final double paddingNumber;
 
   @override
@@ -26,6 +28,7 @@ class QuizBox extends StatelessWidget {
       width: screenWidth * percOfWidth,
       constraints: BoxConstraints(
         minHeight: minHeight,
+        maxHeight: maxHeight,
       ),
       alignment: Alignment.center,
       decoration: BoxDecoration(
@@ -40,7 +43,7 @@ class QuizBox extends StatelessWidget {
           ),
         ],
       ),
-      padding: const EdgeInsets.all(12),
+      padding:  EdgeInsets.all(paddingNumber),
       child: Text(
         text,
         style: Styles.brownWithoutShadow11,
