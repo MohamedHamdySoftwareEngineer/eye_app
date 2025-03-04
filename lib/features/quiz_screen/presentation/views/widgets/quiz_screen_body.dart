@@ -68,6 +68,7 @@ class QuizScreenBody extends StatelessWidget {
       spacing: 10,
       runSpacing: 10,
       runAlignment: WrapAlignment.spaceBetween,
+      alignment: WrapAlignment.center,
       children: [
         InkWell(
           onTap: () {
@@ -81,7 +82,7 @@ class QuizScreenBody extends StatelessWidget {
           },
           child: const OptionBox(
             text: '5',
-            percOfWidth: 1,
+            percOfWidth: 0.7,
           ),
         ),
         InkWell(
@@ -95,7 +96,7 @@ class QuizScreenBody extends StatelessWidget {
           },
           child: const OptionBox(
             text: '6',
-            percOfWidth: 1,
+            percOfWidth: 0.7,
           ),
         ),
         InkWell(
@@ -109,7 +110,7 @@ class QuizScreenBody extends StatelessWidget {
           },
           child: const OptionBox(
             text: '7',
-            percOfWidth: 1,
+            percOfWidth: 0.7,
           ),
         ),
         InkWell(
@@ -123,7 +124,7 @@ class QuizScreenBody extends StatelessWidget {
           },
           child: const OptionBox(
             text: '8',
-            percOfWidth: 1,
+            percOfWidth: 0.7,
           ),
         ),
       ],

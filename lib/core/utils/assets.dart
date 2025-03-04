@@ -15,4 +15,5 @@ class AssetsData {
   static const arrowIconInternal = 'assets/images/arrow_next_internal.svg';
   static const passwordEye = 'assets/images/password_eye.svg';
   static const tagIcon = 'assets/images/tag.svg';
+  static const invertedTriangle = 'assets/images/inverted_triangle.svg';
 }
