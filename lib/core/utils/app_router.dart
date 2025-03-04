@@ -2,6 +2,7 @@ import 'package:eye/features/choice_screen/presentation/views/choice_screen.dart
 import 'package:eye/features/home/presentation/views/home_view.dart';
 import 'package:eye/features/leaderboard/presentation/views/leaderboard.dart';
 import 'package:eye/features/quiz_screen/presentation/views/quiz_screen.dart';
+import 'package:eye/features/settings_screen/presentation/views/settings_screen.dart';
 import 'package:eye/features/sign_in/presentation/views/sign_in.dart';
 import 'package:eye/features/splash/presentation/views/splash_view.dart';
 import 'package:go_router/go_router.dart';
@@ -14,6 +15,7 @@ abstract class AppRouter {
   static const rLeaderboard = '/Leaderboard';
   static const rChoiceScreen = '/ChoiceScreen';
   static const rQuizScreen = '/QuizScreen';
+  static const rSettingsScreen = '/SettingsScreen';
 
   static final router = GoRouter(routes: [
     GoRoute(path: '/', builder: (context, state) => const SplashView()),
@@ -24,7 +26,7 @@ abstract class AppRouter {
         path: rLeaderboard, builder: (context, state) => const Leaderboard()),
     GoRoute(
         path: rChoiceScreen, builder: (context, state) => const ChoiceScreen()),
-    GoRoute(path: rQuizScreen,builder: (context, state) => const QuizScreen()),
-    
+    GoRoute(path: rQuizScreen, builder: (context, state) => const QuizScreen()),
+    GoRoute(path: rSettingsScreen, builder: (context, state) => const SettingsScreen()),
   ]);
 }

@@ -2,6 +2,9 @@ import 'package:eye/constants.dart';
 import 'package:eye/core/utils/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
+
+import '../utils/app_router.dart';
 
 class CustomAppBar extends StatelessWidget  {
   const CustomAppBar({super.key});
@@ -38,7 +41,7 @@ class CustomAppBar extends StatelessWidget  {
             ),
             firstIcon(),
             middleIcons(),
-            lastIcon(),
+            lastIcon(context),
           ]),
         ),
       ),
@@ -47,12 +50,14 @@ class CustomAppBar extends StatelessWidget  {
     
   }
 
-  Widget lastIcon() {
+  Widget lastIcon(BuildContext context) {
     return Transform.translate(
       offset: const Offset(0, 3),
       child: IconButton(
         padding: EdgeInsets.zero,
-        onPressed: () {},
+        onPressed: () {
+          GoRouter.of(context).push(AppRouter.rSettingsScreen);
+        },
         icon: SvgPicture.asset(
           width: 70,      
           AssetsData.userIcon,
