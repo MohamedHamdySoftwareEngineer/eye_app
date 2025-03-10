@@ -1,5 +1,5 @@
 import 'package:eye/constants.dart';
-import 'package:eye/core/widgets/base_widgets.dart';
+import 'package:eye/core/widgets/base_scaffold.dart';
 import 'package:eye/core/widgets/next_box.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -16,7 +16,7 @@ class LeaderboardBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BaseWidgets(
+    return BaseScaffold(
       child: Expanded(
         child: LayoutBuilder(
           builder: (context, constraints) {
@@ -79,8 +79,10 @@ class LeaderboardBody extends StatelessWidget {
                     );
                   }),
                 ),
-                
-                const NextBox(screenRoute: AppRouter.rChoiceScreen,),
+
+                const NextBox(
+                  screenRoute: AppRouter.rChoiceScreen,
+                ),
               ],
             );
           },

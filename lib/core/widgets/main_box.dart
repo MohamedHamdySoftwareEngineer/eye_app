@@ -7,7 +7,7 @@ class MainBox extends StatelessWidget {
    const MainBox({
     super.key,
     required this.text,
-    required this.assetName,
+     this.assetName = '',
     required this.numWidHig,
     required this.numRight,
     required this.numTop,
@@ -46,7 +46,7 @@ class MainBox extends StatelessWidget {
             style: Styles.customtextStyle,
           ),
         ),
-        Positioned(
+          Positioned(
           right: numRight,
           top: numTop,
           child: SvgPicture.asset(

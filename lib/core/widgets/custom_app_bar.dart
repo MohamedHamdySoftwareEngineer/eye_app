@@ -56,7 +56,7 @@ class CustomAppBar extends StatelessWidget  {
       child: IconButton(
         padding: EdgeInsets.zero,
         onPressed: () {
-          GoRouter.of(context).push(AppRouter.rSettingsScreen);
+          GoRouter.of(context).push(AppRouter.rUserProfile);
         },
         icon: SvgPicture.asset(
           width: 70,      

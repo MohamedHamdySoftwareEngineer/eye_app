@@ -10,8 +10,8 @@ class QuizBox extends StatelessWidget {
     this.radius = 30,
     this.percOfWidth = 0.25,
     this.minHeight = 50,
-    this.maxHeight = 70,
-    this.paddingNumber = 12,
+    this.maxHeight = 80,
+    this.paddingNumber = 8,
   });
 
   final String text;
@@ -46,7 +46,7 @@ class QuizBox extends StatelessWidget {
       padding:  EdgeInsets.all(paddingNumber),
       child: Text(
         text,
-        style: Styles.brownWithoutShadow11,
+        style: Styles.brownWithoutShadow18,
         textAlign: TextAlign.center,
       ),
     );

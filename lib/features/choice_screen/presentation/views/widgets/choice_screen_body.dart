@@ -1,5 +1,5 @@
 import 'package:eye/core/utils/styles.dart';
-import 'package:eye/core/widgets/base_widgets.dart';
+import 'package:eye/core/widgets/base_scaffold.dart';
 import 'package:eye/core/widgets/next_box.dart';
 import 'package:eye/core/widgets/option_box.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +11,7 @@ class ChoiceScreenBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const BaseWidgets(
+    return const BaseScaffold(
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 30, horizontal: 30),
         child: Column(
