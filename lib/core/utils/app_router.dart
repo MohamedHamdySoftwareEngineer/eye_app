@@ -5,6 +5,7 @@ import 'package:eye/features/quiz_screen/presentation/views/quiz_screen.dart';
 import 'package:eye/features/settings_screen/presentation/views/settings_screen.dart';
 import 'package:eye/features/sign_in/presentation/views/sign_in.dart';
 import 'package:eye/features/splash/presentation/views/splash_view.dart';
+import 'package:eye/features/user_profile/presentation/views/user_profile.dart';
 import 'package:go_router/go_router.dart';
 import '../../features/sign_up/presentation/views/sign_up.dart';
 
@@ -16,6 +17,7 @@ abstract class AppRouter {
   static const rChoiceScreen = '/ChoiceScreen';
   static const rQuizScreen = '/QuizScreen';
   static const rSettingsScreen = '/SettingsScreen';
+  static const rUserProfile = '/UserProfile';
 
   static final router = GoRouter(routes: [
     GoRoute(path: '/', builder: (context, state) => const SplashView()),
@@ -27,6 +29,9 @@ abstract class AppRouter {
     GoRoute(
         path: rChoiceScreen, builder: (context, state) => const ChoiceScreen()),
     GoRoute(path: rQuizScreen, builder: (context, state) => const QuizScreen()),
-    GoRoute(path: rSettingsScreen, builder: (context, state) => const SettingsScreen()),
+    GoRoute(
+        path: rSettingsScreen,
+        builder: (context, state) => const SettingsScreen()),
+    GoRoute(path: rUserProfile, builder: (context, state) => const UserProfile()),
   ]);
 }

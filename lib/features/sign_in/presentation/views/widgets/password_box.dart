@@ -3,9 +3,14 @@ import 'package:eye/constants.dart';
 import 'package:eye/core/utils/styles.dart';
 
 class PasswordBox extends StatefulWidget {
-  const PasswordBox({super.key, required this.text});
+  const PasswordBox({
+    super.key,
+    required this.text,
+    this.controller,
+  });
 
   final String text;
+  final TextEditingController? controller;
 
   @override
   PasswordBoxState createState() => PasswordBoxState();
@@ -18,12 +23,16 @@ class PasswordBoxState extends State<PasswordBox> {
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController();
+    // Use the provided controller if available, otherwise create a new one.
+    _controller = widget.controller ?? TextEditingController();
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    // Dispose only if the controller was created inside the widget.
+    if (widget.controller == null) {
+      _controller.dispose();
+    }
     super.dispose();
   }
 

@@ -20,7 +20,7 @@ class OptionBox extends StatelessWidget {
       alignment: Alignment.center,
       child: Text(
         text,
-        style: Styles.brownWithoutShadow11,
+        style: Styles.brownWithoutShadow18,
       ),
     );
   }

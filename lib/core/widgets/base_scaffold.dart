@@ -1,10 +1,10 @@
 import 'package:eye/core/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 
-class BaseWidgets extends StatelessWidget {
+class BaseScaffold extends StatelessWidget {
   final Widget child;
 
-  const BaseWidgets({super.key, required this.child});
+  const BaseScaffold({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {

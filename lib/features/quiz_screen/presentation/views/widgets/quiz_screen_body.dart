@@ -1,4 +1,4 @@
-import 'package:eye/core/widgets/base_widgets.dart';
+import 'package:eye/core/widgets/base_scaffold.dart';
 import 'package:eye/core/widgets/option_box.dart';
 import 'package:eye/features/quiz_screen/presentation/views/widgets/quiz_box.dart';
 import 'package:flutter/material.dart';
@@ -8,14 +8,14 @@ class QuizScreenBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BaseWidgets(
+    return BaseScaffold(
         child: Padding(
       padding: const EdgeInsets.all(15),
       child: Column(
         children: [
           quizDetails(),
           const SizedBox(
-            height: 20,
+            height: 40,
           ),
           theQuestion(),
           const SizedBox(
@@ -40,94 +40,96 @@ class QuizScreenBody extends StatelessWidget {
   Row quizDetails() {
     return const Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisSize: MainAxisSize.min,
       children: [
         QuizBox(
           text: 'صعب',
-          maxHeight: 60,
+          percOfWidth: 0.28,
         ),
         SizedBox(
-          width: 10,
+          width: 15,
         ),
         QuizBox(
           text: ': عدد نقاطك \n 100',
-          maxHeight: 60,
+          percOfWidth: 0.28,
         ),
         SizedBox(
-          width: 10,
+          width: 15,
         ),
         QuizBox(
           text: '60s',
-          maxHeight: 60,
+          percOfWidth: 0.28,
         ),
       ],
     );
   }
 
   Widget answerOptions(BuildContext context) {
-    return Wrap(
-      spacing: 10,
-      runSpacing: 10,
-      runAlignment: WrapAlignment.spaceBetween,
-      alignment: WrapAlignment.center,
-      children: [
-        InkWell(
-          onTap: () {
-            ScaffoldMessenger.of(context).showSnackBar(
-               const SnackBar(
-                content: Text('wrong answer!',),
-                duration: Duration(seconds: 1),
-                
-              ),
-            );
-          },
-          child: const OptionBox(
-            text: '5',
-            percOfWidth: 0.7,
+    return Expanded(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          InkWell(
+            onTap: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text(
+                    'wrong answer!',
+                  ),
+                  duration: Duration(seconds: 1),
+                ),
+              );
+            },
+            child: const OptionBox(
+              text: '5',
+              percOfWidth: 0.7,
+            ),
           ),
-        ),
-        InkWell(
-          onTap: () {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('wrong answer!'),
-                duration: Duration(seconds: 1),
-              ),
-            );
-          },
-          child: const OptionBox(
-            text: '6',
-            percOfWidth: 0.7,
+          InkWell(
+            onTap: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('wrong answer!'),
+                  duration: Duration(seconds: 1),
+                ),
+              );
+            },
+            child: const OptionBox(
+              text: '6',
+              percOfWidth: 0.7,
+            ),
           ),
-        ),
-        InkWell(
-          onTap: () {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('right answer!'),
-                duration: Duration(seconds: 1),
-              ),
-            );
-          },
-          child: const OptionBox(
-            text: '7',
-            percOfWidth: 0.7,
+          InkWell(
+            onTap: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('right answer!'),
+                  duration: Duration(seconds: 1),
+                ),
+              );
+            },
+            child: const OptionBox(
+              text: '7',
+              percOfWidth: 0.7,
+            ),
           ),
-        ),
-        InkWell(
-          onTap: () {
-           ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('wrong answer!'),
-                duration: Duration(seconds: 1),
-              ),
-            );
-          },
-          child: const OptionBox(
-            text: '8',
-            percOfWidth: 0.7,
+          InkWell(
+            onTap: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('wrong answer!'),
+                  duration: Duration(seconds: 1),
+                ),
+              );
+            },
+            child: const OptionBox(
+              text: '8',
+              percOfWidth: 0.7,
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

@@ -1,4 +1,4 @@
-import 'package:eye/core/widgets/base_widgets.dart';
+import 'package:eye/core/widgets/base_scaffold.dart';
 import 'package:eye/features/home/presentation/views/widgets/starting_box.dart';
 import 'package:eye/features/home/presentation/views/widgets/strongest_classifiers.dart';
 import 'package:eye/features/home/presentation/views/widgets/welcome_text.dart';
@@ -10,10 +10,9 @@ class HomeViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const BaseWidgets(
+    return const BaseScaffold(
       child: Column(
         children: [
-          
           WelcomeText(),
           SizedBox(
             height: 30,
@@ -27,7 +26,6 @@ class HomeViewBody extends StatelessWidget {
             style: Styles.strongestclassifiersText,
           ),
           StrongestClassifiers(),
-          
         ],
       ),
     );
