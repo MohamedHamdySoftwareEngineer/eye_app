@@ -72,7 +72,7 @@ class _SplashViewBodyState extends State<SplashViewBody> with SingleTickerProvid
 void navigateToHome() {
   // 3. Total duration = typing + brief pause
   Future.delayed(const Duration(milliseconds: 3500), () { // 3.2 seconds
-    if (mounted) context.go(AppRouter.rHomeView);
+    if (mounted) context.go(AppRouter.rSignIn);
   });
 }
 }                                                     
