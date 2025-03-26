@@ -55,7 +55,7 @@ class EmailBoxState extends State<EmailBox> {
           isDense: true,
         ),
         style: Styles.signTextStyle,
-        keyboardType: TextInputType.emailAddress,
+        // keyboardType: TextInputType.emailAddress,
         textInputAction: TextInputAction.done,
       ),
     );
