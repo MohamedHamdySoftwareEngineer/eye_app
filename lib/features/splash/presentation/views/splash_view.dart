@@ -10,7 +10,7 @@ class SplashView extends StatelessWidget {
     return const Scaffold(
       backgroundColor: Colors.white,
 
-      body: SplashViewBody(),
+      body: Center(child: SplashViewBody()),
     );
   }
 }

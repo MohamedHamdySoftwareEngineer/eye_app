@@ -75,8 +75,8 @@ class QuizScreenBodyState extends State<QuizScreenBody> {
   }
 
   Future<QuestionModel> fetchQuestion(String questionId) async {
-    // final url = Uri.parse('http://10.0.2.2:5236/api/questions/$questionId');
-    final url = Uri.parse('http://192.168.1.8:5236/api/questions/$questionId');
+     final url = Uri.parse('http://10.0.2.2:5236/api/questions/$questionId');
+    // final url = Uri.parse('http://192.168.1.8:5236/api/questions/$questionId');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
