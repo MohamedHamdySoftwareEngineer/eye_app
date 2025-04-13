@@ -91,7 +91,7 @@ class CustomAppBar extends StatelessWidget  {
   SizedBox firstIcon() {
     return SizedBox(
       child: Image.asset(
-        AssetsData.eyePNG,
+        AssetsData.splash,
         fit: BoxFit.contain,
       ),
     );
