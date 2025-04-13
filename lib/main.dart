@@ -1,6 +1,5 @@
 import 'package:eye/core/utils/app_router.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   runApp(const EyeApp());
@@ -16,9 +15,10 @@ class EyeApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         brightness: Brightness.light,
-        textTheme: GoogleFonts.cairoTextTheme().apply(
-          bodyColor: Colors.white
-        ), // Apply Cairo font globally
+        fontFamily: 'Cairo', // Use your manually registered Cairo font
+        textTheme: ThemeData.light().textTheme.apply(
+              bodyColor: Colors.white,
+            ),
       ),
       themeMode: ThemeMode.light,
     );

@@ -80,8 +80,8 @@ flutter:
   # example:
   fonts:
     - family: Cairo
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
+      fonts:
+        - asset: assets/fonts/static/Cairo-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

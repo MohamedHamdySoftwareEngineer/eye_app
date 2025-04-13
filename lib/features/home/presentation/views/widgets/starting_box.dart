@@ -11,7 +11,7 @@ class StartingBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        GoRouter.of(context).push(AppRouter.rSignIn);
+        GoRouter.of(context).push(AppRouter.rLeaderboard);
       },
       child: const MainBox(
         text: 'يلا نحل',
