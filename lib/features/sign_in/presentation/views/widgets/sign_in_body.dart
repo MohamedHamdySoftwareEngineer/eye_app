@@ -33,8 +33,9 @@ class _SignInBodyState extends State<SignInBody> {
   Future<void> _signIn() async {
     final username = emailController.text;
     final password = passwordController.text;
-    // const String apiUrl = "http://10.0.2.2:5216/api/users/login";
-    const String apiUrl = "http://192.168.20.30:5236/api/users/login";
+    // const String apiUrl = "http://10.0.2.2:5236/api/users/login";
+    const String apiUrl = "http://192.168.1.8:5236/api/users/login";
+    // const String apiUrl = "http://192.168.20.30:5236/api/users/login";
 
     try {
       final response = await http.post(
@@ -52,7 +53,7 @@ class _SignInBodyState extends State<SignInBody> {
         GoRouter.of(context).go(AppRouter.rHomeView);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
+           const SnackBar(
               content: Text("Login failed. Please check your credentials.")),
         );
       }

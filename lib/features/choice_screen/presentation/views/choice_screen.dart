@@ -6,6 +6,6 @@ class ChoiceScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChoiceScreenBody();
+    return const ChoiceScreenBody();
   }
 }
