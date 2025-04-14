@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import '../../../../../core/utils/app_router.dart';
 import 'package:eye/core/utils/assets.dart';
 import 'package:eye/core/utils/styles.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class SignInBody extends StatefulWidget {
   const SignInBody({super.key});
@@ -14,17 +13,18 @@ class SignInBody extends StatefulWidget {
   State<SignInBody> createState() => _SignInBodyState();
 }
 
-class _SignInBodyState extends State<SignInBody> with SingleTickerProviderStateMixin {
+class _SignInBodyState extends State<SignInBody>
+    with SingleTickerProviderStateMixin {
   // Controllers to capture user input
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  
+
   // Animation controller for the login button
   late AnimationController _loginButtonController;
   bool isLoading = false;
   bool isPasswordVisible = false;
-  
+
   @override
   void initState() {
     super.initState();
@@ -42,19 +42,18 @@ class _SignInBodyState extends State<SignInBody> with SingleTickerProviderStateM
     super.dispose();
   }
 
-  // API integration - keeping the same functionality
   Future<void> _signIn() async {
+    // run all your validators and tell me if everything is good.
     if (_formKey.currentState!.validate()) {
       setState(() {
         isLoading = true;
       });
       _loginButtonController.forward();
-      
+
       final username = emailController.text;
       final password = passwordController.text;
       const String apiUrl = "http://10.0.2.2:5236/api/users/login";
       // const String apiUrl = "http://192.168.1.8:5236/api/users/login";
-      // const String apiUrl = "http://192.168.20.30:5236/api/users/login";
 
       try {
         final response = await http.post(
@@ -69,7 +68,7 @@ class _SignInBodyState extends State<SignInBody> with SingleTickerProviderStateM
         );
 
         if (!mounted) return;
-        
+
         setState(() {
           isLoading = false;
         });
@@ -78,44 +77,39 @@ class _SignInBodyState extends State<SignInBody> with SingleTickerProviderStateM
         if (response.statusCode == 200) {
           GoRouter.of(context).go(AppRouter.rHomeView);
         } else {
-          _showErrorDialog("Login failed. Please check your credentials.");
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text("Login failed. Please check your credentials."),
+              backgroundColor: Colors.red,
+              behavior: SnackBarBehavior.floating,
+            ),
+          );
         }
       } catch (e) {
         if (!mounted) return;
-        
+
         setState(() {
           isLoading = false;
         });
         _loginButtonController.reverse();
-        
-        _showErrorDialog("Connection error. Please check your internet connection.");
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+                "Connection error. Please check your internet connection."),
+            backgroundColor: Colors.red,
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
+
         print("An error occurred: $e");
       }
     }
-  }
-  
-  void _showErrorDialog(String message) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Error'),
-        content: Text(message),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('OK', style: TextStyle(color: Colors.brown)),
-          ),
-        ],
-        backgroundColor: Colors.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-      ),
-    );
   }
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
@@ -135,21 +129,7 @@ class _SignInBodyState extends State<SignInBody> with SingleTickerProviderStateM
               ),
             ),
           ),
-          Positioned(
-            bottom: 0,
-            left: 0,
-            child: Container(
-              width: size.width * 0.4,
-              height: size.height * 0.2,
-              decoration: BoxDecoration(
-                color: Colors.brown.withOpacity(0.1),
-                borderRadius: const BorderRadius.only(
-                  topRight: Radius.circular(100),
-                ),
-              ),
-            ),
-          ),
-          
+
           // Main content
           SafeArea(
             child: SingleChildScrollView(
@@ -160,8 +140,8 @@ class _SignInBodyState extends State<SignInBody> with SingleTickerProviderStateM
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(height: size.height * 0.05),
-                    
-                    // App logo/brand
+
+                    // App logo
                     Center(
                       child: Container(
                         width: 100,
@@ -179,16 +159,16 @@ class _SignInBodyState extends State<SignInBody> with SingleTickerProviderStateM
                         ),
                         child: Center(
                           child: Image.asset(
-                            AssetsData.splash,
+                            AssetsData.logo,
                             width: 60,
                             height: 60,
                           ),
                         ),
                       ),
                     ),
-                    
+
                     SizedBox(height: size.height * 0.04),
-                    
+
                     // Welcome text
                     Directionality(
                       textDirection: TextDirection.rtl,
@@ -206,17 +186,18 @@ class _SignInBodyState extends State<SignInBody> with SingleTickerProviderStateM
                           Text(
                             'تسجيل الدخول للمتابعة',
                             style: TextStyle(
-                              color: Colors.brown.withOpacity(0.7),
+                              color: Colors.brown.withOpacity(0.9),
                               fontSize: 16,
                             ),
                           ),
                         ],
                       ),
                     ),
-                    
+
                     SizedBox(height: size.height * 0.05),
-                    
+
                     // Login form
+                    // Form is a widget that groups together form fields (e.g. TextFormField) and provides an easy way to validate and save them as a single unit.
                     Form(
                       key: _formKey,
                       child: Column(
@@ -233,9 +214,9 @@ class _SignInBodyState extends State<SignInBody> with SingleTickerProviderStateM
                               return null;
                             },
                           ),
-                          
+
                           const SizedBox(height: 20),
-                          
+
                           // Password field
                           _buildTextField(
                             controller: passwordController,
@@ -249,9 +230,9 @@ class _SignInBodyState extends State<SignInBody> with SingleTickerProviderStateM
                               return null;
                             },
                           ),
-                          
-                          const SizedBox(height: 15),
-                          
+
+                          const SizedBox(height: 8),
+
                           // Forgot password
                           Align(
                             alignment: Alignment.centerLeft,
@@ -264,88 +245,34 @@ class _SignInBodyState extends State<SignInBody> with SingleTickerProviderStateM
                                 minimumSize: const Size(50, 30),
                                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                               ),
-                              child: Text(
+                              child: const Text(
                                 'نسيت كلمة المرور؟',
                                 style: TextStyle(
-                                  color: Colors.brown.withOpacity(0.8),
+                                  color: Colors.brown,
                                   fontSize: 14,
                                 ),
                               ),
                             ),
                           ),
-                          
+
                           SizedBox(height: size.height * 0.04),
-                          
+
                           // Login Button
                           _buildLoginButton(),
-                          
+
                           SizedBox(height: size.height * 0.03),
-                          
-                          // Divider
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Divider(
-                                  color: Colors.brown.withOpacity(0.3),
-                                  thickness: 1,
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 16),
-                                child: Text(
-                                  'أو',
-                                  style: TextStyle(
-                                    color: Colors.brown.withOpacity(0.7),
-                                    fontSize: 14,
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Divider(
-                                  color: Colors.brown.withOpacity(0.3),
-                                  thickness: 1,
-                                ),
-                              ),
-                            ],
-                          ),
-                          
-                          SizedBox(height: size.height * 0.03),
-                          
-                          // Social login options
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              _buildSocialLoginButton(
-                                icon: Icons.facebook,
-                                color: Colors.blue,
-                              ),
-                              const SizedBox(width: 20),
-                              _buildSocialLoginButton(
-                                icon: Icons.g_mobiledata_rounded,
-                                color: Colors.red,
-                              ),
-                            ],
-                          ),
-                          
-                          SizedBox(height: size.height * 0.04),
-                          
+
                           // Create account link
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text(
-                                'ليس لديك حساب؟',
-                                style: TextStyle(
-                                  color: Colors.black.withOpacity(0.7),
-                                  fontSize: 14,
-                                ),
-                              ),
                               TextButton(
                                 onPressed: () {
                                   GoRouter.of(context).push(AppRouter.rSignUp);
                                 },
                                 style: TextButton.styleFrom(
-                                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 8),
                                 ),
                                 child: const Text(
                                   'إنشاء حساب',
@@ -354,6 +281,13 @@ class _SignInBodyState extends State<SignInBody> with SingleTickerProviderStateM
                                     fontWeight: FontWeight.bold,
                                     fontSize: 14,
                                   ),
+                                ),
+                              ),
+                              Text(
+                                'ليس لديك حساب؟',
+                                style: TextStyle(
+                                  color: Colors.black.withOpacity(0.7),
+                                  fontSize: 14,
                                 ),
                               ),
                             ],
@@ -370,7 +304,7 @@ class _SignInBodyState extends State<SignInBody> with SingleTickerProviderStateM
       ),
     );
   }
-  
+
   Widget _buildTextField({
     required TextEditingController controller,
     required String hintText,
@@ -387,7 +321,7 @@ class _SignInBodyState extends State<SignInBody> with SingleTickerProviderStateM
         style: const TextStyle(color: Colors.black87),
         decoration: InputDecoration(
           hintText: hintText,
-          hintStyle: TextStyle(color: Colors.grey.shade500),
+          hintStyle: const TextStyle(color: Colors.brown),
           prefixIcon: Icon(prefixIcon, color: Colors.brown),
           suffixIcon: isPassword
               ? IconButton(
@@ -403,8 +337,9 @@ class _SignInBodyState extends State<SignInBody> with SingleTickerProviderStateM
                 )
               : null,
           filled: true,
-          fillColor: Colors.brown.withOpacity(0.07),
-          contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+          fillColor: Colors.brown.withOpacity(0.15),
+          contentPadding:
+              const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(30),
             borderSide: BorderSide.none,
@@ -419,7 +354,7 @@ class _SignInBodyState extends State<SignInBody> with SingleTickerProviderStateM
           ),
           errorBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(30),
-            borderSide: BorderSide(color: Colors.red.shade300, width: 1.5),
+            borderSide: BorderSide(color: Colors.red.shade200, width: 1.5),
           ),
           focusedErrorBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(30),
@@ -429,7 +364,7 @@ class _SignInBodyState extends State<SignInBody> with SingleTickerProviderStateM
       ),
     );
   }
-  
+
   Widget _buildLoginButton() {
     return SizedBox(
       width: double.infinity,
@@ -450,7 +385,8 @@ class _SignInBodyState extends State<SignInBody> with SingleTickerProviderStateM
                 height: 24,
                 child: CircularProgressIndicator(
                   strokeWidth: 2.5,
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.brown.shade50),
+                  valueColor:
+                      AlwaysStoppedAnimation<Color>(Colors.brown.shade50),
                 ),
               )
             : const Text(
@@ -461,34 +397,6 @@ class _SignInBodyState extends State<SignInBody> with SingleTickerProviderStateM
                   color: Colors.white,
                 ),
               ),
-      ),
-    );
-  }
-  
-  Widget _buildSocialLoginButton({required IconData icon, required Color color}) {
-    return InkWell(
-      onTap: () {
-        // Handle social login
-      },
-      child: Container(
-        width: 60,
-        height: 60,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: color.withOpacity(0.2),
-              blurRadius: 10,
-              spreadRadius: 2,
-            ),
-          ],
-        ),
-        child: Icon(
-          icon,
-          color: color,
-          size: 35,
-        ),
       ),
     );
   }

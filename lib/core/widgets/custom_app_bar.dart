@@ -36,11 +36,9 @@ class CustomAppBar extends StatelessWidget  {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween, 
               children: [
-            const SizedBox(
-              width: 10,
-            ),
-            firstIcon(),
-            middleIcons(),
+            
+            firstIcon(context),
+            // middleIcons(),
             lastIcon(context),
           ]),
         ),
@@ -88,11 +86,15 @@ class CustomAppBar extends StatelessWidget  {
     );
   }
 
-  SizedBox firstIcon() {
-    return SizedBox(
-      child: Image.asset(
-        AssetsData.splash,
-        fit: BoxFit.contain,
+   Widget firstIcon(BuildContext context) {
+    return Transform.translate(
+      offset: const Offset(0, 3),
+      child: IconButton(
+        padding: EdgeInsets.zero,
+        onPressed: () {
+          GoRouter.of(context).push(AppRouter.rUserProfile);
+        },
+        icon: const Icon(Icons.settings_rounded,size: 30,),
       ),
     );
   }

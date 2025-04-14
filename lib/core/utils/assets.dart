@@ -1,5 +1,5 @@
 class AssetsData {
-  static const splash = 'assets/images/splash.png';
+  static const logo = 'assets/images/splash.png';
   static const homeIcon = 'assets/images/home_icon.svg';
   static const trophyIcon = 'assets/images/trophy_icon.svg';
   static const userIcon = 'assets/images/user_icon.svg';
