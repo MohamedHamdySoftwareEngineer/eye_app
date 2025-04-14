@@ -12,17 +12,18 @@ class SplashViewBody extends StatefulWidget {
 }
 
 class _SplashViewBodyState extends State<SplashViewBody> {
-  
   @override
   void initState() {
     super.initState();
     navigateToHome();
   }
+
   void navigateToHome() {
     Future.delayed(const Duration(milliseconds: 3500), () {
       if (mounted) context.go(AppRouter.rSignIn);
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -31,7 +32,7 @@ class _SplashViewBodyState extends State<SplashViewBody> {
         Container(
           padding: const EdgeInsets.all(20),
           child: Image.asset(
-            AssetsData.splash,
+            AssetsData.logo,
             height: 250,
             width: 250,
             fit: BoxFit.cover,
@@ -40,7 +41,4 @@ class _SplashViewBodyState extends State<SplashViewBody> {
       ],
     );
   }
-
-  
-  
 }

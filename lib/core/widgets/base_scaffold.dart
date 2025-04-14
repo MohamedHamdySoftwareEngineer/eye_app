@@ -13,7 +13,7 @@ class BaseScaffold extends StatelessWidget {
       body: Column(
         children: [
           // Include your custom app bar here instead of in the Scaffold's appBar property.
-          const CustomAppBar(),
+          // const CustomAppBar(),
           // Use Expanded to allow the child widget to fill the remaining space.
           Expanded(child: child),
         ],
