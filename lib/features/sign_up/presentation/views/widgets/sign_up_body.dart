@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:go_router/go_router.dart';
+import 'package:typewritertext/typewritertext.dart';
 import '../../../../../core/utils/app_router.dart';
 import 'package:eye/core/utils/assets.dart';
 import 'package:eye/core/utils/styles.dart';
@@ -69,7 +70,6 @@ class _SignUpBodyState extends State<SignUpBody>
       });
       _signUpButtonController.forward();
 
-     
       const String apiUrl = "http://10.0.2.2:5236/api/users/register";
 
       try {
@@ -224,14 +224,23 @@ class _SignUpBodyState extends State<SignUpBody>
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'إنشاء حساب جديد',
+                        TypeWriter.text('حساب جديد!',
                           style: Styles.brownText18.copyWith(
                             fontSize: 26,
                             fontWeight: FontWeight.bold,
                           ),
+                          duration: const Duration(milliseconds: 70),
+                          // ← keep the layout at its final size
+                          maintainSize: true,
+                          // ← force it to render on one line
+                          maxLines: 1,
+                          // ← control wrapping/overflow
+                          overflow: TextOverflow.visible,
+                          softWrap: false,
+                          // ← optional: align text in its box
+                          textAlign: TextAlign.left,
                         ),
-                        const SizedBox(height: 10),
+                        
                         Text(
                           'الرجاء إدخال بياناتك',
                           style: TextStyle(
@@ -424,7 +433,6 @@ class _SignUpBodyState extends State<SignUpBody>
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            
                             TextButton(
                               onPressed: () {
                                 GoRouter.of(context).go(AppRouter.rSignIn);

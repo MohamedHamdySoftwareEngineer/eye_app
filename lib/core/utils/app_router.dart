@@ -1,6 +1,6 @@
 import 'package:eye/features/choice_screen/presentation/views/choice_screen.dart';
 import 'package:eye/features/home/presentation/views/home_view.dart';
-import 'package:eye/features/leaderboard/presentation/views/leaderboard.dart';
+
 import 'package:eye/features/quiz_screen/presentation/views/quiz_screen.dart';
 import 'package:eye/features/settings_screen/presentation/views/settings_screen.dart';
 import 'package:eye/features/sign_in/presentation/views/sign_in.dart';
@@ -24,8 +24,7 @@ abstract class AppRouter {
     GoRoute(path: rHomeView, builder: (context, state) => const HomeView()),
     GoRoute(path: rSignIn, builder: (context, state) => const SignIn()),
     GoRoute(path: rSignUp, builder: (context, state) => const SignUp()),
-    GoRoute(
-        path: rLeaderboard, builder: (context, state) => const Leaderboard()),
+    
     GoRoute(
         path: rChoiceScreen, builder: (context, state) => const ChoiceScreen()),
     GoRoute(path: rQuizScreen, builder: (context, state) => const QuizScreen()),

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:go_router/go_router.dart';
+import 'package:typewritertext/typewritertext.dart';
 import '../../../../../core/utils/app_router.dart';
 import 'package:eye/core/utils/assets.dart';
 import 'package:eye/core/utils/styles.dart';
@@ -21,24 +22,24 @@ class _SignInBodyState extends State<SignInBody>
   final _formKey = GlobalKey<FormState>();
 
   // Animation controller for the login button
-  late AnimationController _loginButtonController;
+  // late AnimationController _loginButtonController;
   bool isLoading = false;
   bool isPasswordVisible = false;
 
   @override
-  void initState() {
-    super.initState();
-    _loginButtonController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 1500),
-    );
-  }
+  // void initState() {
+  //   super.initState();
+  //   _loginButtonController = AnimationController(
+  //     vsync: this,
+  //     duration: const Duration(milliseconds: 1500),
+  //   );
+  // }
 
   @override
   void dispose() {
     emailController.dispose();
     passwordController.dispose();
-    _loginButtonController.dispose();
+    // _loginButtonController.dispose();
     super.dispose();
   }
 
@@ -48,12 +49,12 @@ class _SignInBodyState extends State<SignInBody>
       setState(() {
         isLoading = true;
       });
-      _loginButtonController.forward();
+      // _loginButtonController.forward();
 
       final username = emailController.text;
       final password = passwordController.text;
-      const String apiUrl = "http://10.0.2.2:5236/api/users/login";
-      // const String apiUrl = "http://192.168.1.8:5236/api/users/login";
+      // const String apiUrl = "http://10.0.2.2:5236/api/users/login";
+      const String apiUrl = "http://192.168.1.8:5236/api/users/login";
 
       try {
         final response = await http.post(
@@ -72,7 +73,7 @@ class _SignInBodyState extends State<SignInBody>
         setState(() {
           isLoading = false;
         });
-        _loginButtonController.reverse();
+        // _loginButtonController.reverse();
 
         if (response.statusCode == 200) {
           GoRouter.of(context).go(AppRouter.rHomeView);
@@ -91,7 +92,7 @@ class _SignInBodyState extends State<SignInBody>
         setState(() {
           isLoading = false;
         });
-        _loginButtonController.reverse();
+        // _loginButtonController.reverse();
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text(
@@ -170,16 +171,32 @@ class _SignInBodyState extends State<SignInBody>
                     SizedBox(height: size.height * 0.04),
 
                     // Welcome text
+                    // Within the 'Welcome text' section
                     Directionality(
                       textDirection: TextDirection.rtl,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            'مرحباً بعودتك!',
-                            style: Styles.brownText18.copyWith(
-                              fontSize: 28,
-                              fontWeight: FontWeight.bold,
+                          SizedBox(
+                            // Add fixed height container
+                            height:
+                                40, // Adjust this value based on your text size
+                            child: TypeWriter.text(
+                              'مرحباً بعودتك!',
+                              style: Styles.brownText18.copyWith(
+                                fontSize: 28,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              duration: const Duration(milliseconds: 70),
+                              // ← keep the layout at its final size
+                              maintainSize: true,
+                              // ← force it to render on one line
+                              maxLines: 1,
+                              // ← control wrapping/overflow
+                              overflow: TextOverflow.visible,
+                              softWrap: false,
+                              // ← optional: align text in its box
+                              textAlign: TextAlign.left,
                             ),
                           ),
                           const SizedBox(height: 10),
@@ -193,7 +210,6 @@ class _SignInBodyState extends State<SignInBody>
                         ],
                       ),
                     ),
-
                     SizedBox(height: size.height * 0.05),
 
                     // Login form
