@@ -6,96 +6,42 @@ import 'package:go_router/go_router.dart';
 
 import '../utils/app_router.dart';
 
-class CustomAppBar extends StatelessWidget  {
-  const CustomAppBar({super.key});
+class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const CustomAppBar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    double screenHeight = MediaQuery.of(context).size.height;
-
-    return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
-        child: Container(
-          width: double.infinity,
-          height: screenHeight * 0.08,
-          padding: const EdgeInsets.symmetric(vertical: 10),
-          decoration: BoxDecoration(
-              color: mainColor,
-              borderRadius: BorderRadius.circular(6),
-              boxShadow: const [
-                BoxShadow(
-                  blurRadius: 5,
-                  color: shadowMainColor,
-                  offset: Offset(0, 6),
-                  spreadRadius: -3,
-                ),
-              ],
-              ),
-          child:
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween, 
-              children: [
+    return AppBar(
+      // remove default shadow/line
+      elevation: 0,
+      backgroundColor: Colors.transparent,
+      // left: back arrow
+      leading: Padding(
+        padding: const EdgeInsets.only(left: 20),
+        child: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new_outlined, size: 28),
+          onPressed: () => GoRouter.of(context).pop(),
+          padding: EdgeInsets.zero,
+        ),
+      ),
+      // right: user profile icon
+      actions: [
+        Padding(
+          padding: const EdgeInsets.only(right:  20),
+          child: IconButton(
+            icon: SvgPicture.asset(
+              AssetsData.userIcon,
+              width: 40,
+              height: 40,
+              fit: BoxFit.contain,
+            ),
             
-            firstIcon(context),
-            // middleIcons(),
-            lastIcon(context),
-          ]),
-        ),
-      ),
-    );
-
-    
-  }
-
-  Widget lastIcon(BuildContext context) {
-    return Transform.translate(
-      offset: const Offset(0, 3),
-      child: IconButton(
-        padding: EdgeInsets.zero,
-        onPressed: () {
-          GoRouter.of(context).push(AppRouter.rUserProfile);
-        },
-        icon: SvgPicture.asset(
-          width: 70,      
-          AssetsData.userIcon,
-          fit: BoxFit.contain,
-        ),
-      ),
-    );
-  }
-
-  Expanded middleIcons() {
-    return Expanded(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          SvgPicture.asset(
-            width: 40,
-            AssetsData.homeIcon,
-            fit: BoxFit.contain,
+            onPressed: () {
+              GoRouter.of(context).push(AppRouter.rUserProfile);
+            },
           ),
-          SvgPicture.asset(
-            width: 40,
-            AssetsData.trophyIcon,
-            fit: BoxFit.contain,
-          ),
-        ],
-      ),
-    );
-  }
-
-   Widget firstIcon(BuildContext context) {
-    return Transform.translate(
-      offset: const Offset(0, 3),
-      child: IconButton(
-        padding: EdgeInsets.zero,
-        onPressed: () {
-          GoRouter.of(context).push(AppRouter.rUserProfile);
-        },
-        icon: const Icon(Icons.settings_rounded,size: 30,),
-      ),
+        ),
+      ],
     );
   }
 
