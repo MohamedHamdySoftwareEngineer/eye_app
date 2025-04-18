@@ -69,7 +69,7 @@ class _SignUpBodyState extends State<SignUpBody>
       });
       _signUpButtonController.forward();
 
-      // API endpoint - replace with your actual endpoint
+     
       const String apiUrl = "http://10.0.2.2:5236/api/users/register";
 
       try {
