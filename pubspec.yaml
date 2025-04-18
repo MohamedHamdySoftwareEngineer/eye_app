@@ -28,6 +28,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  typewritertext: ^3.0.9
   http: ^1.3.0
   dartz: ^0.10.1
   equatable: ^2.0.7
