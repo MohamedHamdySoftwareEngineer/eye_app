@@ -70,6 +70,13 @@ class QuizScreenBodyState extends State<QuizScreenBody> {
   bool isLoading = false;
   int selectedChoiceId = -1;
 
+  // Theme colors
+  final Color primaryColor = const Color(0xFF8B4513); // richer brown
+  final Color backgroundColor =
+      const Color(0xFFF5F0EA); // warm light background
+  final Color accentColor = const Color(0xFFD2B48C); // tan accent
+  final Color textColor = const Color(0xFF3E2723); // dark brown text
+
   @override
   void initState() {
     super.initState();
@@ -91,26 +98,10 @@ class QuizScreenBodyState extends State<QuizScreenBody> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    
+
     return BaseScaffold(
       child: Stack(
         children: [
-          // Background design - top right decoration
-          Positioned(
-            top: 0,
-            right: 0,
-            child: Container(
-              width: size.width * 0.6,
-              height: size.height * 0.3,
-              decoration: BoxDecoration(
-                color: Colors.brown.withOpacity(0.2),
-                borderRadius: const BorderRadius.only(
-                  bottomLeft: Radius.circular(100),
-                ),
-              ),
-            ),
-          ),
-          
           // Main content
           SafeArea(
             child: Padding(
@@ -120,9 +111,25 @@ class QuizScreenBodyState extends State<QuizScreenBody> {
                 builder: (context, snapshot) {
                   // While loading show a progress indicator.
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(Colors.brown),
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          CircularProgressIndicator(
+                            valueColor:
+                                AlwaysStoppedAnimation<Color>(primaryColor),
+                            strokeWidth: 3,
+                          ),
+                          const SizedBox(height: 20),
+                          Text(
+                            "تحميل السؤال...",
+                            style: TextStyle(
+                              color: primaryColor,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          )
+                        ],
                       ),
                     );
                   }
@@ -132,19 +139,41 @@ class QuizScreenBodyState extends State<QuizScreenBody> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(
-                            Icons.error_outline,
-                            color: Colors.red.shade300,
-                            size: 60,
+                          Container(
+                            padding: const EdgeInsets.all(20),
+                            decoration: BoxDecoration(
+                              color: Colors.red.shade50,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Icon(
+                              Icons.error_outline,
+                              color: Colors.red.shade300,
+                              size: 60,
+                            ),
                           ),
                           const SizedBox(height: 16),
-                          Text(
-                            'Error: ${snapshot.error}',
-                            style: const TextStyle(
-                              color: Colors.red,
-                              fontSize: 16,
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 24, vertical: 16),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(12),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.red.withOpacity(0.1),
+                                  blurRadius: 12,
+                                  offset: const Offset(0, 4),
+                                ),
+                              ],
                             ),
-                            textAlign: TextAlign.center,
+                            child: Text(
+                              'Error: ${snapshot.error}',
+                              style: TextStyle(
+                                color: Colors.red.shade700,
+                                fontSize: 16,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
                           ),
                           const SizedBox(height: 24),
                           ElevatedButton(
@@ -155,6 +184,7 @@ class QuizScreenBodyState extends State<QuizScreenBody> {
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.brown,
+                              foregroundColor: Colors.white,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30),
                               ),
@@ -162,12 +192,14 @@ class QuizScreenBodyState extends State<QuizScreenBody> {
                                 horizontal: 32,
                                 vertical: 12,
                               ),
+                              elevation: 4,
                             ),
                             child: const Text(
-                              'Try Again',
+                              'حاول مرة أخرى',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
+                                fontSize: 16,
                               ),
                             ),
                           ),
@@ -181,78 +213,122 @@ class QuizScreenBodyState extends State<QuizScreenBody> {
                   return Column(
                     children: [
                       SizedBox(height: size.height * 0.02),
-                      
-                      // Quiz header with logo
-                      Center(
-                        child: Container(
-                          width: 80,
-                          height: 80,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            shape: BoxShape.circle,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.brown.withOpacity(0.3),
-                                blurRadius: 15,
-                                spreadRadius: 5,
-                              ),
-                            ],
-                          ),
-                          child: Center(
-                            child: Image.asset(
-                              AssetsData.logo,
-                              width: 50,
-                              height: 50,
+
+                      // Progress indicator
+                      Container(
+                        width: double.infinity,
+                        height: 10,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                              color: primaryColor.withOpacity(0.1),
+                              blurRadius: 4,
+                              offset: const Offset(0, 2),
                             ),
-                          ),
+                          ],
+                        ),
+                        child: Row(
+                          children: [
+                            Container(
+                              width:
+                                  size.width * 0.25, // Adjust based on progress
+                              height: 10,
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: [
+                                    primaryColor.withOpacity(0.8),
+                                    primaryColor,
+                                  ],
+                                  begin: Alignment.centerLeft,
+                                  end: Alignment.centerRight,
+                                ),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      
-                      SizedBox(height: size.height * 0.03),
-                      
+
+                      SizedBox(height: size.height * 0.02),
+
                       // Quiz details
                       _buildQuizDetails(),
-                      
+
                       SizedBox(height: size.height * 0.04),
-                      
+
                       // Question text
                       Directionality(
                         textDirection: TextDirection.rtl,
                         child: Container(
                           width: double.infinity,
                           padding: const EdgeInsets.symmetric(
-                            vertical: 20,
+                            vertical: 24,
                             horizontal: 24,
                           ),
                           decoration: BoxDecoration(
-                            color: Colors.brown.withOpacity(0.15),
+                            color: Colors.white,
                             borderRadius: BorderRadius.circular(20),
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.brown.withOpacity(0.1),
-                                blurRadius: 8,
+                                color: primaryColor.withOpacity(0.15),
+                                blurRadius: 12,
                                 offset: const Offset(0, 4),
                               ),
                             ],
-                          ),
-                          child: Text(
-                            question.questionText,
-                            style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.brown,
-                              height: 1.5,
+                            border: Border.all(
+                              color: accentColor.withOpacity(0.5),
+                              width: 1.5,
                             ),
-                            textAlign: TextAlign.right,
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 14, vertical: 6),
+                                decoration: BoxDecoration(
+                                  color: primaryColor.withOpacity(0.1),
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                child: Text(
+                                  'السؤال ${question.questionID}',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                    color: primaryColor,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 16),
+                              Text(
+                                question.questionText,
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600,
+                                  color: textColor,
+                                  height: 1.6,
+                                ),
+                                textAlign: TextAlign.right,
+                              ),
+                            ],
                           ),
                         ),
                       ),
-                      
+
                       SizedBox(height: size.height * 0.04),
-                      
+
                       // Answer options
                       Expanded(
-                        child: _buildAnswerOptions(question.choices),
+                        child: NotificationListener<
+                            OverscrollIndicatorNotification>(
+                          onNotification: (overscroll) {
+                            overscroll.disallowIndicator();
+                            return true;
+                          },
+                          child: _buildAnswerOptions(question.choices),
+                        ),
                       ),
                     ],
                   );
@@ -268,18 +344,22 @@ class QuizScreenBodyState extends State<QuizScreenBody> {
   // Redesigned quiz details
   Widget _buildQuizDetails() {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+      padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(18),
         boxShadow: [
           BoxShadow(
-            color: Colors.brown.withOpacity(0.2),
+            color: primaryColor.withOpacity(0.12),
             blurRadius: 10,
-            spreadRadius: 2,
+            spreadRadius: 0,
             offset: const Offset(0, 4),
           ),
         ],
+        border: Border.all(
+          color: accentColor.withOpacity(0.5),
+          width: 1.5,
+        ),
       ),
       child: Directionality(
         textDirection: TextDirection.rtl,
@@ -289,24 +369,27 @@ class QuizScreenBodyState extends State<QuizScreenBody> {
             _buildQuizDetailItem(
               icon: Icons.timer_outlined,
               label: '60s',
+              iconColor: const Color(0xFF00796B), // teal
             ),
             Container(
-              height: 30,
+              height: 36,
               width: 1,
-              color: Colors.brown.withOpacity(0.3),
+              color: accentColor.withOpacity(0.5),
             ),
             _buildQuizDetailItem(
               icon: Icons.star_outline,
               label: '100 نقطة',
+              iconColor: const Color(0xFFFFA000), // amber
             ),
             Container(
-              height: 30,
+              height: 36,
               width: 1,
-              color: Colors.brown.withOpacity(0.3),
+              color: accentColor.withOpacity(0.5),
             ),
             _buildQuizDetailItem(
               icon: Icons.fitness_center_outlined,
               label: 'صعب',
+              iconColor: const Color(0xFFC62828), // red
             ),
           ],
         ),
@@ -314,24 +397,31 @@ class QuizScreenBodyState extends State<QuizScreenBody> {
     );
   }
 
-  Widget _buildQuizDetailItem({required IconData icon, required String label}) {
-    return Row(
-      children: [
-        Icon(
-          icon,
-          color: Colors.brown,
-          size: 22,
-        ),
-        const SizedBox(width: 8),
-        Text(
-          label,
-          style: TextStyle(
-            color: Colors.brown.shade700,
-            fontWeight: FontWeight.w600,
-            fontSize: 14,
+  Widget _buildQuizDetailItem({
+    required IconData icon,
+    required String label,
+    required Color iconColor,
+  }) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+      child: Row(
+        children: [
+          Icon(
+            icon,
+            color: iconColor,
+            size: 24,
           ),
-        ),
-      ],
+          const SizedBox(width: 8),
+          Text(
+            label,
+            style: TextStyle(
+              color: textColor,
+              fontWeight: FontWeight.w600,
+              fontSize: 15,
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -343,7 +433,8 @@ class QuizScreenBodyState extends State<QuizScreenBody> {
       itemBuilder: (context, index) {
         final currentChoice = choices[index];
         bool isSelected = selectedChoiceId == currentChoice.choiceID;
-        
+        String optionLetter = String.fromCharCode(65 + index); // A, B, C, D...
+
         return Padding(
           padding: const EdgeInsets.only(bottom: 16.0),
           child: Directionality(
@@ -354,87 +445,116 @@ class QuizScreenBodyState extends State<QuizScreenBody> {
                   selectedChoiceId = currentChoice.choiceID;
                   isLoading = true;
                 });
-                
+
                 // Check the answer with a short delay to show the loading state
                 Future.delayed(const Duration(milliseconds: 800), () {
                   if (!mounted) return;
-                  
+
                   setState(() {
                     isLoading = false;
                   });
-                  
+
                   // Show answer result
                   final isCorrectAnswer = currentChoice.rank > 5;
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text(
-                        isCorrectAnswer ? 'إجابة صحيحة!' : 'إجابة خاطئة!',
-                        style: const TextStyle(fontSize: 16),
-                        textAlign: TextAlign.center,
+                      content: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            isCorrectAnswer ? Icons.check_circle : Icons.cancel,
+                            color: Colors.white,
+                          ),
+                          const SizedBox(width: 10),
+                          Text(
+                            isCorrectAnswer ? 'إجابة صحيحة!' : 'إجابة خاطئة!',
+                            style: const TextStyle(fontSize: 16),
+                          ),
+                        ],
                       ),
-                      backgroundColor: isCorrectAnswer ? Colors.green : Colors.red,
+                      backgroundColor: isCorrectAnswer
+                          ? Colors.green.shade600
+                          : Colors.red.shade600,
                       duration: const Duration(seconds: 1),
                       behavior: SnackBarBehavior.floating,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 40, vertical: 20),
                     ),
                   );
                 });
               },
               child: Container(
                 padding: const EdgeInsets.symmetric(
-                  vertical: 16,
-                  horizontal: 20,
+                  vertical: 18,
+                  horizontal: 22,
                 ),
                 decoration: BoxDecoration(
-                  color: isSelected
-                      ? Colors.brown.withOpacity(0.2)
-                      : Colors.brown.withOpacity(0.15),
-                  borderRadius: BorderRadius.circular(30),
-                  border: isSelected
-                      ? Border.all(color: Colors.brown, width: 2)
-                      : null,
+                  color:
+                      isSelected ? primaryColor.withOpacity(0.1) : Colors.white,
+                  borderRadius: BorderRadius.circular(18),
+                  border: Border.all(
+                    color: isSelected
+                        ? primaryColor
+                        : accentColor.withOpacity(0.5),
+                    width: isSelected ? 2 : 1.5,
+                  ),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.brown.withOpacity(0.1),
-                      blurRadius: 6,
-                      offset: const Offset(0, 3),
+                      color: isSelected
+                          ? primaryColor.withOpacity(0.2)
+                          : primaryColor.withOpacity(0.08),
+                      blurRadius: 8,
+                      offset: const Offset(0, 4),
                     ),
                   ],
                 ),
                 child: Row(
                   children: [
-                    isSelected && isLoading
-                        ? const SizedBox(
-                            width: 20,
-                            height: 20,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2,
-                              valueColor: AlwaysStoppedAnimation<Color>(Colors.brown),
-                            ),
-                          )
-                        : isSelected
-                            ? const Icon(Icons.check_circle, color: Colors.brown)
-                            : Container(
-                                width: 20,
-                                height: 20,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color: Colors.brown.withOpacity(0.7),
-                                    width: 2,
-                                  ),
-                                ),
+                    Container(
+                      width: 36,
+                      height: 36,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: isSelected
+                            ? primaryColor
+                            : accentColor.withOpacity(0.3),
+                      ),
+                      child: isSelected && isLoading
+                          ? Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                valueColor:
+                                    AlwaysStoppedAnimation<Color>(Colors.white),
                               ),
+                            )
+                          : Center(
+                              child: isSelected
+                                  ? const Icon(Icons.check,
+                                      color: Colors.white, size: 22)
+                                  : Text(
+                                      optionLetter,
+                                      style: TextStyle(
+                                        color: textColor,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                            ),
+                    ),
                     const SizedBox(width: 16),
                     Expanded(
                       child: Text(
                         currentChoice.choiceText,
                         style: TextStyle(
                           fontSize: 16,
-                          fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-                          color: Colors.brown.shade800,
+                          fontWeight:
+                              isSelected ? FontWeight.bold : FontWeight.w500,
+                          color: textColor,
+                          height: 1.4,
                         ),
                         textAlign: TextAlign.right,
                       ),
