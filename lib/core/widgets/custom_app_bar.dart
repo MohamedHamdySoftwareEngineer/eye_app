@@ -7,12 +7,12 @@ import 'package:go_router/go_router.dart';
 import '../utils/app_router.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const CustomAppBar({Key? key}) : super(key: key);
+  const CustomAppBar({super.key});
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      // remove default shadow/line
+      shadowColor: Colors.transparent,
       elevation: 0,
       backgroundColor: Colors.transparent,
       // left: back arrow
