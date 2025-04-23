@@ -1,4 +1,4 @@
-import 'package:eye/constants.dart';
+import 'package:eye/core/utils/constants.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../core/utils/styles.dart';

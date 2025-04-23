@@ -1,4 +1,4 @@
-import 'package:eye/constants.dart';
+import 'package:eye/core/utils/constants.dart';
 import 'package:eye/core/utils/assets.dart';
 import 'package:eye/core/widgets/base_scaffold.dart';
 import 'package:eye/features/settings_screen/presentation/views/widgets/build_text_field_with_label.dart';

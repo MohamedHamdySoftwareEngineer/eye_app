@@ -16,42 +16,87 @@ class ChoiceScreenBody extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
         child: Column(
           children: [
-            // Header with decoration
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-              decoration: BoxDecoration(
-                color: const Color(0xFFF5EBE0),
-                borderRadius: BorderRadius.circular(15),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
-                    blurRadius: 10,
-                    offset: const Offset(0, 3),
+            // Simple yet pretty header
+// Modern quiz app subject header with card-style design
+Container(
+  margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+  decoration: BoxDecoration(
+    color: Colors.white,
+    borderRadius: BorderRadius.circular(20),
+    boxShadow: [
+      BoxShadow(
+        color: Colors.indigo.withOpacity(0.1),
+        blurRadius: 15,
+        offset: const Offset(0, 5),
+      ),
+    ],
+  ),
+  child: Column(
+    crossAxisAlignment: CrossAxisAlignment.stretch,
+    children: [
+      // Colorful top banner
+      Container(
+        height: 65,
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Color(0xFF6A6FC8), 
+              Color(0xFF4E54C8)
+            ],
+            begin: Alignment.centerLeft,
+            end: Alignment.centerRight,
+          ),
+          borderRadius: BorderRadius.all(
+            Radius.circular(20)
+          ),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            // Title section
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.2),
+                    shape: BoxShape.circle,
                   ),
-                ],
-              ),
-              child: Column(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFB28B67).withOpacity(0.15),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: const Text(
-                      'إختر المادة',
-                      style: Styles.brownWithoutShadow18,
-                    ),
+                  child: const Icon(
+                    Icons.menu_book,
+                    color: Colors.white,
+                    size: 24,
                   ),
-                  const SizedBox(height: 15),
-                  const Text(
-                    'قم بإختيار المادة التي ترغب في حل الأسئلة عليها أو قم بالنقر على عشوائي لتعيش تجربة الإختبار',
-                    style: Styles.brownWithoutShadow11,
-                    textAlign: TextAlign.center,
+                ),
+                const SizedBox(width: 12),
+                const Text(
+                  'إختر المادة',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    
                   ),
-                ],
-              ),
+                  
+                ),
+              ],
             ),
+            // Quiz icon
+            Icon(
+              Icons.quiz_outlined,
+              color: Colors.white.withOpacity(0.9),
+              size: 24,
+            ),
+          ],
+        ),
+      ),
+      
+      
+    ],
+  ),
+),
             
             const SizedBox(height: 30),
             
@@ -103,19 +148,7 @@ class ChoiceScreenBody extends StatelessWidget {
             
             const SizedBox(height: 20),
             
-            // Random option button
-            OptionBox(
-              text: 'عشوائي',
-              percOfWidth: 0.9,
-              height: 65,
-              icon: Icons.shuffle,
-              color: const Color(0xFFB28B67).withOpacity(0.2),
-              onTap: () {
-                GoRouter.of(context).push(AppRouter.rQuizScreen);
-              },
-            ),
             
-            const SizedBox(height: 15),
           ],
         ),
       ),
