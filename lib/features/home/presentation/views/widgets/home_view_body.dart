@@ -47,8 +47,8 @@ class HomeViewBody extends StatelessWidget {
 
                   // App logo
                   Container(
-                    width: 120,
-                    height: 120,
+                    width: 100,
+                    height: 100,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       shape: BoxShape.circle,
@@ -63,8 +63,8 @@ class HomeViewBody extends StatelessWidget {
                     child: Center(
                       child: Image.asset(
                         AssetsData.logo,
-                        width: 80,
-                        height: 80,
+                        width: 60,
+                        height: 60,
                       ),
                     ),
                   ),
