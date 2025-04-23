@@ -1,11 +1,10 @@
 import 'dart:convert';
 
 import 'package:eye/core/widgets/base_scaffold.dart';
-import 'package:eye/core/widgets/option_box.dart';
-import 'package:eye/features/quiz_screen/presentation/views/widgets/quiz_box.dart';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:eye/core/utils/assets.dart';
+
 
 // 1. Data Models
 class QuestionModel {
@@ -486,8 +485,8 @@ class QuizScreenBodyState extends State<QuizScreenBody> {
                             : accentColor.withOpacity(0.3),
                       ),
                       child: isSelected && isLoading
-                          ? Padding(
-                              padding: const EdgeInsets.all(8.0),
+                          ? const Padding(
+                              padding: EdgeInsets.all(8.0),
                               child: CircularProgressIndicator(
                                 strokeWidth: 2,
                                 valueColor:
