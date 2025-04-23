@@ -14,6 +14,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       shadowColor: Colors.transparent,
       elevation: 0,
+      scrolledUnderElevation: 0,
       backgroundColor: Colors.transparent,
       // left: back arrow
       leading: Padding(

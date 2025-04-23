@@ -394,7 +394,7 @@ class _SignInBodyState extends State<SignInBody>
           ),
           elevation: 5,
           shadowColor: Colors.brown.withOpacity(0.5),
-        ),
+        )..copyWith(splashFactory: NoSplash.splashFactory),
         child: isLoading
             ? SizedBox(
                 width: 24,
