@@ -11,9 +11,9 @@ class HomeViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
-    void navigateToQuiz() {
+    void navigateToChoice() {
       // Directly navigate to quiz screen
-      GoRouter.of(context).go(AppRouter.rQuizScreen);
+      GoRouter.of(context).go(AppRouter.rChoiceScreen);
     }
 
     return Stack(
@@ -105,7 +105,7 @@ class HomeViewBody extends StatelessWidget {
                     width: double.infinity,
                     height: 60,
                     child: ElevatedButton(
-                      onPressed: navigateToQuiz,
+                      onPressed: navigateToChoice,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.brown,
                         shape: RoundedRectangleBorder(
