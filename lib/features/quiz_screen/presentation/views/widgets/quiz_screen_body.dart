@@ -214,44 +214,7 @@ class QuizScreenBodyState extends State<QuizScreenBody> {
                     children: [
                       SizedBox(height: size.height * 0.02),
 
-                      // Progress indicator
-                      Container(
-                        width: double.infinity,
-                        height: 10,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                              color: primaryColor.withOpacity(0.1),
-                              blurRadius: 4,
-                              offset: const Offset(0, 2),
-                            ),
-                          ],
-                        ),
-                        child: Row(
-                          children: [
-                            Container(
-                              width:
-                                  size.width * 0.25, // Adjust based on progress
-                              height: 10,
-                              decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                  colors: [
-                                    primaryColor.withOpacity(0.8),
-                                    primaryColor,
-                                  ],
-                                  begin: Alignment.centerLeft,
-                                  end: Alignment.centerRight,
-                                ),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      SizedBox(height: size.height * 0.02),
+                     
 
                       // Quiz details
                       _buildQuizDetails(),
