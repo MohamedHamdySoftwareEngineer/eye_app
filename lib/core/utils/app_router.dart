@@ -23,6 +23,7 @@ abstract class AppRouter {
     GoRoute(path: '/', builder: (context, state) => const SplashView()),
     GoRoute(path: rHomeView, builder: (context, state) => const HomeView()),
     GoRoute(path: rSignIn, builder: (context, state) => const SignIn()),
+    
     GoRoute(path: rSignUp, builder: (context, state) => const SignUp()),
     
     GoRoute(
