@@ -1,7 +1,19 @@
+import 'dart:io';
+
 import 'package:eye/core/utils/app_router.dart';
 import 'package:flutter/material.dart';
 
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    final client = super.createHttpClient(context);
+    client.badCertificateCallback = (_, __, ___) => true;
+    return client;
+  }
+}
+
 void main() {
+  HttpOverrides.global = MyHttpOverrides();
   runApp(const EyeApp());
 }
 
