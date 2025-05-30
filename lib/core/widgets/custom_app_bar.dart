@@ -1,4 +1,3 @@
-
 import 'package:eye/core/utils/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -9,7 +8,7 @@ import '../utils/styles.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String appBarTitle;
-  const CustomAppBar({super.key,required this.appBarTitle});
+  const CustomAppBar({super.key, required this.appBarTitle});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +32,23 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         style: Styles.mainText23,
       ),
       centerTitle: true,
-      
+      actions: [
+        Padding(
+          padding: const EdgeInsets.only(right: 20),
+          child: IconButton(
+            icon: SvgPicture.asset(
+              AssetsData.userIcon,
+              width: 40,
+              height: 40,
+              fit: BoxFit.contain,
+            ),
+            onPressed: () {
+              // Navigate to user profile (replace with actual navigation logic)
+              // Example: context.go(AppRouter.rUserProfile);
+            },
+          ),
+        ),
+      ],
     );
   }
 

@@ -1,2 +1,0 @@
-D:/Eduction/Flutter/eye/android/app/.cxx/Debug/2u1v122b/x86/CMakeFiles/edit_cache.dir
-D:/Eduction/Flutter/eye/android/app/.cxx/Debug/2u1v122b/x86/CMakeFiles/rebuild_cache.dir
