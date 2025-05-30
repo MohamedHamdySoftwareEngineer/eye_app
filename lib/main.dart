@@ -1,7 +1,10 @@
 import 'dart:io';
 
 import 'package:eye/core/utils/app_router.dart';
+import 'package:eye/core/utils/constants.dart';
 import 'package:flutter/material.dart';
+
+import 'core/utils/app_transation.dart';
 
 class MyHttpOverrides extends HttpOverrides {
   @override
@@ -26,10 +29,19 @@ class EyeApp extends StatelessWidget {
       routerConfig: AppRouter.router,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        scaffoldBackgroundColor: backgroundColor,
+        pageTransitionsTheme:  const PageTransitionsTheme(
+          // Disable animations on Android & iOS
+          builders: {
+            TargetPlatform.android:  FadeTransitionsBuilder(),
+            TargetPlatform.iOS:  FadeTransitionsBuilder(),
+          },
+        ),
         brightness: Brightness.light,
-        fontFamily: 'Cairo', // Use your manually registered Cairo font
+        fontFamily: 'Cairo', 
         textTheme: ThemeData.light().textTheme.apply(
               bodyColor: Colors.white,
+              fontFamily: 'Cairo',
             ),
       ),
       themeMode: ThemeMode.light,

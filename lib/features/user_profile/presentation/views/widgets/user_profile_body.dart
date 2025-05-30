@@ -1,9 +1,12 @@
+import 'package:eye/core/widgets/base_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../../core/utils/app_router.dart';
+import '../../../../../core/utils/constants.dart';
 
 class UserProfileBody extends StatefulWidget {
-  const UserProfileBody({super.key});
+  final int initialIndex;
+  const UserProfileBody({super.key, required this.initialIndex});
 
   @override
   State<UserProfileBody> createState() => _UserProfileBodyState();
@@ -52,9 +55,25 @@ class _UserProfileBodyState extends State<UserProfileBody> {
       });
       
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('تم حفظ التغييرات بنجاح'),
-          backgroundColor: Colors.green,
+        SnackBar(
+          content: const Directionality(
+            textDirection: TextDirection.rtl,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.check_circle, color: Colors.white, size: 20),
+                SizedBox(width: 12),
+                Text(
+                  'تم حفظ التغييرات بنجاح',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                ),
+              ],
+            ),
+          ),
+          backgroundColor: progressIndeicatorColor,
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
         ),
       );
     }
@@ -76,39 +95,41 @@ class _UserProfileBodyState extends State<UserProfileBody> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: Stack(
-        children: [
-          // Background design elements
-          _buildBackgroundElements(size),
-          
-          // Main content
-          SafeArea(
-            child: SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
-              child: Padding(
-                padding: const EdgeInsets.all(24.0),
+    return BaseScaffold(
+      appBartTitle: 'الملف الشخصي',
+      initialIndex: widget.initialIndex,
+      child: Container(
+        width: double.infinity,
+        height: double.infinity,
+        color: backgroundColor,
+        child: SafeArea(
+          child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              child: Directionality(
+                textDirection: TextDirection.rtl,
                 child: Form(
                   key: _formKey,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      SizedBox(height: size.height * 0.02),
+                      SizedBox(height: size.height * 0.03),
                       
-                      // User avatar and basic info
-                      _buildUserHeader(),
+                      // User profile card
+                      _buildUserProfileCard(),
                       
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 24),
                       
                       // Edit/Save buttons
                       _buildActionButtons(),
                       
-                      const SizedBox(height: 30),
+                      const SizedBox(height: 24),
                       
-                      // Information sections
+                      // Account information section
                       _buildInfoSection(
                         title: 'معلومات الحساب',
+                        icon: Icons.account_circle_outlined,
                         items: [
                           InfoItem(
                             icon: Icons.email_outlined,
@@ -131,8 +152,10 @@ class _UserProfileBodyState extends State<UserProfileBody> {
                       
                       const SizedBox(height: 20),
                       
+                      // Personal information section
                       _buildInfoSection(
                         title: 'المعلومات الشخصية',
+                        icon: Icons.person_outline,
                         items: [
                           InfoItem(
                             icon: Icons.person_outline,
@@ -153,7 +176,7 @@ class _UserProfileBodyState extends State<UserProfileBody> {
                         ],
                       ),
                       
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 24),
                       
                       // Logout button
                       _buildLogoutButton(),
@@ -165,209 +188,275 @@ class _UserProfileBodyState extends State<UserProfileBody> {
               ),
             ),
           ),
-        ],
+        ),
       ),
     );
   }
   
-  // Background elements builder
-  Widget _buildBackgroundElements(Size size) {
-    return Stack(
-      children: [
-        Positioned(
-          top: 0,
-          right: 0,
-          child: Container(
-            width: size.width * 0.6,
-            height: size.height * 0.25,
-            decoration: BoxDecoration(
-              color: Colors.brown.withOpacity(0.2),
-              borderRadius: const BorderRadius.only(
-                bottomLeft: Radius.circular(100),
-              ),
-            ),
+  // User profile card with avatar and basic info
+  Widget _buildUserProfileCard() {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(32),
+      decoration: BoxDecoration(
+        color: backgroundBoxesColor,
+        borderRadius: BorderRadius.circular(24),
+        boxShadow: [
+          BoxShadow(
+            color: mainColor.withOpacity(0.1),
+            blurRadius: 25,
+            spreadRadius: 0,
+            offset: const Offset(0, 8),
           ),
-        ),
-        Positioned(
-          bottom: 0,
-          left: 0,
-          child: Container(
-            width: size.width * 0.4,
-            height: size.height * 0.15,
-            decoration: BoxDecoration(
-              color: Colors.brown.withOpacity(0.1),
-              borderRadius: const BorderRadius.only(
-                topRight: Radius.circular(100),
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-  
-  // User avatar and basic information
-  Widget _buildUserHeader() {
-    return Column(
-      children: [
-        // Avatar with points badge
-        Stack(
-          children: [
-            // Avatar
-            Container(
-              width: 120,
-              height: 120,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                shape: BoxShape.circle,
-                border: Border.all(color: Colors.brown, width: 2),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.brown.withOpacity(0.3),
-                    blurRadius: 15,
-                    spreadRadius: 2,
-                  ),
-                ],
-              ),
-              child: Center(
-                child: Text(
-                  _getInitials(),
-                  style: const TextStyle(
-                    color: Colors.brown,
-                    fontSize: 40,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-            
-            // Points badge
-            Positioned(
-              right: 0,
-              bottom: 0,
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        ],
+      ),
+      child: Column(
+        children: [
+          // Avatar with points badge
+          Stack(
+            children: [
+              // Avatar
+              Container(
+                width: 100,
+                height: 100,
                 decoration: BoxDecoration(
-                  color: Colors.brown,
-                  borderRadius: BorderRadius.circular(20),
+                  gradient: LinearGradient(
+                    colors: [
+                      mainColor.withOpacity(0.8),
+                      progressIndeicatorColor.withOpacity(0.6),
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.2),
-                      blurRadius: 4,
-                      offset: const Offset(0, 2),
+                      color: mainColor.withOpacity(0.3),
+                      blurRadius: 15,
+                      spreadRadius: 2,
+                      offset: const Offset(0, 6),
                     ),
                   ],
                 ),
-                child: Row(
-                  children: [
-                    const Icon(Icons.star, color: Colors.amber, size: 18),
-                    const SizedBox(width: 4),
-                    Text(
-                      userData['userPoints'].toString(),
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
+                child: Center(
+                  child: Container(
+                    width: 80,
+                    height: 80,
+                    decoration: const BoxDecoration(
+                      color: backgroundBoxesColor,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Center(
+                      child: Text(
+                        _getInitials(),
+                        style: const TextStyle(
+                          color: mainColor,
+                          fontSize: 28,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ],
-        ),
-        
-        const SizedBox(height: 20),
-        
-        // Username
-        Text(
-          '@${userData['username']}',
-          style: const TextStyle(
-            color: Colors.brown,
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        
-        // Full name
-        Text(
-          '${userData['firstName']} ${userData['secondName']} ${userData['lastName']}',
-          style: const TextStyle(
-            color: Colors.black87,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-          textAlign: TextAlign.center,
-        ),
-        
-        const SizedBox(height: 5),
-        
-        // Gender icon
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              userData['gender'] == 'M' ? Icons.male : Icons.female,
-              color: userData['gender'] == 'M' ? Colors.blue : Colors.pink,
-              size: 20,
-            ),
-            const SizedBox(width: 5),
-            Text(
-              userData['gender'] == 'M' ? 'ذكر' : 'أنثى',
-              style: TextStyle(
-                color: Colors.grey[600],
-                fontSize: 14,
+              
+              // Points badge
+              Positioned(
+                left: 0,
+                bottom: 0,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  decoration: BoxDecoration(
+                    color: mainColor,
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                      BoxShadow(
+                        color: mainColor.withOpacity(0.3),
+                        blurRadius: 8,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(Icons.star, color: Colors.amber, size: 16),
+                      const SizedBox(width: 4),
+                      Text(
+                        userData['userPoints'].toString(),
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
+            ],
+          ),
+          
+          const SizedBox(height: 24),
+          
+          // Full name
+          Text(
+            '${userData['firstName']} ${userData['secondName']} ${userData['lastName']}',
+            style: const TextStyle(
+              color: mainTextColor,
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
             ),
-          ],
-        ),
-      ],
+            textAlign: TextAlign.center,
+          ),
+          
+          const SizedBox(height: 8),
+          
+          // Username
+          Text(
+            '@${userData['username']}',
+            style: const TextStyle(
+              color: secondTextColor,
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          
+          const SizedBox(height: 16),
+          
+          // Gender badge
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            decoration: BoxDecoration(
+              color: userData['gender'] == 'M' 
+                  ? Colors.blue.withOpacity(0.1)
+                  : Colors.pink.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  userData['gender'] == 'M' ? Icons.male : Icons.female,
+                  color: userData['gender'] == 'M' ? Colors.blue : Colors.pink,
+                  size: 18,
+                ),
+                const SizedBox(width: 6),
+                Text(
+                  userData['gender'] == 'M' ? 'ذكر' : 'أنثى',
+                  style: TextStyle(
+                    color: userData['gender'] == 'M' ? Colors.blue : Colors.pink,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
   
   // Action buttons (Edit/Save/Cancel)
   Widget _buildActionButtons() {
     return !isEditing
-      ? ElevatedButton.icon(
-          onPressed: () => _toggleEditMode(true),
-          icon: const Icon(Icons.edit, size: 20),
-          label: const Text('تعديل الملف الشخصي'),
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.brown,
-            foregroundColor: Colors.white,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
+      ? Container(
+          width: double.infinity,
+          height: 52,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: [
+              BoxShadow(
+                color: mainColor.withOpacity(0.3),
+                blurRadius: 12,
+                spreadRadius: 0,
+                offset: const Offset(0, 6),
+              ),
+            ],
+          ),
+          child: ElevatedButton.icon(
+            onPressed: () => _toggleEditMode(true),
+            icon: const Icon(Icons.edit, size: 20),
+            label: const Text(
+              'تعديل الملف الشخصي',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: mainColor,
+              foregroundColor: Colors.white,
+              elevation: 0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+            ),
           ),
         )
       : Row(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ElevatedButton.icon(
-              onPressed: _saveChanges,
-              icon: const Icon(Icons.save, size: 20),
-              label: const Text('حفظ'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green,
-                foregroundColor: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15),
+            Expanded(
+              child: Container(
+                height: 52,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16),
+                  boxShadow: [
+                    BoxShadow(
+                      color: progressIndeicatorColor.withOpacity(0.3),
+                      blurRadius: 12,
+                      spreadRadius: 0,
+                      offset: const Offset(0, 6),
+                    ),
+                  ],
                 ),
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                child: ElevatedButton.icon(
+                  onPressed: _saveChanges,
+                  icon: const Icon(Icons.save, size: 20),
+                  label: const Text(
+                    'حفظ',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: progressIndeicatorColor,
+                    foregroundColor: Colors.white,
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                  ),
+                ),
               ),
             ),
-            const SizedBox(width: 10),
-            ElevatedButton.icon(
-              onPressed: () => _toggleEditMode(false),
-              icon: const Icon(Icons.cancel, size: 20),
-              label: const Text('إلغاء'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.grey,
-                foregroundColor: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Container(
+                height: 52,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16),
+                  boxShadow: [
+                    BoxShadow(
+                      color: secondTextColor.withOpacity(0.2),
+                      blurRadius: 8,
+                      spreadRadius: 0,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
                 ),
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                child: ElevatedButton.icon(
+                  onPressed: () => _toggleEditMode(false),
+                  icon: const Icon(Icons.cancel, size: 20),
+                  label: const Text(
+                    'إلغاء',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: secondTextColor,
+                    foregroundColor: Colors.white,
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                  ),
+                ),
               ),
             ),
           ],
@@ -375,41 +464,47 @@ class _UserProfileBodyState extends State<UserProfileBody> {
   }
   
   // Information section builder
-  Widget _buildInfoSection({required String title, required List<InfoItem> items}) {
+  Widget _buildInfoSection({
+    required String title, 
+    required IconData icon,
+    required List<InfoItem> items
+  }) {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
+        color: backgroundBoxesColor,
+        borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 10,
-            spreadRadius: 1,
+            color: mainColor.withOpacity(0.1),
+            blurRadius: 20,
+            spreadRadius: 0,
+            offset: const Offset(0, 6),
           ),
         ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Section title
+          // Section header
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+            padding: const EdgeInsets.all(24),
             child: Row(
               children: [
                 Container(
-                  width: 4,
-                  height: 20,
+                  width: 40,
+                  height: 40,
                   decoration: BoxDecoration(
-                    color: Colors.brown,
-                    borderRadius: BorderRadius.circular(2),
+                    color: mainColor.withOpacity(0.1),
+                    shape: BoxShape.circle,
                   ),
+                  child: Icon(icon, color: mainColor, size: 20),
                 ),
-                const SizedBox(width: 8),
+                const SizedBox(width: 16),
                 Text(
                   title,
                   style: const TextStyle(
-                    color: Colors.brown,
+                    color: mainTextColor,
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
@@ -419,13 +514,21 @@ class _UserProfileBodyState extends State<UserProfileBody> {
           ),
           
           // Section items
-          ...items.map((item) => Column(
-            children: [
-              _buildInfoItemWidget(item),
-              if (items.indexOf(item) < items.length - 1)
-                const Divider(height: 1, thickness: 1, color: Color(0xFFEEEEEE)),
-            ],
-          )).toList(),
+          ...items.asMap().entries.map((entry) {
+            int index = entry.key;
+            InfoItem item = entry.value;
+            return Column(
+              children: [
+                if (index > 0)
+                  Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 24),
+                    height: 1,
+                    color: mainColor.withOpacity(0.1),
+                  ),
+                _buildInfoItemWidget(item),
+              ],
+            );
+          }).toList(),
         ],
       ),
     );
@@ -434,19 +537,20 @@ class _UserProfileBodyState extends State<UserProfileBody> {
   // Info item widget
   Widget _buildInfoItemWidget(InfoItem item) {
     return Padding(
-      padding: const EdgeInsets.all(15),
+      padding: const EdgeInsets.all(24),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            padding: const EdgeInsets.all(10),
+            width: 36,
+            height: 36,
             decoration: BoxDecoration(
-              color: Colors.brown.withOpacity(0.1),
+              color: mainColor.withOpacity(0.1),
               shape: BoxShape.circle,
             ),
-            child: Icon(item.icon, color: Colors.brown, size: 22),
+            child: Icon(item.icon, color: mainColor, size: 18),
           ),
-          const SizedBox(width: 15),
+          const SizedBox(width: 16),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -455,30 +559,32 @@ class _UserProfileBodyState extends State<UserProfileBody> {
                   children: [
                     Text(
                       item.title,
-                      style: TextStyle(
-                        color: Colors.grey[600],
+                      style: const TextStyle(
+                        color: secondTextColor,
                         fontSize: 14,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                     if (item.isEditable && !isEditing)
-                      const Padding(
-                        padding: EdgeInsets.only(right: 5),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 8),
                         child: Icon(
                           Icons.edit,
-                          color: Colors.brown,
+                          color: mainColor.withOpacity(0.7),
                           size: 14,
                         ),
                       ),
                   ],
                 ),
-                const SizedBox(height: 5),
+                const SizedBox(height: 8),
                 isEditing && item.isEditable
                   ? item.editWidget
                   : Text(
                       item.value,
                       style: const TextStyle(
-                        color: Colors.black87,
+                        color: mainTextColor,
                         fontSize: 16,
+                        fontWeight: FontWeight.w500,
                       ),
                       textAlign: TextAlign.right,
                     ),
@@ -501,28 +607,28 @@ class _UserProfileBodyState extends State<UserProfileBody> {
       controller: controller,
       maxLines: maxLines,
       validator: validator,
-      style: const TextStyle(color: Colors.black87, fontSize: 16),
+      style: const TextStyle(color: mainTextColor, fontSize: 16),
       decoration: InputDecoration(
         hintText: hintText,
-        hintStyle: TextStyle(color: Colors.grey.shade400),
+        hintStyle: TextStyle(color: secondTextColor.withOpacity(0.7)),
         filled: true,
-        fillColor: Colors.brown.withOpacity(0.05),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+        fillColor: backgroundColor,
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide.none,
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide.none,
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(color: mainColor.withOpacity(0.2), width: 1),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: Colors.brown, width: 1),
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: mainColor, width: 2),
         ),
         errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: Colors.red.shade300, width: 1),
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: Colors.red, width: 1),
         ),
       ),
     );
@@ -540,23 +646,40 @@ class _UserProfileBodyState extends State<UserProfileBody> {
   
   // Logout button
   Widget _buildLogoutButton() {
-    return SizedBox(
+    return Container(
       width: double.infinity,
+      height: 52,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: Colors.red.withOpacity(0.3), width: 1),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.red.withOpacity(0.1),
+            blurRadius: 8,
+            spreadRadius: 0,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
       child: OutlinedButton.icon(
         onPressed: () {
-          GoRouter.of(context).go(AppRouter.rSignIn);
+          AppRouter.toSignIn(context);
         },
-        icon: const Icon(Icons.logout, color: Colors.red),
+        icon: const Icon(Icons.logout, color: Colors.red, size: 20),
         label: const Text(
           'تسجيل الخروج',
-          style: TextStyle(color: Colors.red),
+          style: TextStyle(
+            color: Colors.red,
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         style: OutlinedButton.styleFrom(
-          side: const BorderSide(color: Colors.red),
+          backgroundColor: backgroundBoxesColor,
+          side: BorderSide.none,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(16),
           ),
-          padding: const EdgeInsets.symmetric(vertical: 12),
         ),
       ),
     );

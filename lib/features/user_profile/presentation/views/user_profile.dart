@@ -2,12 +2,13 @@ import 'package:eye/features/user_profile/presentation/views/widgets/user_profil
 import 'package:flutter/material.dart';
 
 class UserProfile extends StatelessWidget {
-  const UserProfile({super.key});
+  final int initialIndex;
+  const UserProfile({super.key, required this.initialIndex});
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: UserProfileBody(),
+    return  Scaffold(
+      body: UserProfileBody(initialIndex: initialIndex),
     );
   }
 }

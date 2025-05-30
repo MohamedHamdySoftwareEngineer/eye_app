@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
 
 const timeNavigate = 4;
-const mainColor = Color(0xffD3CCB8);
+const mainColor = Color(0xff2563eb);
+const backgroundColor = Color(0xfff8fafc);
+const backgroundBoxesColor = Color(0xffffffff);
+const correctAnswerColor = Color(0xff22c55e);
+const wrongAnswerColor = Color(0xffef4444);
+const warningAndHintsColor = Color(0xfff59e0b);
+const progressIndeicatorColor = Color(0xff8b5cf6);
+const mainTextColor = Color(0xff1f2937);
+const secondTextColor = Color(0xff6b7280);
+
 const shadowMainColor = Color(0xffe9d7a2);
 const secondColor = Color(0xffD98E04);
 const shadowSecondColor = Color(0xfffcc96a);

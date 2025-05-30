@@ -2,6 +2,15 @@ import 'package:eye/core/utils/constants.dart';
 import 'package:flutter/material.dart';
 
 abstract class Styles {
+
+  static const mainText23 =
+    TextStyle(fontSize: 23, fontWeight: FontWeight.bold, );
+
+    static const mainText28 =
+    TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: mainTextColor);
+
+
+
   static const brownText18 = TextStyle(
     fontFamily: 'Cairo',
     fontSize: 18,
