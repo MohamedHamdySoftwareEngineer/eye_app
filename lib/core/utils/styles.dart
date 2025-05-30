@@ -7,7 +7,7 @@ abstract class Styles {
     TextStyle(fontSize: 23, fontWeight: FontWeight.bold, );
 
     static const mainText28 =
-    TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: mainTextColor);
+    TextStyle(fontSize: 28, fontWeight: FontWeight.bold,);
 
 
 

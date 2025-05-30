@@ -505,7 +505,7 @@ class _UserProfileBodyState extends State<UserProfileBody> {
                   title,
                   style: const TextStyle(
                     color: mainTextColor,
-                    fontSize: 18,
+                    fontSize: 19,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

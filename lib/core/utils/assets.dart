@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
 class AssetsData {
+  static const logoIcon = 'assets/images/login_icon.png';
+  static const homeLogo = 'assets/images/home_logo.png';
+  static const choicesLogo = 'assets/images/choices_logo.png';
+
   static const logo = 'assets/images/splash.png';
   static const homeIcon = 'assets/images/home_icon.svg';
   static const trophyIcon = 'assets/images/trophy_icon.svg';
@@ -18,5 +22,4 @@ class AssetsData {
   static const profileIcon = 'assets/images/profile.svg';
   static const subjectsIcon = 'assets/images/subjects.svg';
   static const subjectIcon = 'assets/images/subject.svg';
- 
 }

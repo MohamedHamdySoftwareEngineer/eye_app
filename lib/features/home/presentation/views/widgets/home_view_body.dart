@@ -49,47 +49,14 @@ class HomeViewBody extends StatelessWidget {
     return Column(
       children: [
         // Logo with gradient background
-        Container(
-          width: 120,
-          height: 120,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                mainColor.withOpacity(0.8),
-                progressIndeicatorColor.withOpacity(0.6),
-              ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-            shape: BoxShape.circle,
-            boxShadow: [
-              BoxShadow(
-                color: mainColor.withOpacity(0.3),
-                blurRadius: 20,
-                spreadRadius: 2,
-                offset: const Offset(0, 8),
-              ),
-            ],
-          ),
-          child: Center(
-            child: Container(
-              width: 100,
-              height: 100,
-              decoration: const BoxDecoration(
-                color: backgroundBoxesColor,
-                shape: BoxShape.circle,
-              ),
-              child: Center(
-                child: Image.asset(
-                  AssetsData.logo,
-                  width: 60,
-                  height: 60,
-                ),
-              ),
-            ),
+        Center(
+          child: Image.asset(
+            AssetsData.homeLogo,
+            width: 140,
+            height: 140,
           ),
         ),
-        const SizedBox(height: 32),
+        const SizedBox(height: 24),
         // Welcome Text with RTL and TypeWriter
         Directionality(
           textDirection: TextDirection.rtl,
@@ -177,7 +144,7 @@ class HomeViewBody extends StatelessWidget {
               'ابدأ رحلة التعلم',
               style: TextStyle(
                 color: mainTextColor,
-                fontSize: 24,
+                fontSize: 26,
                 fontWeight: FontWeight.bold,
               ),
               textAlign: TextAlign.center,
@@ -192,8 +159,8 @@ class HomeViewBody extends StatelessWidget {
               'اختر من بين مجموعة متنوعة من المواضيع واختبر مدى معرفتك',
               style: TextStyle(
                 color: secondTextColor,
-                fontSize: 14,
-                fontWeight: FontWeight.w400,
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
               ),
               textAlign: TextAlign.center,
             ),
@@ -328,7 +295,7 @@ class HomeViewBody extends StatelessWidget {
                     title,
                     style: const TextStyle(
                       color: mainTextColor,
-                      fontSize: 14,
+                      fontSize: 15,
                       fontWeight: FontWeight.bold,
                     ),
                     textAlign: TextAlign.center,
@@ -339,7 +306,7 @@ class HomeViewBody extends StatelessWidget {
                     style: const TextStyle(
                       color: secondTextColor,
                       fontSize: 12,
-                      fontWeight: FontWeight.w400,
+                      fontWeight: FontWeight.bold,
                     ),
                     textAlign: TextAlign.center,
                   ),

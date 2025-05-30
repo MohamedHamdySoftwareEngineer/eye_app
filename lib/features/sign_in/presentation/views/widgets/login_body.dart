@@ -1,11 +1,9 @@
 import 'package:eye/features/sign_in/presentation/manager/cubit/login_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:typewritertext/typewritertext.dart';
 import '../../../../../core/utils/app_router.dart';
 import 'package:eye/core/utils/assets.dart';
-import 'package:eye/core/utils/styles.dart';
 
 
 import '../../../../../core/utils/constants.dart'; 
@@ -80,47 +78,14 @@ class _LoginBodyState extends State<LoginBody> {
     return Column(
       children: [
         // Logo with gradient background
-        Container(
-          width: 120,
-          height: 120,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                mainColor.withOpacity(0.8),
-                progressIndeicatorColor.withOpacity(0.6),
-              ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-            shape: BoxShape.circle,
-            boxShadow: [
-              BoxShadow(
-                color: mainColor.withOpacity(0.3),
-                blurRadius: 20,
-                spreadRadius: 2,
-                offset: const Offset(0, 8),
-              ),
-            ],
-          ),
-          child: Center(
-            child: Container(
-              width: 100,
-              height: 100,
-              decoration: const BoxDecoration(
-                color: backgroundBoxesColor,
-                shape: BoxShape.circle,
-              ),
-              child: Center(
-                child: Image.asset(
-                  AssetsData.logo,
-                  width: 60,
-                  height: 60,
-                ),
-              ),
-            ),
+        Center(
+          child: Image.asset(
+            AssetsData.logoIcon,
+            width: 120,
+            height: 120,
           ),
         ),
-        const SizedBox(height: 32),
+        const SizedBox(height: 28),
         // Welcome Text with RTL
         Directionality(
           textDirection: TextDirection.rtl,
@@ -149,7 +114,7 @@ class _LoginBodyState extends State<LoginBody> {
                 style: TextStyle(
                   color: secondTextColor,
                   fontSize: 16,
-                  fontWeight: FontWeight.w500,
+                  fontWeight: FontWeight.bold,
                 ),
                 textAlign: TextAlign.center,
               ),

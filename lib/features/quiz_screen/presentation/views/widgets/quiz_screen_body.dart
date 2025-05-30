@@ -80,37 +80,34 @@ class QuizScreenBodyState extends State<QuizScreenBody> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
-    return BaseScaffold(
-      appBartTitle: 'اختبار',
-      child: Container(
-        width: double.infinity,
-        height: double.infinity,
-        color: backgroundColor,
-        child: SafeArea(
-          child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
-              child: Column(
-                children: [
-                  SizedBox(height: size.height * 0.03),
-
-                  // Quiz details header
-                  _buildQuizHeader(),
-
-                  SizedBox(height: size.height * 0.04),
-
-                  // Question card
-                  _buildQuestionCard(),
-
-                  SizedBox(height: size.height * 0.04),
-
-                  // Answer options
-                  _buildAnswerOptions(currentQuestion.choices),
-
-                  SizedBox(height: size.height * 0.03),
-                ],
-              ),
+    return Container(
+      width: double.infinity,
+      height: double.infinity,
+      color: backgroundColor,
+      child: SafeArea(
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24.0),
+            child: Column(
+              children: [
+                SizedBox(height: size.height * 0.03),
+    
+                // Quiz details header
+                _buildQuizHeader(),
+    
+                SizedBox(height: size.height * 0.04),
+    
+                // Question card
+                _buildQuestionCard(),
+    
+                SizedBox(height: size.height * 0.04),
+    
+                // Answer options
+                _buildAnswerOptions(currentQuestion.choices),
+    
+                SizedBox(height: size.height * 0.03),
+              ],
             ),
           ),
         ),
@@ -199,7 +196,7 @@ class QuizScreenBodyState extends State<QuizScreenBody> {
             style: const TextStyle(
               color: mainTextColor,
               fontWeight: FontWeight.w600,
-              fontSize: 14,
+              fontSize: 15,
             ),
           ),
         ],
@@ -251,7 +248,7 @@ class QuizScreenBodyState extends State<QuizScreenBody> {
             Text(
               currentQuestion.questionText,
               style: const TextStyle(
-                fontSize: 20,
+                fontSize: 19,
                 fontWeight: FontWeight.bold,
                 color: mainTextColor,
                 height: 1.5,
@@ -309,7 +306,7 @@ class QuizScreenBodyState extends State<QuizScreenBody> {
                             Text(
                               isCorrectAnswer ? 'إجابة صحيحة!' : 'إجابة خاطئة!',
                               style: const TextStyle(
-                                fontSize: 16,
+                                fontSize: 19,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
@@ -317,8 +314,8 @@ class QuizScreenBodyState extends State<QuizScreenBody> {
                         ),
                       ),
                       backgroundColor: isCorrectAnswer
-                          ? progressIndeicatorColor
-                          : Colors.red.shade500,
+                          ? correctAnswerColor
+                          : wrongAnswerColor,
                       duration: const Duration(seconds: 2),
                       behavior: SnackBarBehavior.floating,
                       shape: RoundedRectangleBorder(

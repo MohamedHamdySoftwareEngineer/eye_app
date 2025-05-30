@@ -26,19 +26,11 @@ class _SplashViewBodyState extends State<SplashViewBody> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Container(
-          padding: const EdgeInsets.all(20),
-          child: Image.asset(
-            AssetsData.logo,
-            height: 250,
-            width: 250,
-            fit: BoxFit.cover,
-          ),
-        ),
-      ],
+    return Image.asset(
+      AssetsData.logoIcon,
+      height: 250,
+      width: 250,
+      fit: BoxFit.contain,
     );
   }
 }

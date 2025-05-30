@@ -3,6 +3,7 @@ import 'package:eye/core/widgets/base_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../../core/utils/app_router.dart';
+import '../../../../../core/utils/assets.dart';
 import '../../../../../core/utils/constants.dart';
 
 class ChoiceScreenBody extends StatelessWidget {
@@ -38,7 +39,7 @@ class ChoiceScreenBody extends StatelessWidget {
   Widget _buildHeaderSection() {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(24),
+      padding: const EdgeInsets.all(2),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [mainColor, mainColor.withOpacity(0.8)],
@@ -48,30 +49,23 @@ class ChoiceScreenBody extends StatelessWidget {
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: mainColor.withOpacity(0.2),
+            color: mainColor
+                .withOpacity(0.25), // Slightly stronger shadow for better depth
             blurRadius: 20,
             spreadRadius: 0,
             offset: const Offset(0, 10),
           ),
         ],
       ),
-      child: const Row(
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-
-          Icon(
-            Icons.school_rounded,
-            color: Colors.white,
-            size: 40,
-          ),
-          SizedBox(width: 20),
-          Text(
+          Image.asset(AssetsData.choicesLogo, width: 100, height: 100),
+          const SizedBox(width: 20),
+          const Text(
             'اختر المادة',
             style: Styles.mainText28,
           ),
-          // Icon section
-          
-          
         ],
       ),
     );
@@ -112,7 +106,6 @@ class ChoiceScreenBody extends StatelessWidget {
           child: _buildSubjectCard(
             context: context,
             title: subject['title'] as String,
-            
             icon: subject['icon'] as IconData,
             color: subject['color'] as Color,
             lightColor: subject['lightColor'] as Color,
@@ -125,7 +118,6 @@ class ChoiceScreenBody extends StatelessWidget {
   Widget _buildSubjectCard({
     required BuildContext context,
     required String title,
-    
     required IconData icon,
     required Color color,
     required Color lightColor,
@@ -173,12 +165,10 @@ class ChoiceScreenBody extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                   
                   ],
                 ),
               ),
             ),
-            
           ],
         ),
       ),
