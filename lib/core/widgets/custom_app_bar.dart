@@ -1,13 +1,15 @@
-import 'package:eye/core/utils/constants.dart';
+
 import 'package:eye/core/utils/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
 import '../utils/app_router.dart';
+import '../utils/styles.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const CustomAppBar({super.key});
+  final String appBarTitle;
+  const CustomAppBar({super.key,required this.appBarTitle});
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +28,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
       ),
       // right: user profile icon
+      title: Text(
+        appBarTitle,
+        style: Styles.mainText23,
+      ),
+      centerTitle: true,
       actions: [
         Padding(
-          padding: const EdgeInsets.only(right:  20),
+          padding: const EdgeInsets.only(right: 20),
           child: IconButton(
             icon: SvgPicture.asset(
               AssetsData.userIcon,
@@ -36,9 +43,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               height: 40,
               fit: BoxFit.contain,
             ),
-            
             onPressed: () {
-              GoRouter.of(context).push(AppRouter.rUserProfile);
+              AppRouter.rUserProfile;
             },
           ),
         ),

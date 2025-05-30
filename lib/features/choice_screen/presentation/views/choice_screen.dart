@@ -2,10 +2,11 @@ import 'package:eye/features/choice_screen/presentation/views/widgets/choice_scr
 import 'package:flutter/material.dart';
 
 class ChoiceScreen extends StatelessWidget {
-  const ChoiceScreen({super.key});
+  final int initialIndex;
+  const ChoiceScreen({super.key,required this.initialIndex});
 
   @override
   Widget build(BuildContext context) {
-    return const ChoiceScreenBody();
+    return  ChoiceScreenBody(initialIndex: initialIndex);
   }
 }

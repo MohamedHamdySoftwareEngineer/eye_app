@@ -1,153 +1,183 @@
-// Enhanced ChoiceScreenBody
 import 'package:eye/core/utils/styles.dart';
 import 'package:eye/core/widgets/base_scaffold.dart';
-import 'package:eye/core/widgets/option_box.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../../core/utils/app_router.dart';
+import '../../../../../core/utils/constants.dart';
 
 class ChoiceScreenBody extends StatelessWidget {
-  const ChoiceScreenBody({super.key});
+  final int initialIndex;
+  const ChoiceScreenBody({super.key, required this.initialIndex});
 
   @override
   Widget build(BuildContext context) {
     return BaseScaffold(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
-        child: Column(
-          children: [
-            // Simple yet pretty header
-// Modern quiz app subject header with card-style design
-Container(
-  margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-  decoration: BoxDecoration(
-    color: Colors.white,
-    borderRadius: BorderRadius.circular(20),
-    boxShadow: [
-      BoxShadow(
-        color: Colors.indigo.withOpacity(0.1),
-        blurRadius: 15,
-        offset: const Offset(0, 5),
-      ),
-    ],
-  ),
-  child: Column(
-    crossAxisAlignment: CrossAxisAlignment.stretch,
-    children: [
-      // Colorful top banner
-      Container(
-        height: 65,
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Color(0xFF6A6FC8), 
-              Color(0xFF4E54C8)
-            ],
-            begin: Alignment.centerLeft,
-            end: Alignment.centerRight,
-          ),
-          borderRadius: BorderRadius.all(
-            Radius.circular(20)
-          ),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            // Title section
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+      appBartTitle: 'المواد الدراسية',
+      initialIndex: initialIndex,
+      child: Container(
+        color: backgroundColor,
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
               children: [
-                Container(
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.2),
-                    shape: BoxShape.circle,
-                  ),
-                  child: const Icon(
-                    Icons.menu_book,
-                    color: Colors.white,
-                    size: 24,
-                  ),
-                ),
-                const SizedBox(width: 12),
-                const Text(
-                  'إختر المادة',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                    
-                  ),
-                  
-                ),
+                const SizedBox(height: 20),
+                _buildHeaderSection(),
+                const SizedBox(height: 30),
+                _buildSubjectsGrid(context),
+                const SizedBox(height: 20),
               ],
             ),
-            // Quiz icon
-            Icon(
-              Icons.quiz_outlined,
-              color: Colors.white.withOpacity(0.9),
-              size: 24,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildHeaderSection() {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [mainColor, mainColor.withOpacity(0.8)],
+          begin: Alignment.bottomRight,
+          end: Alignment.topLeft,
+        ),
+        borderRadius: BorderRadius.circular(24),
+        boxShadow: [
+          BoxShadow(
+            color: mainColor.withOpacity(0.2),
+            blurRadius: 20,
+            spreadRadius: 0,
+            offset: const Offset(0, 10),
+          ),
+        ],
+      ),
+      child: const Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+
+          Icon(
+            Icons.school_rounded,
+            color: Colors.white,
+            size: 40,
+          ),
+          SizedBox(width: 20),
+          Text(
+            'اختر المادة',
+            style: Styles.mainText28,
+          ),
+          // Icon section
+          
+          
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSubjectsGrid(BuildContext context) {
+    final subjects = [
+      {
+        'title': 'رياضيات',
+        'icon': Icons.calculate_rounded,
+        'color': const Color(0xFFFF8A65),
+        'lightColor': const Color(0xFFFFE0B2),
+      },
+      {
+        'title': 'فيزياء',
+        'icon': Icons.rocket_launch_rounded,
+        'color': const Color(0xFFFF7043),
+        'lightColor': const Color(0xFFFFCCBC),
+      },
+      {
+        'title': 'أحياء',
+        'icon': Icons.eco_rounded,
+        'color': const Color(0xFF66BB6A),
+        'lightColor': const Color(0xFFC8E6C9),
+      },
+      {
+        'title': 'كيمياء',
+        'icon': Icons.science_rounded,
+        'color': const Color(0xFF42A5F5),
+        'lightColor': const Color(0xFFBBDEFB),
+      },
+    ];
+
+    return Column(
+      children: subjects.map((subject) {
+        return Container(
+          margin: const EdgeInsets.only(bottom: 16),
+          child: _buildSubjectCard(
+            context: context,
+            title: subject['title'] as String,
+            
+            icon: subject['icon'] as IconData,
+            color: subject['color'] as Color,
+            lightColor: subject['lightColor'] as Color,
+          ),
+        );
+      }).toList(),
+    );
+  }
+
+  Widget _buildSubjectCard({
+    required BuildContext context,
+    required String title,
+    
+    required IconData icon,
+    required Color color,
+    required Color lightColor,
+  }) {
+    return GestureDetector(
+      onTap: () {
+        AppRouter.toQuizScreen(context);
+      },
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: backgroundBoxesColor,
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: secondTextColor.withOpacity(0.1),
+              blurRadius: 20,
+              spreadRadius: 0,
+              offset: const Offset(0, 8),
             ),
           ],
         ),
-      ),
-      
-      
-    ],
-  ),
-),
-            
-            const SizedBox(height: 30),
-            
-            // Subject options grid
+        child: Row(
+          children: [
+            // Icon section
+            Icon(
+              icon,
+              color: color,
+              size: 55,
+            ),
+            const SizedBox(width: 20),
+            // Text section
             Expanded(
-              child: GridView.count(
-                crossAxisCount: 2,
-                childAspectRatio: 1.6,
-                crossAxisSpacing: 15,
-                mainAxisSpacing: 15,
-                shrinkWrap: true,
-                physics: const BouncingScrollPhysics(),
-                children: [
-                  OptionBox(
-                    text: 'أحياء',
-                    icon: Icons.biotech,
-                    color: Colors.white,
-                    onTap: () {
-                      GoRouter.of(context).push(AppRouter.rQuizScreen);
-                    },
-                  ),
-                  OptionBox(
-                    text: 'فيزياء',
-                    icon: Icons.science,
-                    color: Colors.white,
-                    onTap: () {
-                      GoRouter.of(context).push(AppRouter.rQuizScreen);
-                    },
-                  ),
-                  OptionBox(
-                    text: 'كيمياء',
-                    icon: Icons.science,
-                    color: Colors.white,
-                    onTap: () {
-                      GoRouter.of(context).push(AppRouter.rQuizScreen);
-                    },
-                  ),
-                  OptionBox(
-                    text: 'رياضيات',
-                    icon: Icons.calculate,
-                    color: Colors.white,
-                    onTap: () {
-                      GoRouter.of(context).push(AppRouter.rQuizScreen);
-                    },
-                  ),
-                ],
+              child: Directionality(
+                textDirection: TextDirection.rtl,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: const TextStyle(
+                        color: mainTextColor,
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                   
+                  ],
+                ),
               ),
             ),
-            
-            const SizedBox(height: 20),
-            
             
           ],
         ),

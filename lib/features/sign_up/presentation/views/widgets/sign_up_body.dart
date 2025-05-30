@@ -6,6 +6,7 @@ import 'package:typewritertext/typewritertext.dart';
 import '../../../../../core/utils/app_router.dart';
 import 'package:eye/core/utils/assets.dart';
 import 'package:eye/core/utils/styles.dart';
+import '../../../../../core/utils/constants.dart';
 
 class SignUpBody extends StatefulWidget {
   const SignUpBody({super.key});
@@ -99,9 +100,9 @@ class _SignUpBodyState extends State<SignUpBody>
         _signUpButtonController.reverse();
 
         if (response.statusCode == 200 || response.statusCode == 201) {
-          _showSuccessDialog("Account created successfully!");
+          _showSuccessDialog("تم إنشاء الحساب بنجاح!");
         } else {
-          _showErrorDialog("Registration failed. Please try again.");
+          _showErrorDialog("فشل في التسجيل. يرجى المحاولة مرة أخرى.");
         }
       } catch (e) {
         if (!mounted) return;
@@ -112,7 +113,7 @@ class _SignUpBodyState extends State<SignUpBody>
         _signUpButtonController.reverse();
 
         _showErrorDialog(
-            "Connection error. Please check your internet connection.");
+            "خطأ في الاتصال. يرجى التحقق من اتصال الإنترنت.");
         print("An error occurred: $e");
       }
     }
@@ -122,19 +123,31 @@ class _SignUpBodyState extends State<SignUpBody>
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Success'),
-        content: Text(message),
+        title: const Text(
+          'نجح',
+          style: TextStyle(
+            color: mainTextColor,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        content: Text(
+          message,
+          style: const TextStyle(color: secondTextColor),
+        ),
         actions: [
           TextButton(
             onPressed: () {
               Navigator.pop(context);
-              GoRouter.of(context).go(AppRouter.rHomeView);
+              AppRouter.toQuizScreen(context);
             },
-            child: const Text('OK', style: TextStyle(color: Colors.brown)),
+            child: const Text(
+              'موافق',
+              style: TextStyle(color: mainColor),
+            ),
           ),
         ],
-        backgroundColor: Colors.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+        backgroundColor: backgroundBoxesColor,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       ),
     );
   }
@@ -143,16 +156,28 @@ class _SignUpBodyState extends State<SignUpBody>
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Error'),
-        content: Text(message),
+        title: const Text(
+          'خطأ',
+          style: TextStyle(
+            color: wrongAnswerColor,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        content: Text(
+          message,
+          style: const TextStyle(color: secondTextColor),
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('OK', style: TextStyle(color: Colors.brown)),
+            child: const Text(
+              'موافق',
+              style: TextStyle(color: wrongAnswerColor),
+            ),
           ),
         ],
-        backgroundColor: Colors.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+        backgroundColor: backgroundBoxesColor,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       ),
     );
   }
@@ -160,316 +185,299 @@ class _SignUpBodyState extends State<SignUpBody>
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    
+    return Container(
+      width: double.infinity,
+      height: double.infinity,
+      color: backgroundColor,
+      child: SafeArea(
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24.0),
+            child: Column(
+              children: [
+                SizedBox(height: size.height * 0.06),
+                // Logo and Welcome Section
+                _buildWelcomeSection(),
+                SizedBox(height: size.height * 0.05),
+                // Sign Up Form Card
+                _buildSignUpCard(size),
+                SizedBox(height: size.height * 0.04),
+                // Sign In Link
+                _buildSignInSection(),
+                SizedBox(height: size.height * 0.02),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 
-    return Stack(
+  Widget _buildWelcomeSection() {
+    return Column(
       children: [
-        // Background design elements
-        Positioned(
-          top: 0,
-          right: 0,
-          child: Container(
-            width: size.width * 0.6,
-            height: size.height * 0.3,
-            decoration: BoxDecoration(
-              color: Colors.brown.withOpacity(0.2),
-              borderRadius: const BorderRadius.only(
-                bottomLeft: Radius.circular(100),
+        // Logo with gradient background
+        Container(
+          width: 120,
+          height: 120,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                mainColor.withOpacity(0.8),
+                progressIndeicatorColor.withOpacity(0.6),
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            shape: BoxShape.circle,
+            boxShadow: [
+              BoxShadow(
+                color: mainColor.withOpacity(0.3),
+                blurRadius: 20,
+                spreadRadius: 2,
+                offset: const Offset(0, 8),
+              ),
+            ],
+          ),
+          child: Center(
+            child: Container(
+              width: 100,
+              height: 100,
+              decoration: const BoxDecoration(
+                color: backgroundBoxesColor,
+                shape: BoxShape.circle,
+              ),
+              child: Center(
+                child: Image.asset(
+                  AssetsData.logo,
+                  width: 60,
+                  height: 60,
+                ),
               ),
             ),
           ),
         ),
-
-        // Main content
-        SafeArea(
-          child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: size.height * 0.05),
-
-                  // App logo/brand
-                  Center(
-                    child: Container(
-                      width: 100,
-                      height: 100,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.brown.withOpacity(0.3),
-                            blurRadius: 15,
-                            spreadRadius: 5,
-                          ),
-                        ],
-                      ),
-                      child: Center(
-                        child: Image.asset(
-                          AssetsData.logo,
-                          width: 60,
-                          height: 60,
-                        ),
-                      ),
-                    ),
+        const SizedBox(height: 32),
+        // Welcome Text with RTL
+        Directionality(
+          textDirection: TextDirection.rtl,
+          child: Column(
+            children: [
+              SizedBox(
+                height: 45,
+                child: TypeWriter.text(
+                  'حساب جديد!',
+                  style: const TextStyle(
+                    color: mainTextColor,
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
                   ),
-
-                  SizedBox(height: size.height * 0.04),
-
-                  // Welcome text
-                  Directionality(
-                    textDirection: TextDirection.rtl,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        TypeWriter.text('حساب جديد!',
-                          style: Styles.brownText18.copyWith(
-                            fontSize: 26,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          duration: const Duration(milliseconds: 70),
-                          // ← keep the layout at its final size
-                          maintainSize: true,
-                          // ← force it to render on one line
-                          maxLines: 1,
-                          // ← control wrapping/overflow
-                          overflow: TextOverflow.visible,
-                          softWrap: false,
-                          // ← optional: align text in its box
-                          textAlign: TextAlign.left,
-                        ),
-                        
-                        Text(
-                          'الرجاء إدخال بياناتك',
-                          style: TextStyle(
-                            color: Colors.brown.withOpacity(0.9),
-                            fontSize: 16,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-
-                  SizedBox(height: size.height * 0.05),
-
-                  // Registration form
-                  Form(
-                    key: _formKey,
-                    child: Column(
-                      children: [
-                        // Personal information section
-                        _buildSectionTitle('المعلومات الشخصية'),
-                        const SizedBox(height: 15),
-
-                        // Name fields in a row
-                        Row(
-                          children: [
-                            // First Name
-                            Expanded(
-                              child: _buildTextField(
-                                controller: firstNameController,
-                                hintText: 'الاسم الثاني',
-                                prefixIcon: Icons.person_outline,
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'مطلوب';
-                                  }
-                                  return null;
-                                },
-                              ),
-                            ),
-                            const SizedBox(width: 10),
-                            // Second Name
-                            Expanded(
-                              child: _buildTextField(
-                                controller: secondNameController,
-                                hintText: 'الاسم الأول',
-                                prefixIcon: Icons.person_outline,
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'مطلوب';
-                                  }
-                                  return null;
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
-
-                        const SizedBox(height: 15),
-
-                        // Last Name
-                        _buildTextField(
-                          controller: lastNameController,
-                          hintText: 'اسم العائلة',
-                          prefixIcon: Icons.person_outline,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'مطلوب';
-                            }
-                            return null;
-                          },
-                        ),
-
-                        const SizedBox(height: 15),
-
-                        // Gender selection
-                        _buildGenderSelection(),
-
-                        const SizedBox(height: 25),
-
-                        // Account information section
-                        _buildSectionTitle('معلومات الحساب'),
-                        const SizedBox(height: 15),
-
-                        // Email
-                        _buildTextField(
-                          controller: emailController,
-                          hintText: 'البريد الإلكتروني',
-                          prefixIcon: Icons.email_outlined,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'مطلوب';
-                            } else if (!RegExp(
-                                    r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
-                                .hasMatch(value)) {
-                              return 'بريد إلكتروني غير صالح';
-                            }
-                            return null;
-                          },
-                        ),
-
-                        const SizedBox(height: 15),
-
-                        // Username
-                        _buildTextField(
-                          controller: usernameController,
-                          hintText: 'اسم المستخدم',
-                          prefixIcon: Icons.account_circle_outlined,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'مطلوب';
-                            }
-                            return null;
-                          },
-                        ),
-
-                        const SizedBox(height: 15),
-
-                        // Password
-                        _buildTextField(
-                          controller: passwordController,
-                          hintText: 'كلمة المرور',
-                          prefixIcon: Icons.lock_outline,
-                          isPassword: true,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'مطلوب';
-                            } else if (value.length < 6) {
-                              return 'كلمة المرور يجب أن تكون 6 أحرف على الأقل';
-                            }
-                            return null;
-                          },
-                        ),
-
-                        const SizedBox(height: 15),
-
-                        // Confirm Password
-                        _buildTextField(
-                          controller: confirmPasswordController,
-                          hintText: 'تأكيد كلمة المرور',
-                          prefixIcon: Icons.lock_outline,
-                          isPassword: true,
-                          isConfirmPassword: true,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'مطلوب';
-                            } else if (value != passwordController.text) {
-                              return 'كلمات المرور غير متطابقة';
-                            }
-                            return null;
-                          },
-                        ),
-
-                        const SizedBox(height: 25),
-
-                        // Additional information section
-                        _buildSectionTitle('معلومات إضافية'),
-                        const SizedBox(height: 15),
-
-                        // Address
-                        _buildTextField(
-                          controller: addressController,
-                          hintText: 'العنوان',
-                          prefixIcon: Icons.location_on_outlined,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'مطلوب';
-                            }
-                            return null;
-                          },
-                        ),
-
-                        const SizedBox(height: 15),
-
-                        // Notes - multiline
-                        _buildTextField(
-                          controller: notesController,
-                          hintText: 'ملاحظات (اختياري)',
-                          prefixIcon: Icons.note_outlined,
-                          maxLines: 3,
-                        ),
-
-                        SizedBox(height: size.height * 0.04),
-
-                        // Sign Up Button
-                        _buildSignUpButton(),
-
-                        SizedBox(height: size.height * 0.03),
-
-                        // Already have account
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            TextButton(
-                              onPressed: () {
-                                GoRouter.of(context).go(AppRouter.rSignIn);
-                              },
-                              style: TextButton.styleFrom(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 8),
-                              ),
-                              child: const Text(
-                                'تسجيل الدخول',
-                                style: TextStyle(
-                                  color: Colors.brown,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 14,
-                                ),
-                              ),
-                            ),
-                            Text(
-                              'لديك حساب بالفعل؟',
-                              style: TextStyle(
-                                color: Colors.black.withOpacity(0.7),
-                                fontSize: 14,
-                              ),
-                            ),
-                          ],
-                        ),
-
-                        SizedBox(height: size.height * 0.02),
-                      ],
-                    ),
-                  ),
-                ],
+                  duration: const Duration(milliseconds: 70),
+                  maintainSize: true,
+                  maxLines: 1,
+                  overflow: TextOverflow.visible,
+                  softWrap: false,
+                  textAlign: TextAlign.center,
+                ),
               ),
-            ),
+              const SizedBox(height: 12),
+              const Text(
+                'الرجاء إدخال بياناتك',
+                style: TextStyle(
+                  color: secondTextColor,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ],
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildSignUpCard(Size size) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(32),
+      decoration: BoxDecoration(
+        color: backgroundBoxesColor,
+        borderRadius: BorderRadius.circular(24),
+        boxShadow: [
+          BoxShadow(
+            color: mainColor.withOpacity(0.1),
+            blurRadius: 30,
+            spreadRadius: 0,
+            offset: const Offset(0, 10),
+          ),
+        ],
+      ),
+      child: Form(
+        key: _formKey,
+        child: Column(
+          children: [
+            // Personal Information Section
+            _buildSectionTitle('المعلومات الشخصية'),
+            const SizedBox(height: 20),
+            
+            // Name fields in a row
+            Row(
+              children: [
+                Expanded(
+                  child: _buildTextField(
+                    controller: firstNameController,
+                    hintText: 'الاسم الثاني',
+                    prefixIcon: Icons.person_outline_rounded,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'مطلوب';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: _buildTextField(
+                    controller: secondNameController,
+                    hintText: 'الاسم الأول',
+                    prefixIcon: Icons.person_outline_rounded,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'مطلوب';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+              ],
+            ),
+            
+            const SizedBox(height: 20),
+            
+            _buildTextField(
+              controller: lastNameController,
+              hintText: 'اسم العائلة',
+              prefixIcon: Icons.person_outline_rounded,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'مطلوب';
+                }
+                return null;
+              },
+            ),
+            
+            const SizedBox(height: 20),
+            
+            // Gender selection
+            _buildGenderSelection(),
+            
+            const SizedBox(height: 30),
+            
+            // Account Information Section
+            _buildSectionTitle('معلومات الحساب'),
+            const SizedBox(height: 20),
+            
+            _buildTextField(
+              controller: emailController,
+              hintText: 'البريد الإلكتروني',
+              prefixIcon: Icons.email_outlined,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'مطلوب';
+                } else if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                    .hasMatch(value)) {
+                  return 'بريد إلكتروني غير صالح';
+                }
+                return null;
+              },
+            ),
+            
+            const SizedBox(height: 20),
+            
+            _buildTextField(
+              controller: usernameController,
+              hintText: 'اسم المستخدم',
+              prefixIcon: Icons.account_circle_outlined,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'مطلوب';
+                }
+                return null;
+              },
+            ),
+            
+            const SizedBox(height: 20),
+            
+            _buildTextField(
+              controller: passwordController,
+              hintText: 'كلمة المرور',
+              prefixIcon: Icons.lock_outline_rounded,
+              isPassword: true,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'مطلوب';
+                } else if (value.length < 6) {
+                  return 'كلمة المرور يجب أن تكون 6 أحرف على الأقل';
+                }
+                return null;
+              },
+            ),
+            
+            const SizedBox(height: 20),
+            
+            _buildTextField(
+              controller: confirmPasswordController,
+              hintText: 'تأكيد كلمة المرور',
+              prefixIcon: Icons.lock_outline_rounded,
+              isPassword: true,
+              isConfirmPassword: true,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'مطلوب';
+                } else if (value != passwordController.text) {
+                  return 'كلمات المرور غير متطابقة';
+                }
+                return null;
+              },
+            ),
+            
+            const SizedBox(height: 30),
+            
+            // Additional Information Section
+            _buildSectionTitle('معلومات إضافية'),
+            const SizedBox(height: 20),
+            
+            _buildTextField(
+              controller: addressController,
+              hintText: 'العنوان',
+              prefixIcon: Icons.location_on_outlined,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'مطلوب';
+                }
+                return null;
+              },
+            ),
+            
+            const SizedBox(height: 20),
+            
+            _buildTextField(
+              controller: notesController,
+              hintText: 'ملاحظات (اختياري)',
+              prefixIcon: Icons.note_outlined,
+              maxLines: 3,
+            ),
+            
+            const SizedBox(height: 40),
+            
+            _buildSignUpButton(),
+          ],
+        ),
+      ),
     );
   }
 
@@ -480,18 +488,25 @@ class _SignUpBodyState extends State<SignUpBody>
         children: [
           Container(
             width: 4,
-            height: 20,
+            height: 24,
             decoration: BoxDecoration(
-              color: Colors.brown,
+              gradient: LinearGradient(
+                colors: [
+                  mainColor,
+                  progressIndeicatorColor,
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
               borderRadius: BorderRadius.circular(2),
             ),
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: 12),
           Text(
             title,
             style: const TextStyle(
-              color: Colors.brown,
-              fontSize: 16,
+              color: mainTextColor,
+              fontSize: 18,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -511,60 +526,103 @@ class _SignUpBodyState extends State<SignUpBody>
   }) {
     return Directionality(
       textDirection: TextDirection.rtl,
-      child: TextFormField(
-        controller: controller,
-        obscureText: (isPassword && !isPasswordVisible) ||
-            (isConfirmPassword && !isConfirmPasswordVisible),
-        validator: validator,
-        maxLines: maxLines,
-        style: const TextStyle(color: Colors.black87),
-        decoration: InputDecoration(
-          hintText: hintText,
-          hintStyle: TextStyle(color: Colors.grey.shade500),
-          prefixIcon: Icon(prefixIcon, color: Colors.brown),
-          suffixIcon: isPassword || isConfirmPassword
-              ? IconButton(
-                  icon: Icon(
-                    (isPassword && isPasswordVisible) ||
-                            (isConfirmPassword && isConfirmPasswordVisible)
-                        ? Icons.visibility_off
-                        : Icons.visibility,
-                    color: Colors.brown.withOpacity(0.7),
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      if (isPassword) {
-                        isPasswordVisible = !isPasswordVisible;
-                      } else if (isConfirmPassword) {
-                        isConfirmPasswordVisible = !isConfirmPasswordVisible;
-                      }
-                    });
-                  },
-                )
-              : null,
-          filled: true,
-          fillColor: Colors.brown.withOpacity(0.07),
-          contentPadding: EdgeInsets.symmetric(
-              vertical: maxLines > 1 ? 16 : 0, horizontal: 20),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15),
-            borderSide: BorderSide.none,
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: mainColor.withOpacity(0.05),
+              blurRadius: 10,
+              spreadRadius: 0,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: TextFormField(
+          controller: controller,
+          obscureText: (isPassword && !isPasswordVisible) ||
+              (isConfirmPassword && !isConfirmPasswordVisible),
+          validator: validator,
+          maxLines: maxLines,
+          style: const TextStyle(
+            color: mainTextColor,
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
           ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15),
-            borderSide: BorderSide.none,
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15),
-            borderSide: const BorderSide(color: Colors.brown, width: 1.5),
-          ),
-          errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15),
-            borderSide: BorderSide(color: Colors.red.shade300, width: 1.5),
-          ),
-          focusedErrorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15),
-            borderSide: BorderSide(color: Colors.red.shade400, width: 1.5),
+          decoration: InputDecoration(
+            hintText: hintText,
+            hintStyle: const TextStyle(
+              color: secondTextColor,
+              fontSize: 16,
+              fontWeight: FontWeight.w400,
+            ),
+            prefixIcon: Icon(
+              prefixIcon,
+              color: mainColor.withOpacity(0.7),
+              size: 22,
+            ),
+            suffixIcon: isPassword || isConfirmPassword
+                ? IconButton(
+                    icon: Icon(
+                      (isPassword && isPasswordVisible) ||
+                              (isConfirmPassword && isConfirmPasswordVisible)
+                          ? Icons.visibility_off_rounded
+                          : Icons.visibility_rounded,
+                      color: secondTextColor,
+                      size: 22,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        if (isPassword) {
+                          isPasswordVisible = !isPasswordVisible;
+                        } else if (isConfirmPassword) {
+                          isConfirmPasswordVisible = !isConfirmPasswordVisible;
+                        }
+                      });
+                    },
+                  )
+                : null,
+            filled: true,
+            fillColor: backgroundColor,
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: 20,
+              vertical: maxLines > 1 ? 20 : 20,
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16),
+              borderSide: BorderSide(
+                color: mainColor.withOpacity(0.1),
+                width: 1,
+              ),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16),
+              borderSide: BorderSide(
+                color: mainColor.withOpacity(0.1),
+                width: 1,
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16),
+              borderSide: const BorderSide(
+                color: mainColor,
+                width: 2,
+              ),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16),
+              borderSide: const BorderSide(
+                color: wrongAnswerColor,
+                width: 1.5,
+              ),
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16),
+              borderSide: const BorderSide(
+                color: wrongAnswerColor,
+                width: 2,
+              ),
+            ),
           ),
         ),
       ),
@@ -575,37 +633,74 @@ class _SignUpBodyState extends State<SignUpBody>
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+        padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: Colors.brown.withOpacity(0.07),
-          borderRadius: BorderRadius.circular(15),
+          color: backgroundColor,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(
+            color: mainColor.withOpacity(0.1),
+            width: 1,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: mainColor.withOpacity(0.05),
+              blurRadius: 10,
+              spreadRadius: 0,
+              offset: const Offset(0, 4),
+            ),
+          ],
         ),
-        child: Row(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Icon(
-              Icons.person_outlined,
-              color: Colors.brown,
+            Row(
+              children: [
+                Icon(
+                  Icons.person_outline_rounded,
+                  color: mainColor.withOpacity(0.7),
+                  size: 22,
+                ),
+                const SizedBox(width: 12),
+                const Text(
+                  'الجنس',
+                  style: TextStyle(
+                    color: mainTextColor,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(width: 10),
-            const Text(
-              'الجنس:',
-              style: TextStyle(
-                color: Colors.black87,
-                fontSize: 16,
-              ),
-            ),
-            const SizedBox(width: 20),
-            Expanded(
-              child: Row(
-                children: [
-                  // Male option
-                  Expanded(
+            const SizedBox(height: 16),
+            Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: selectedGender == 'male' 
+                          ? mainColor.withOpacity(0.1) 
+                          : Colors.transparent,
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: selectedGender == 'male' 
+                            ? mainColor 
+                            : Colors.transparent,
+                        width: 1,
+                      ),
+                    ),
                     child: RadioListTile<String>(
-                      title: const Text('ذكر'),
+                      title: const Text(
+                        'ذكر',
+                        style: TextStyle(
+                          color: mainTextColor,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
                       value: 'male',
                       groupValue: selectedGender,
-                      activeColor: Colors.brown,
+                      activeColor: mainColor,
                       contentPadding: EdgeInsets.zero,
+                      dense: true,
                       onChanged: (value) {
                         setState(() {
                           selectedGender = value!;
@@ -613,14 +708,35 @@ class _SignUpBodyState extends State<SignUpBody>
                       },
                     ),
                   ),
-                  // Female option
-                  Expanded(
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: selectedGender == 'female' 
+                          ? mainColor.withOpacity(0.1) 
+                          : Colors.transparent,
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: selectedGender == 'female' 
+                            ? mainColor 
+                            : Colors.transparent,
+                        width: 1,
+                      ),
+                    ),
                     child: RadioListTile<String>(
-                      title: const Text('أنثى'),
+                      title: const Text(
+                        'أنثى',
+                        style: TextStyle(
+                          color: mainTextColor,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
                       value: 'female',
                       groupValue: selectedGender,
-                      activeColor: Colors.brown,
+                      activeColor: mainColor,
                       contentPadding: EdgeInsets.zero,
+                      dense: true,
                       onChanged: (value) {
                         setState(() {
                           selectedGender = value!;
@@ -628,8 +744,8 @@ class _SignUpBodyState extends State<SignUpBody>
                       },
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ],
         ),
@@ -638,18 +754,31 @@ class _SignUpBodyState extends State<SignUpBody>
   }
 
   Widget _buildSignUpButton() {
-    return SizedBox(
+    return Container(
       width: double.infinity,
-      height: 55,
+      height: 56,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: mainColor.withOpacity(0.3),
+            blurRadius: 15,
+            spreadRadius: 0,
+            offset: const Offset(0, 8),
+          ),
+        ],
+      ),
       child: ElevatedButton(
         onPressed: isLoading ? null : _signUp,
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.brown,
+          backgroundColor: mainColor,
+          foregroundColor: backgroundBoxesColor,
+          elevation: 0,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(16),
           ),
-          elevation: 5,
-          shadowColor: Colors.brown.withOpacity(0.5),
+        ).copyWith(
+          splashFactory: NoSplash.splashFactory,
         ),
         child: isLoading
             ? SizedBox(
@@ -657,8 +786,9 @@ class _SignUpBodyState extends State<SignUpBody>
                 height: 24,
                 child: CircularProgressIndicator(
                   strokeWidth: 2.5,
-                  valueColor:
-                      AlwaysStoppedAnimation<Color>(Colors.brown.shade50),
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    backgroundBoxesColor,
+                  ),
                 ),
               )
             : const Text(
@@ -669,6 +799,38 @@ class _SignUpBodyState extends State<SignUpBody>
                   color: Colors.white,
                 ),
               ),
+      ),
+    );
+  }
+
+  Widget _buildSignInSection() {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          TextButton(
+            onPressed: () {
+              AppRouter.toSignIn(context);
+            },
+            child: const Text(
+              'تسجيل الدخول',
+              style: TextStyle(
+                color: mainColor,
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+            ),
+          ),
+          const Text(
+            'لديك حساب بالفعل؟ ',
+            style: TextStyle(
+              color: secondTextColor,
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ],
       ),
     );
   }

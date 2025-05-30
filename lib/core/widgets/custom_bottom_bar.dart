@@ -1,57 +1,63 @@
 // custom_bottom_bar.dart
+import 'package:eye/core/utils/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:go_router/go_router.dart';
+
+import 'package:smart_nav_bar/smart_nav_bar.dart';
+
+import '../utils/app_router.dart';
+import '../utils/assets.dart';
 
 class CustomBottomBar extends StatefulWidget {
-  const CustomBottomBar({Key? key}) : super(key: key);
+  final int currentIndex;
+  const CustomBottomBar({super.key, required this.currentIndex});
 
   @override
   State<CustomBottomBar> createState() => _CustomBottomBarState();
 }
 
 class _CustomBottomBarState extends State<CustomBottomBar> {
-  // You might want to use a state management solution to handle this index
-  // (like Provider, GetX, Bloc, etc.) if you need to access it from other parts of your app
-  int _currentIndex = 0;
+  late int _currentIndex;
+
+  @override
+  void initState() {
+    super.initState();
+    _currentIndex = widget.currentIndex;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return CurvedNavigationBar(
-      backgroundColor: Colors.white, // Match this to your scaffold background
-      color: Theme.of(context).primaryColor, // Use your app's primary color
-      buttonBackgroundColor: Theme.of(context).primaryColor,
-      height: 60,
-      animationDuration: const Duration(milliseconds: 300),
-      animationCurve: Curves.easeInOut,
-      index: _currentIndex,
-      items: const <Widget>[
-        Icon(Icons.home, size: 30, color: Colors.white),
-        Icon(Icons.search, size: 30, color: Colors.white),
-        Icon(Icons.add, size: 30, color: Colors.white),
-        Icon(Icons.favorite, size: 30, color: Colors.white),
-        Icon(Icons.person, size: 30, color: Colors.white),
+    return SmartBottomNav(
+      currentIndex: _currentIndex,
+      items: const [
+        SmartNavItem(
+          iconPath: AssetsData.profileIcon,
+          label: 'Profile',
+          activeColor: mainColor,
+          inactiveColor: secondTextColor,
+        ),
+        SmartNavItem(
+          iconPath: AssetsData.subjectsIcon,
+          label: 'Subjects',
+          activeColor: mainColor,
+          inactiveColor: secondTextColor,
+        ),
       ],
       onTap: (index) {
-        setState(() {
-          _currentIndex = index;
-        });
-        
-        // Here you'll need to add navigation logic based on the index
-        // For example:
-        switch (index) {
-          case 0:
-            // Navigate to Home screen
-            Navigator.of(context).pushReplacementNamed('/home');
-            break;
-          case 1:
-            // Navigate to Search screen
-            Navigator.of(context).pushReplacementNamed('/search');
-            break;
-          // Add cases for other navigation items
-          default:
-            break;
-        }
+        if (index == _currentIndex) return;
+        setState(() => _currentIndex = index);
+        _navigateToScreen(index, context);
       },
     );
+  }
+
+  void _navigateToScreen(int index, BuildContext context) {
+    switch (index) {
+      case 0:
+        AppRouter.toUserProfile(context);
+      case 1:
+        AppRouter.toChoiceScreen(context);
+        break;
+    }
   }
 }

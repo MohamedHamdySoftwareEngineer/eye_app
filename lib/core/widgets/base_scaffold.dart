@@ -5,18 +5,23 @@ import 'custom_bottom_bar.dart';
 
 class BaseScaffold extends StatelessWidget {
   final Widget child;
+  final String appBartTitle;
+  final int initialIndex;
 
-  const BaseScaffold({super.key, required this.child});
+  const BaseScaffold({
+    super.key,
+    required this.child,
+    required this.appBartTitle,
+    this.initialIndex = 0,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       bottomNavigationBar: const CustomBottomBar(),
+      bottomNavigationBar:  CustomBottomBar(currentIndex: initialIndex),
       body: Column(
         children: [
-          // Include your custom app bar here instead of in the Scaffold's appBar property.
-          const CustomAppBar(),
-          // Use Expanded to allow the child widget to fill the remaining space.
+          CustomAppBar(appBarTitle: appBartTitle),
           Expanded(child: child),
         ],
       ),

@@ -1,0 +1,18 @@
+Primary Color Palette:
+
+Deep Blue (#2563eb) - Professional and trustworthy for headers and primary buttons
+Clean White (#ffffff) - Essential for question backgrounds and text areas
+Soft Gray (#f8fafc) - Perfect for app backgrounds and subtle separations
+
+Accent Colors:
+
+Vibrant Green (#22c55e) - Ideal for correct answers and success states
+Warm Red (#ef4444) - Clear indicator for incorrect answers
+Bright Orange (#f59e0b) - Great for hints, warnings, or neutral feedback
+Purple (#8b5cf6) - Excellent for progress indicators and special features
+
+Text Colors:
+
+Dark Charcoal (#1f2937) - Primary text for maximum readability
+Medium Gray (#6b7280) - Secondary text and descriptions
+Light Gray (#9ca3af) - Placeholder text and disabled states

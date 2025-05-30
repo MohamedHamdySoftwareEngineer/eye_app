@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class AssetsData {
   static const logo = 'assets/images/splash.png';
   static const homeIcon = 'assets/images/home_icon.svg';
@@ -13,4 +15,8 @@ class AssetsData {
   static const passwordEye = 'assets/images/password_eye.svg';
   static const tagIcon = 'assets/images/tag.svg';
   static const invertedTriangle = 'assets/images/inverted_triangle.svg';
+  static const profileIcon = 'assets/images/profile.svg';
+  static const subjectsIcon = 'assets/images/subjects.svg';
+  static const subjectIcon = 'assets/images/subject.svg';
+ 
 }

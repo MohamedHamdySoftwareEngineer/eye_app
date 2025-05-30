@@ -21,6 +21,7 @@ class _SettingsScreenBodyState extends State<SettingsScreenBody> {
     double screenHeight = MediaQuery.of(context).size.height;
 
     return BaseScaffold(
+      appBartTitle: 'الاعدادات',
         child: Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
       child: Column(
