@@ -33,22 +33,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         style: Styles.mainText23,
       ),
       centerTitle: true,
-      actions: [
-        Padding(
-          padding: const EdgeInsets.only(right: 20),
-          child: IconButton(
-            icon: SvgPicture.asset(
-              AssetsData.userIcon,
-              width: 40,
-              height: 40,
-              fit: BoxFit.contain,
-            ),
-            onPressed: () {
-              AppRouter.rUserProfile;
-            },
-          ),
-        ),
-      ],
+      
     );
   }
 
