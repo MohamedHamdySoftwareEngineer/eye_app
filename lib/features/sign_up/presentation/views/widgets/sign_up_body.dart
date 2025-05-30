@@ -219,47 +219,14 @@ class _SignUpBodyState extends State<SignUpBody>
     return Column(
       children: [
         // Logo with gradient background
-        Container(
-          width: 120,
-          height: 120,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                mainColor.withOpacity(0.8),
-                progressIndeicatorColor.withOpacity(0.6),
-              ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-            shape: BoxShape.circle,
-            boxShadow: [
-              BoxShadow(
-                color: mainColor.withOpacity(0.3),
-                blurRadius: 20,
-                spreadRadius: 2,
-                offset: const Offset(0, 8),
-              ),
-            ],
-          ),
-          child: Center(
-            child: Container(
-              width: 100,
-              height: 100,
-              decoration: const BoxDecoration(
-                color: backgroundBoxesColor,
-                shape: BoxShape.circle,
-              ),
-              child: Center(
-                child: Image.asset(
-                  AssetsData.logo,
-                  width: 60,
-                  height: 60,
-                ),
-              ),
-            ),
+        Center(
+          child: Image.asset(
+            AssetsData.logoIcon,
+            width: 120,
+            height: 120,
           ),
         ),
-        const SizedBox(height: 32),
+        const SizedBox(height: 28),
         // Welcome Text with RTL
         Directionality(
           textDirection: TextDirection.rtl,
@@ -490,7 +457,7 @@ class _SignUpBodyState extends State<SignUpBody>
             width: 4,
             height: 24,
             decoration: BoxDecoration(
-              gradient: LinearGradient(
+              gradient: const LinearGradient(
                 colors: [
                   mainColor,
                   progressIndeicatorColor,
@@ -781,7 +748,7 @@ class _SignUpBodyState extends State<SignUpBody>
           splashFactory: NoSplash.splashFactory,
         ),
         child: isLoading
-            ? SizedBox(
+            ? const SizedBox(
                 width: 24,
                 height: 24,
                 child: CircularProgressIndicator(

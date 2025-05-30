@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:eye/features/choice_screen/presentation/views/choice_screen.dart';
 import 'package:eye/features/home/presentation/views/home_view.dart';
@@ -7,7 +8,11 @@ import 'package:eye/features/sign_in/presentation/views/login.dart';
 import 'package:eye/features/sign_up/presentation/views/sign_up.dart';
 import 'package:eye/features/splash/presentation/views/splash_view.dart';
 import 'package:eye/features/user_profile/presentation/views/user_profile.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
+
+import '../../features/home/data/repositories/quiz_repository.dart';
 
 abstract class AppRouter {
   // Route names
@@ -34,7 +39,20 @@ abstract class AppRouter {
           return ChoiceScreen(initialIndex: initialIndex);
         },
       ),
-      GoRoute(path: rQuizScreen, builder: (context, state) => const QuizScreen()),
+      GoRoute(
+        path: rQuizScreen,
+        builder: (context, state) {
+          final lessonId = int.parse(state.pathParameters['lessonId'] ?? '0');
+
+          return RepositoryProvider<QuizRepository>(
+            create: (_) => QuizRepository(
+              dio: Dio(),
+              storage: const FlutterSecureStorage(),
+            ),
+            child: QuizScreen(lessonId: lessonId),
+          );
+        },
+      ),
       GoRoute(
         path: rSettingsScreen,
         builder: (context, state) => const SettingsScreen(),
@@ -64,27 +82,29 @@ abstract class AppRouter {
   );
 
   // Navigation methods
-  static Future<T?> toHomeView<T>(BuildContext context) => 
+  static Future<T?> toHomeView<T>(BuildContext context) =>
       context.push<T>(rHomeView);
 
-  static Future<T?> toSignIn<T>(BuildContext context) => 
+  static Future<T?> toSignIn<T>(BuildContext context) =>
       context.push<T>(rSignIn);
 
-  static Future<T?> toSignUp<T>(BuildContext context) => 
+  static Future<T?> toSignUp<T>(BuildContext context) =>
       context.push<T>(rSignUp);
 
-  static Future<T?> toChoiceScreen<T>(BuildContext context, {int initialIndex = 1}) => 
+  static Future<T?> toChoiceScreen<T>(BuildContext context,
+          {int initialIndex = 1}) =>
       context.push<T>(rChoiceScreen, extra: initialIndex);
 
-  static Future<T?> toQuizScreen<T>(BuildContext context) => 
+  static Future<T?> toQuizScreen<T>(BuildContext context) =>
       context.push<T>(rQuizScreen);
 
-  static Future<T?> toSettingsScreen<T>(BuildContext context) => 
+  static Future<T?> toSettingsScreen<T>(BuildContext context) =>
       context.push<T>(rSettingsScreen);
 
-  static Future<T?> toUserProfile<T>(BuildContext context, {int initialIndex = 0}) => 
+  static Future<T?> toUserProfile<T>(BuildContext context,
+          {int initialIndex = 0}) =>
       context.push<T>(rUserProfile, extra: initialIndex);
 
-  static void toBack<T>(BuildContext context, [T? result]) => 
+  static void toBack<T>(BuildContext context, [T? result]) =>
       context.pop(result);
 }

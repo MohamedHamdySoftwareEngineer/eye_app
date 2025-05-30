@@ -1,121 +1,71 @@
 import 'package:flutter/material.dart';
-import 'package:eye/core/widgets/base_scaffold.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:eye/features/quiz_screen/presentation/manager/quiz_cubit.dart';
+import 'package:eye/features/quiz_screen/presentation/manager/quiz_state.dart';
 import '../../../../../core/utils/constants.dart';
 
-// 1. Data Models
-class QuestionModel {
-  final int questionID;
-  final String questionText;
-  final bool isMCQ;
-  final List<Choice> choices;
-
-  QuestionModel({
-    required this.questionID,
-    required this.questionText,
-    required this.isMCQ,
-    required this.choices,
-  });
-}
-
-class Choice {
-  final int choiceID;
-  final int questionID;
-  final String choiceText;
-  final int rank;
-
-  Choice({
-    required this.choiceID,
-    required this.questionID,
-    required this.choiceText,
-    required this.rank,
-  });
-}
-
-// 2. Main Quiz Screen Widget
 class QuizScreenBody extends StatefulWidget {
   const QuizScreenBody({super.key});
-
   @override
   QuizScreenBodyState createState() => QuizScreenBodyState();
 }
 
 class QuizScreenBodyState extends State<QuizScreenBody> {
-  // Static demo data
-  final QuestionModel currentQuestion = QuestionModel(
-    questionID: 1,
-    questionText: "ما هي عاصمة المملكة العربية السعودية؟",
-    isMCQ: true,
-    choices: [
-      Choice(
-        choiceID: 1,
-        questionID: 1,
-        choiceText: "جدة",
-        rank: 3,
-      ),
-      Choice(
-        choiceID: 2,
-        questionID: 1,
-        choiceText: "الرياض",
-        rank: 8,
-      ),
-      Choice(
-        choiceID: 3,
-        questionID: 1,
-        choiceText: "مكة المكرمة",
-        rank: 2,
-      ),
-      Choice(
-        choiceID: 4,
-        questionID: 1,
-        choiceText: "الدمام",
-        rank: 1,
-      ),
-    ],
-  );
-
-  bool isLoading = false;
   int selectedChoiceId = -1;
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
-    return Container(
-      width: double.infinity,
-      height: double.infinity,
-      color: backgroundColor,
-      child: SafeArea(
-        child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0),
-            child: Column(
-              children: [
-                SizedBox(height: size.height * 0.03),
-    
-                // Quiz details header
-                _buildQuizHeader(),
-    
-                SizedBox(height: size.height * 0.04),
-    
-                // Question card
-                _buildQuestionCard(),
-    
-                SizedBox(height: size.height * 0.04),
-    
-                // Answer options
-                _buildAnswerOptions(currentQuestion.choices),
-    
-                SizedBox(height: size.height * 0.03),
-              ],
+    return BlocBuilder<QuizCubit, QuizState>(
+      builder: (context, state) {
+        if (state is QuizLoading) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (state is QuizError) {
+          return Center(child: Text('Error: ${state.message}'));
+        } else if (state is QuizLoaded) {
+          final questions = state.questions;
+          return Container(
+            width: double.infinity,
+            height: double.infinity,
+            color: backgroundColor,
+            child: SafeArea(
+              child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                  child: Column(
+                    children: [
+                      SizedBox(height: size.height * 0.03),
+
+                      // Quiz header (you can keep static or derive from state)
+                      _buildQuizHeader(),
+
+                      ...questions.map((q) {
+                        // For each question render card + options
+                        return Column(
+                          children: [
+                            SizedBox(height: size.height * 0.04),
+                            _buildQuestionCard(q),
+                            SizedBox(height: size.height * 0.03),
+                            _buildAnswerOptions(q),
+                          ],
+                        );
+                      }).toList(),
+                    ],
+                  ),
+                ),
+              ),
             ),
-          ),
-        ),
-      ),
+          );
+        } else {
+          return const SizedBox.shrink();
+        }
+      },
     );
   }
 
-  // Quiz header with details
   Widget _buildQuizHeader() {
     return Container(
       width: double.infinity,
@@ -127,7 +77,6 @@ class QuizScreenBodyState extends State<QuizScreenBody> {
           BoxShadow(
             color: mainColor.withOpacity(0.1),
             blurRadius: 20,
-            spreadRadius: 0,
             offset: const Offset(0, 6),
           ),
         ],
@@ -138,30 +87,17 @@ class QuizScreenBodyState extends State<QuizScreenBody> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             _buildQuizDetailItem(
-              icon: Icons.timer_outlined,
-              label: '60s',
-              iconColor: progressIndeicatorColor,
-            ),
-            Container(
-              height: 40,
-              width: 1,
-              color: mainColor.withOpacity(0.2),
-            ),
+                icon: Icons.timer_outlined,
+                label: '60s',
+                iconColor: progressIndeicatorColor),
+            Container(height: 40, width: 1, color: mainColor.withOpacity(0.2)),
             _buildQuizDetailItem(
-              icon: Icons.star_outline,
-              label: '100 نقطة',
-              iconColor: mainColor,
-            ),
-            Container(
-              height: 40,
-              width: 1,
-              color: mainColor.withOpacity(0.2),
-            ),
+                icon: Icons.star_outline, label: '100 نقطة', iconColor: mainColor),
+            Container(height: 40, width: 1, color: mainColor.withOpacity(0.2)),
             _buildQuizDetailItem(
-              icon: Icons.fitness_center_outlined,
-              label: 'صعب',
-              iconColor: secondTextColor,
-            ),
+                icon: Icons.fitness_center_outlined,
+                label: 'صعب',
+                iconColor: secondTextColor),
           ],
         ),
       ),
@@ -184,28 +120,18 @@ class QuizScreenBodyState extends State<QuizScreenBody> {
               color: iconColor.withOpacity(0.1),
               shape: BoxShape.circle,
             ),
-            child: Icon(
-              icon,
-              color: iconColor,
-              size: 20,
-            ),
+            child: Icon(icon, color: iconColor, size: 20),
           ),
           const SizedBox(height: 8),
-          Text(
-            label,
-            style: const TextStyle(
-              color: mainTextColor,
-              fontWeight: FontWeight.w600,
-              fontSize: 15,
-            ),
-          ),
+          Text(label,
+              style: const TextStyle(
+                  color: mainTextColor, fontWeight: FontWeight.w600, fontSize: 15))
         ],
       ),
     );
   }
 
-  // Question card
-  Widget _buildQuestionCard() {
+  Widget _buildQuestionCard(q) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(28),
@@ -214,11 +140,9 @@ class QuizScreenBodyState extends State<QuizScreenBody> {
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: mainColor.withOpacity(0.1),
-            blurRadius: 25,
-            spreadRadius: 0,
-            offset: const Offset(0, 8),
-          ),
+              color: mainColor.withOpacity(0.1),
+              blurRadius: 25,
+              offset: const Offset(0, 8)),
         ],
       ),
       child: Directionality(
@@ -226,50 +150,36 @@ class QuizScreenBodyState extends State<QuizScreenBody> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Question number badge
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               decoration: BoxDecoration(
                 color: mainColor.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(20),
               ),
-              child: Text(
-                'السؤال ${currentQuestion.questionID}',
-                style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  color: mainColor,
-                ),
-              ),
+              child: Text('السؤال ${q.questionID}',
+                  style: const TextStyle(
+                      fontSize: 14, fontWeight: FontWeight.w600, color: mainColor)),
             ),
             const SizedBox(height: 20),
-            
-            // Question text
-            Text(
-              currentQuestion.questionText,
-              style: const TextStyle(
-                fontSize: 19,
-                fontWeight: FontWeight.bold,
-                color: mainTextColor,
-                height: 1.5,
-              ),
-              textAlign: TextAlign.right,
-            ),
+            Text(q.questionText,
+                style: const TextStyle(
+                    fontSize: 19,
+                    fontWeight: FontWeight.bold,
+                    color: mainTextColor,
+                    height: 1.5),
+                textAlign: TextAlign.right),
           ],
         ),
       ),
     );
   }
 
-  // Build answer options
-  Widget _buildAnswerOptions(List<Choice> choices) {
+  Widget _buildAnswerOptions(q) {
     return Column(
-      children: choices.asMap().entries.map((entry) {
-        int index = entry.key;
-        Choice currentChoice = entry.value;
-        bool isSelected = selectedChoiceId == currentChoice.choiceID;
-        String optionLetter = String.fromCharCode(65 + index);
-
+      children: q.choices.map<Widget>((choice) {
+        final isSelected = selectedChoiceId == choice.choiceID;
+        final rawValue = 65 + q.choices.indexOf(choice);
+final optionLetter = String.fromCharCode(rawValue.toInt());
         return Padding(
           padding: const EdgeInsets.only(bottom: 16.0),
           child: Directionality(
@@ -277,129 +187,96 @@ class QuizScreenBodyState extends State<QuizScreenBody> {
             child: GestureDetector(
               onTap: () {
                 setState(() {
-                  selectedChoiceId = currentChoice.choiceID;
+                  selectedChoiceId = choice.choiceID;
                   isLoading = true;
                 });
-
-                // Simulate answer processing
                 Future.delayed(const Duration(milliseconds: 800), () {
                   if (!mounted) return;
-                  setState(() {
-                    isLoading = false;
-                  });
-
-                  // Show result
-                  final isCorrectAnswer = currentChoice.rank > 5;
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Directionality(
-                        textDirection: TextDirection.rtl,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              isCorrectAnswer ? Icons.check_circle : Icons.cancel,
-                              color: Colors.white,
-                              size: 20,
-                            ),
-                            const SizedBox(width: 12),
-                            Text(
-                              isCorrectAnswer ? 'إجابة صحيحة!' : 'إجابة خاطئة!',
-                              style: const TextStyle(
-                                fontSize: 19,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ],
-                        ),
+                  setState(() => isLoading = false);
+                  final isCorrect = choice.isRightAnswer;
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Directionality(
+                      textDirection: TextDirection.rtl,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(isCorrect ? Icons.check_circle : Icons.cancel,
+                              color: Colors.white),
+                          const SizedBox(width: 12),
+                          Text(isCorrect ? 'إجابة صحيحة!' : 'إجابة خاطئة!',
+                              style: const TextStyle(fontSize: 19, fontWeight: FontWeight.w600)),
+                        ],
                       ),
-                      backgroundColor: isCorrectAnswer
-                          ? correctAnswerColor
-                          : wrongAnswerColor,
-                      duration: const Duration(seconds: 2),
-                      behavior: SnackBarBehavior.floating,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
                     ),
-                  );
+                    backgroundColor:
+                        isCorrect ? correctAnswerColor : wrongAnswerColor,
+                    duration: const Duration(seconds: 2),
+                    behavior: SnackBarBehavior.floating,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16)),
+                    margin:
+                        const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+                  ));
                 });
               },
               child: Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: isSelected 
-                      ? mainColor.withOpacity(0.1) 
+                  color: isSelected
+                      ? mainColor.withOpacity(0.1)
                       : backgroundBoxesColor,
                   borderRadius: BorderRadius.circular(20),
                   border: Border.all(
-                    color: isSelected 
-                        ? mainColor 
-                        : mainColor.withOpacity(0.2),
-                    width: isSelected ? 2 : 1,
-                  ),
+                      color: isSelected
+                          ? mainColor
+                          : mainColor.withOpacity(0.2),
+                      width: isSelected ? 2 : 1),
                   boxShadow: [
                     BoxShadow(
-                      color: isSelected 
-                          ? mainColor.withOpacity(0.15)
-                          : mainColor.withOpacity(0.05),
-                      blurRadius: isSelected ? 15 : 10,
-                      spreadRadius: 0,
-                      offset: const Offset(0, 4),
-                    ),
+                        color: mainColor.withOpacity(isSelected ? 0.15 : 0.05),
+                        blurRadius: isSelected ? 15 : 10,
+                        offset: const Offset(0, 4)),
                   ],
                 ),
                 child: Row(
                   children: [
-                    // Option indicator
                     Container(
                       width: 44,
                       height: 44,
                       decoration: BoxDecoration(
-                        color: isSelected ? mainColor : mainColor.withOpacity(0.1),
-                        shape: BoxShape.circle,
-                      ),
+                          color: isSelected
+                              ? mainColor
+                              : mainColor.withOpacity(0.1),
+                          shape: BoxShape.circle),
                       child: isSelected && isLoading
                           ? const Padding(
                               padding: EdgeInsets.all(10.0),
                               child: CircularProgressIndicator(
-                                strokeWidth: 2,
-                                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                              ),
+                                  strokeWidth: 2,
+                                  valueColor:
+                                      AlwaysStoppedAnimation<Color>(Colors.white)),
                             )
                           : Center(
                               child: isSelected
-                                  ? const Icon(
-                                      Icons.check,
-                                      color: Colors.white,
-                                      size: 20,
-                                    )
-                                  : Text(
-                                      optionLetter,
+                                  ? const Icon(Icons.check, color: Colors.white)
+                                  : Text(optionLetter,
                                       style: const TextStyle(
-                                        color: mainColor,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16,
-                                      ),
-                                    ),
+                                          color: mainColor,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16)),
                             ),
                     ),
                     const SizedBox(width: 16),
-                    
-                    // Choice text
                     Expanded(
-                      child: Text(
-                        currentChoice.choiceText,
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
-                          color: mainTextColor,
-                          height: 1.4,
-                        ),
-                        textAlign: TextAlign.right,
-                      ),
+                      child: Text(choice.choiceText,
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontWeight:
+                                  isSelected ? FontWeight.bold : FontWeight.w500,
+                              color: mainTextColor,
+                              height: 1.4),
+                          textAlign: TextAlign.right),
                     ),
                   ],
                 ),

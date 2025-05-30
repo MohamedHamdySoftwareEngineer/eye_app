@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:eye/core/utils/app_router.dart';
 import 'package:eye/core/utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'core/utils/app_transation.dart';
 
@@ -38,10 +39,12 @@ class EyeApp extends StatelessWidget {
           },
         ),
         brightness: Brightness.light,
-        fontFamily: 'Cairo', 
+        fontFamily: 'NotoSansArabic', 
+        // fontFamily: GoogleFonts.notoSansArabic().fontFamily,
         textTheme: ThemeData.light().textTheme.apply(
               bodyColor: Colors.white,
-              fontFamily: 'Cairo',
+              fontFamily: 'NotoSansArabic',
+              // fontFamily: GoogleFonts.notoSansArabic().fontFamily,
             ),
       ),
       themeMode: ThemeMode.light,
