@@ -295,7 +295,7 @@ class HomeViewBody extends StatelessWidget {
                     title,
                     style: const TextStyle(
                       color: mainTextColor,
-                      fontSize: 15,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
                     textAlign: TextAlign.center,
@@ -305,7 +305,7 @@ class HomeViewBody extends StatelessWidget {
                     subtitle,
                     style: const TextStyle(
                       color: secondTextColor,
-                      fontSize: 12,
+                      fontSize: 13,
                       fontWeight: FontWeight.bold,
                     ),
                     textAlign: TextAlign.center,

@@ -1,5 +1,6 @@
 import 'package:eye/core/widgets/header_section.dart';
 import 'package:flutter/material.dart';
+import '../../../../../core/utils/app_router.dart';
 import '../../../../../core/utils/assets.dart';
 import '../../../../../core/utils/constants.dart';
 import '../../../../../core/utils/styles.dart';
@@ -69,7 +70,7 @@ class QuizScreenBodyState extends State<QuizScreenBody> {
               _buildProgressSection(),
               const SizedBox(height: 40),
               const HeaderSection(
-                  text: 'اختبار تفاعلي', imagePath: AssetsData.choicesLogo),
+                  text: 'اختبار تفاعلي', imagePath: AssetsData.quizIconLogo),
               const SizedBox(height: 30),
               _buildQuestionCard(_questions[currentQuestionIndex]),
               const SizedBox(height: 20),
@@ -83,97 +84,154 @@ class QuizScreenBodyState extends State<QuizScreenBody> {
       ),
     );
   }
-  
+
   // Method for Progress Section
-Widget _buildProgressSection() {
-  double progress = (currentQuestionIndex + 1) / _questions.length;
-  
-  return Container(
-    width: double.infinity,
-    padding: const EdgeInsets.all(24),
-    decoration: BoxDecoration(
-      color: backgroundBoxesColor,
-      borderRadius: BorderRadius.circular(20),
-      boxShadow: [
-        BoxShadow(
-            color: secondTextColor.withOpacity(0.1),
-            blurRadius: 15,
-            offset: const Offset(0, 5))
-      ],
-    ),
-    child: Directionality(
-      textDirection: TextDirection.rtl,
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'السؤال ${currentQuestionIndex + 1} من ${_questions.length}',
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                  color: mainTextColor,
+  Widget _buildProgressSection() {
+    double progress = (currentQuestionIndex + 1) / _questions.length;
+
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        color: backgroundBoxesColor,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+              color: secondTextColor.withOpacity(0.1),
+              blurRadius: 15,
+              offset: const Offset(0, 5))
+        ],
+      ),
+      child: Directionality(
+        textDirection: TextDirection.rtl,
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'السؤال ${currentQuestionIndex + 1} من ${_questions.length}',
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: mainTextColor,
+                  ),
                 ),
+                Text(
+                  '${(progress * 100).toInt()}%',
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: mainColor,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: LinearProgressIndicator(
+                value: progress,
+                backgroundColor: mainColor.withOpacity(0.2),
+                valueColor: const AlwaysStoppedAnimation<Color>(mainColor),
+                minHeight: 8,
               ),
-              Text(
-                '${(progress * 100).toInt()}%',
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                  color: mainColor,
-                ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFinishButton() {
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        onPressed: () {
+          sheetForFinishTest();
+        },
+        style: ElevatedButton.styleFrom(
+          backgroundColor: wrongAnswerColor,
+          foregroundColor: Colors.white,
+          padding: const EdgeInsets.symmetric(vertical: 16),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          elevation: 0,
+        ),
+        child: const Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('إنهاء الاختبار',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
+            SizedBox(width: 8),
+            Icon(Icons.exit_to_app, size: 20),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Future<dynamic> sheetForFinishTest() {
+    return showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (context) {
+        return Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text(
+                'هل أنت متأكد أنك تريد إنهاء الاختبار؟',
+                style: Styles.mainBlackText18,
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 24),
+              Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        AppRouter.toChoiceScreen(context); // Close sheet
+                        // Add your finish logic here
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: mainColor,
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16)),
+                      ),
+                      child: const Text('نعم', style: TextStyle(fontSize: 18)),
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: OutlinedButton(
+                      onPressed: () {
+                        Navigator.of(context).pop(); // Close sheet
+                      },
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: mainColor,
+                        side: const BorderSide(color: mainColor),
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16)),
+                      ),
+                      child: const Text('لا', style: TextStyle(fontSize: 18)),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
-          const SizedBox(height: 12),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: LinearProgressIndicator(
-              value: progress,
-              backgroundColor: mainColor.withOpacity(0.2),
-              valueColor: const AlwaysStoppedAnimation<Color>(mainColor),
-              minHeight: 8,
-            ),
-          ),
-        ],
-      ),
-    ),
-  );
-}
-
-  Widget _buildFinishButton() {
-  return SizedBox(
-    width: double.infinity,
-    child: ElevatedButton(
-      onPressed: () {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('تم انتهاء الاختبار!'),
-            backgroundColor: correctAnswerColor,
-          ),
         );
       },
-      style: ElevatedButton.styleFrom(
-        backgroundColor: wrongAnswerColor.withOpacity(0.9),
-        foregroundColor: Colors.white,
-        padding: const EdgeInsets.symmetric(vertical: 16),
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        elevation: 0,
-      ),
-      child: const Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text('إنهاء الاختبار',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
-          SizedBox(width: 8),
-          Icon(Icons.exit_to_app, size: 20),
-        ],
-      ),
-    ),
-  );
-}
+    );
+  }
+
   Widget _buildQuestionCard(Question q) {
     return Container(
       width: double.infinity,
@@ -281,10 +339,7 @@ Widget _buildProgressSection() {
                     const SizedBox(width: 20),
                     Expanded(
                         child: Text(choice.choiceText,
-                            style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600,
-                                color: mainTextColor),
+                            style: Styles.mainBlackText18,
                             textAlign: TextAlign.right)),
                   ],
                 ),

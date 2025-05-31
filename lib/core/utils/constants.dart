@@ -10,11 +10,6 @@ const wrongAnswerColor = Color(0xffef4444);
 const warningAndHintsColor = Color(0xfff59e0b);
 const progressIndeicatorColor = Color(0xff6366f1);
 const mainTextColor = Color(0xff1f2937);
-const secondTextColor = Color(0xff6b7280);
+const secondTextColor = Color(0xff626875);
 
-const shadowMainColor = Color(0xffe9d7a2);
-const secondColor = Color(0xffD98E04);
-const shadowSecondColor = Color(0xfffcc96a);
-const myBrownColor = Color(0xff594302);
-const borderColor = Color(0xffD98E04);
-const signColor = Color(0xffF2B807);
+

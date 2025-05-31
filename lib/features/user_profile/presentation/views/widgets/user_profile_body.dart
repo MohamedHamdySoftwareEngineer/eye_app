@@ -1,6 +1,6 @@
 import 'package:eye/core/widgets/base_scaffold.dart';
+import 'package:eye/core/widgets/exit_button.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import '../../../../../core/utils/app_router.dart';
 import '../../../../../core/utils/constants.dart';
 
@@ -70,7 +70,7 @@ class _UserProfileBodyState extends State<UserProfileBody> {
               ],
             ),
           ),
-          backgroundColor: progressIndeicatorColor,
+          backgroundColor: correctAnswerColor,
           behavior: SnackBarBehavior.floating,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
@@ -179,7 +179,7 @@ class _UserProfileBodyState extends State<UserProfileBody> {
                       const SizedBox(height: 24),
                       
                       // Logout button
-                      _buildLogoutButton(),
+                      const ExitButton(),
                       
                       SizedBox(height: size.height * 0.05),
                     ],
@@ -416,7 +416,7 @@ class _UserProfileBodyState extends State<UserProfileBody> {
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: progressIndeicatorColor,
+                    backgroundColor: mainColor,
                     foregroundColor: Colors.white,
                     elevation: 0,
                     shape: RoundedRectangleBorder(
@@ -528,7 +528,7 @@ class _UserProfileBodyState extends State<UserProfileBody> {
                 _buildInfoItemWidget(item),
               ],
             );
-          }).toList(),
+          }),
         ],
       ),
     );
@@ -645,45 +645,8 @@ class _UserProfileBodyState extends State<UserProfileBody> {
   }
   
   // Logout button
-  Widget _buildLogoutButton() {
-    return Container(
-      width: double.infinity,
-      height: 52,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.red.withOpacity(0.3), width: 1),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.red.withOpacity(0.1),
-            blurRadius: 8,
-            spreadRadius: 0,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: OutlinedButton.icon(
-        onPressed: () {
-          AppRouter.toSignIn(context);
-        },
-        icon: const Icon(Icons.logout, color: Colors.red, size: 20),
-        label: const Text(
-          'تسجيل الخروج',
-          style: TextStyle(
-            color: Colors.red,
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        style: OutlinedButton.styleFrom(
-          backgroundColor: backgroundBoxesColor,
-          side: BorderSide.none,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-        ),
-      ),
-    );
-  }
+  
+  
   
   // Get initials for avatar
   String _getInitials() {

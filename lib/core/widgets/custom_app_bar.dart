@@ -21,7 +21,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         padding: const EdgeInsets.only(left: 20),
         child: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new_outlined, size: 28),
-          onPressed: () => AppRouter.toHomeView(context),
+          onPressed: () {
+            final currentRouteName = ModalRoute.of(context)?.settings.name;
+            if (currentRouteName == AppRouter.rChoiceScreen) {
+              AppRouter.toHomeView(context);
+            } else {
+              AppRouter.toChoiceScreen(context);
+            }
+          },
           padding: EdgeInsets.zero,
         ),
       ),
@@ -31,7 +38,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         style: Styles.mainText23,
       ),
       centerTitle: true,
-      
     );
   }
 

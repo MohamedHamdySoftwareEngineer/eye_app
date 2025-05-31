@@ -7,8 +7,11 @@ class UserProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-      body: UserProfileBody(initialIndex: initialIndex),
+    return  PopScope(
+      canPop: false,
+      child: Scaffold(
+        body: UserProfileBody(initialIndex: initialIndex),
+      ),
     );
   }
 }

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:eye/features/choice_screen/presentation/views/choice_screen.dart';
 import 'package:eye/features/home/presentation/views/home_view.dart';
 import 'package:eye/features/quiz_screen/presentation/views/quiz_screen.dart';
-import 'package:eye/features/settings_screen/presentation/views/settings_screen.dart';
 import 'package:eye/features/sign_in/presentation/views/login.dart';
 import 'package:eye/features/sign_up/presentation/views/sign_up.dart';
 import 'package:eye/features/splash/presentation/views/splash_view.dart';
@@ -53,10 +52,7 @@ abstract class AppRouter {
           );
         },
       ),
-      GoRoute(
-        path: rSettingsScreen,
-        builder: (context, state) => const SettingsScreen(),
-      ),
+      
       GoRoute(
         path: rUserProfile,
         builder: (context, state) {

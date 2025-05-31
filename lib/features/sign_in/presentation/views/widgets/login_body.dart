@@ -292,14 +292,14 @@ class _LoginBodyState extends State<LoginBody> {
       ),
       child: ElevatedButton(
         onPressed: () {
-          debugPrint('📌 Login button tapped');
-          if (_formKey.currentState?.validate() ?? false) {
-            context.read<LoginCubit>().logIn(
-                  username: usernameController.text.trim(),
-                  password: passwordController.text.trim(),
-                );
-          }
-          // AppRouter.toHomeView(context);
+          // debugPrint('📌 Login button tapped');
+          // if (_formKey.currentState?.validate() ?? false) {
+          //   context.read<LoginCubit>().logIn(
+          //         username: usernameController.text.trim(),
+          //         password: passwordController.text.trim(),
+          //       );
+          // }
+          AppRouter.toHomeView(context);
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: mainColor,

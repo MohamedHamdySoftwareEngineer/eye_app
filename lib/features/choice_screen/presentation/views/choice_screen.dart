@@ -3,10 +3,15 @@ import 'package:flutter/material.dart';
 
 class ChoiceScreen extends StatelessWidget {
   final int initialIndex;
-  const ChoiceScreen({super.key,required this.initialIndex});
+  const ChoiceScreen({super.key, required this.initialIndex});
 
   @override
   Widget build(BuildContext context) {
-    return  ChoiceScreenBody(initialIndex: initialIndex);
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        body: ChoiceScreenBody(initialIndex: initialIndex)
+        ),
+    );
   }
 }

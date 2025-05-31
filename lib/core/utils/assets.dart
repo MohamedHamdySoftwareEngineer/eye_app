@@ -4,6 +4,7 @@ class AssetsData {
   static const logoIcon = 'assets/images/login_icon.png';
   static const homeLogo = 'assets/images/home_logo.png';
   static const choicesLogo = 'assets/images/choices_logo.png';
+  static const quizIconLogo = 'assets/images/quiz_Icon_Logo.png';
 
   static const logo = 'assets/images/splash.png';
   static const homeIcon = 'assets/images/home_icon.svg';
