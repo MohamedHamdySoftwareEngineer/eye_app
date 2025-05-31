@@ -1,7 +1,7 @@
 import 'package:eye/core/utils/styles.dart';
 import 'package:eye/core/widgets/base_scaffold.dart';
+import 'package:eye/core/widgets/header_section.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import '../../../../../core/utils/app_router.dart';
 import '../../../../../core/utils/assets.dart';
 import '../../../../../core/utils/constants.dart';
@@ -24,7 +24,7 @@ class ChoiceScreenBody extends StatelessWidget {
             child: Column(
               children: [
                 const SizedBox(height: 20),
-                _buildHeaderSection(),
+                const HeaderSection(text: 'اختر المادة',imagePath: AssetsData.choicesLogo,),
                 const SizedBox(height: 30),
                 _buildSubjectsGrid(context),
                 const SizedBox(height: 20),
@@ -35,42 +35,8 @@ class ChoiceScreenBody extends StatelessWidget {
       ),
     );
   }
-
-  Widget _buildHeaderSection() {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(2),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [mainColor, mainColor.withOpacity(0.8)],
-          begin: Alignment.bottomRight,
-          end: Alignment.topLeft,
-        ),
-        borderRadius: BorderRadius.circular(24),
-        boxShadow: [
-          BoxShadow(
-            color: mainColor
-                .withOpacity(0.25), // Slightly stronger shadow for better depth
-            blurRadius: 20,
-            spreadRadius: 0,
-            offset: const Offset(0, 10),
-          ),
-        ],
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Image.asset(AssetsData.choicesLogo, width: 100, height: 100),
-          const SizedBox(width: 20),
-          const Text(
-            'اختر المادة',
-            style: Styles.mainText28,
-          ),
-        ],
-      ),
-    );
-  }
-
+ 
+  
   Widget _buildSubjectsGrid(BuildContext context) {
     final subjects = [
       {
